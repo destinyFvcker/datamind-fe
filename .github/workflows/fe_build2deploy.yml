@@ -1,0 +1,22 @@
+name: FE build to deploy(Aliyun)
+on: push
+
+env:
+  DEPLOY_PATH: '/home/${{ secrets.ALIYUN_USER }}/projects/data-mind/fe/'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+      - run: bun run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fe-build
+          path: build
+          compression-level: 9
+          retention-days: 5
