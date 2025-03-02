@@ -20,3 +20,25 @@ jobs:
           path: build
           compression-level: 9
           retention-days: 5
+
+  deploy:
+    name: Deploy to Aliyun ECS
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # 下载构建产物
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: fe-build
+          path: fe-build
+      # 部署到阿里云服务器
+      - name: Deploy to Aliyun
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ALIYUN_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.ALIYUN_HOST }}
+          REMOTE_USER: ${{ secrets.ALIYUN_USER }}
+          ARGS: '-avzr --delete --mkpath'
+          SOURCE: 'fe-build'
+          TARGET: ${{ env.DEPLOY_PATH }}
