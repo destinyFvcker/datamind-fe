@@ -1,17 +1,19 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { cn } from '$lib/utils.js';
 	import Icon from '@iconify/svelte';
-	import { blur, fade } from 'svelte/transition';
+	import { cn } from '$lib/utils.js';
+	import { getGithubState } from '../(data)/data';
+	import { toast } from 'svelte-sonner';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	// let { isLogin = $bindable() }: { isLoading: boolean } = $props();
+	const { class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
 
-	let className: string | undefined | null = undefined;
-	export { className as class };
+	let isLogin = $state(true);
+	let isLoading = $state(false);
 
-	let isLoading = false;
-	async function onSubmitSingIn() {
+	async function onSubmitSingIn(event: SubmitEvent) {
+		event.preventDefault();
 		isLoading = true;
 
 		setTimeout(() => {
@@ -19,31 +21,67 @@
 		}, 5000);
 	}
 
-	let isLogin = true;
+	async function onSubmitLogIn(event: SubmitEvent) {
+		event?.preventDefault();
+		isLoading = true;
+
+		setTimeout(() => {
+			isLoading = false;
+		}, 5000);
+	}
+
+	async function onGithubSignIn() {
+		isLoading = true;
+		const timeoutId = setTimeout(() => {
+			isLoading = false;
+		}, 5000);
+
+		try {
+			const githubStatus = await getGithubState();
+
+			if (!githubStatus.data) {
+				toast.error(`Github state require failed, please check your internet connection.`);
+				isLoading = false;
+				clearTimeout(timeoutId);
+				return;
+			}
+
+			const uri =
+				'https://github.com/login/oauth/authorize?' +
+				'client_id=Ov23lim6oTncg9iWxk1T' +
+				'&redirect_uri=http://localhost:8800/auths/github/callback' +
+				`&state=${githubStatus.data.state}`;
+			window.location.href = uri;
+		} catch {
+			toast.error(`Github state require failed, please check your internet connection.`);
+			isLoading = false;
+			clearTimeout(timeoutId);
+		}
+	}
 </script>
 
 {#if isLogin}
 	<div class="flex flex-col space-y-2 text-center">
-		<h1 class="text-2xl font-semibold tracking-tight">Login in</h1>
-		<p class="text-sm text-muted-foreground">
+		<h1 class="text-2xl font-semibold tracking-tight">Login</h1>
+		<p class="flex items-center justify-center gap-1 text-sm text-muted-foreground">
 			start your journey with data-mind!
-			<Icon icon="line-md:emoji-smile-wink" width="24" height="24" class="inline" />
+			<Icon icon="line-md:emoji-smile-wink" width="24" height="24" />
 		</p>
 	</div>
 {:else}
 	<div class="flex flex-col space-y-2 text-center">
 		<h1 class="text-2xl font-semibold tracking-tight">Create an account</h1>
-		<p class="text-sm text-muted-foreground">
+		<p class="flex items-center justify-center gap-1 text-sm text-muted-foreground">
 			Enter your email below to create your account
-			<Icon icon="line-md:heart" width="24" height="24" class="inline" />
+			<Icon icon="line-md:heart" width="24" height="24" />
 		</p>
 	</div>
 {/if}
 
-<div class={cn('grid gap-6', className)} {...$$restProps}>
+<div class={cn('grid gap-6', className)} {...restProps}>
 	<div class="grid gap-4">
 		{#if isLogin}
-			<form on:submit|preventDefault={onSubmitSingIn}>
+			<form onsubmit={onSubmitSingIn}>
 				<div class="grid gap-3">
 					<div class="grid gap-2.5">
 						<Icon icon="material-symbols:mail" width="24" height="24" />
@@ -78,7 +116,7 @@
 				</div>
 			</form>
 		{:else}
-			<form on:submit|preventDefault={onSubmitSingIn}>
+			<form onsubmit={onSubmitSingIn}>
 				<div class="grid gap-2">
 					<div class="grid gap-2.5">
 						<Icon icon="material-symbols:mail" width="24" height="24" />
@@ -119,7 +157,7 @@
 						{#if isLoading}
 							<Icon icon="line-md:loading-twotone-loop" width="26" height="26" />
 						{/if}
-						Sign In with Email
+						{isLogin ? 'Login' : 'Sign'} In with Email
 					</Button>
 				</div>
 			</form>
@@ -148,14 +186,14 @@
 	</div>
 
 	<div class="grid gap-2">
-		<Button variant="outline" type="button" disabled={isLoading}>
+		<Button variant="outline" type="button" disabled={true}>
 			{#if isLoading}
 				<Icon icon="line-md:loading-twotone-loop" width="26" height="26" />
 			{/if}
 			<Icon icon="line-md:chat-round" width="24" height="24" style="color: #0cc125" />
 			Wechat
 		</Button>
-		<Button variant="outline" type="button" disabled={isLoading}>
+		<Button variant="outline" type="button" disabled={isLoading} onclick={onGithubSignIn}>
 			{#if isLoading}
 				<Icon icon="line-md:loading-twotone-loop" width="26" height="26" />
 			{/if}

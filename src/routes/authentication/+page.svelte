@@ -1,12 +1,10 @@
 <script lang="ts">
 	import UserAuthForm from './(components)/user-auth-form.svelte';
-	let isLogin = $state(false);
 </script>
 
 <div
 	class="relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0"
 >
-	<!-- <Button variant="ghost" class="absolute right-20 top-14 md:right-16">Login</Button> -->
 	<div class="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
 		<div
 			class="absolute inset-0 bg-cover"
