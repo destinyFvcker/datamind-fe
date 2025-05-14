@@ -1,0 +1,4137 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "data-mind-web",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "A股指数量化金融数据"
+    },
+    {
+      "name": "A股量化金融数据"
+    },
+    {
+      "name": "A股金融新闻"
+    },
+    {
+      "name": "技术指标"
+    },
+    {
+      "name": "鉴权接口"
+    }
+  ],
+  "paths": {
+    "/api/aindex/index_option_50etf_qvix_kline": {
+      "get": {
+        "summary": "50ETF 期权波动率指数 QVIX K线数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "index_option_50etf_qvix_kline",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "限定返回的数据天数(日频数据), 设定为`-1`\n来返回所有数据",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取限定时间范围内的50ETF期权波动率指数QVIX K线数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_IndexOption50EtfQvixKlineFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/aindex/index_option_50etf_qvix_mas": {
+      "get": {
+        "summary": "50ETF 期权波动率指数 QVIX 5日/10日/20日移动平均线数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "index_option_50etf_qvix_mas",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "限定返回的数据天数(日频数据), 设定为`-1`\n来返回所有数据",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取限定时间范围内50ETF期权波动率指数QVIX5日/10日/20日移动平均线数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_IndexOption50EtfQvixMAFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/aindex/stock_zh_index_daily_kline": {
+      "get": {
+        "summary": "获取指定指数代码的日频K线数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_zh_index_daily_kline",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "index_code",
+            "in": "query",
+            "description": "指数代码(带交易所2位编号)",
+            "required": true,
+            "example": "sz399982",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "限定返回的数据天数(日频数据), 设定为`-1`\n来返回所有数据",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定指数代码的日频K线数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyKlineFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/aindex/stock_zh_index_daily_mas": {
+      "get": {
+        "summary": "获取指定指数代码的移动平均线数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_zh_index_daily_mas",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "index_code",
+            "in": "query",
+            "description": "指数代码(带交易所2位编号)",
+            "required": true,
+            "example": "sz399982",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "限定返回的数据天数(日频数据), 设定为`-1`\n来返回所有数据",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定的指数代码的移动平均线数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StockZhIndexDailyMAFetch"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/aindex/stock_zh_index_daily_pagin": {
+      "get": {
+        "summary": "分页获取所有指数最新一个交易日的交易信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_zh_index_daily_pagin",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "page_index",
+            "in": "query",
+            "description": "请求某页的页索引(从1开始)",
+            "required": true,
+            "example": 1,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "每页的大小",
+            "required": true,
+            "example": 50,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功分页获取对应交易日的交易信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StockZhIndexDailyPaginFetch"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/aindex/stock_zh_index_daily_volume": {
+      "get": {
+        "summary": "获取指定指数代码的日频交易量数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_zh_index_daily_volume",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "index_code",
+            "in": "query",
+            "description": "指数代码(带交易所2位编号)",
+            "required": true,
+            "example": "sz399982",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "限定返回的数据天数(日频数据), 设定为`-1`\n来返回所有数据",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定的指数代码的日频交易量数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyVolumeFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/daily_indicator": {
+      "get": {
+        "summary": "获取对应`stock_id`的A股股票从今日开始倒推一定天数的日频交易指标数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_daily_indicator",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "stock_id",
+            "in": "query",
+            "description": "需要获取对应日频数据的股票代码",
+            "required": true,
+            "example": "603777",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adj_type",
+            "in": "query",
+            "description": "复权选项(不复权 = 0、前复权 = 1、后复权 = 2)",
+            "required": true,
+            "example": "0",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit_days",
+            "in": "query",
+            "description": "从今日开始的倒推时间范围",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取对应时间范围的日频交易指标数据成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_DailyIndicatorFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/daily_kline": {
+      "get": {
+        "summary": "获取对应`stock_id`的A股股票从今日开始倒推一定天数的日频K线数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_daily_kline",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "stock_id",
+            "in": "query",
+            "description": "需要获取对应日频数据的股票代码",
+            "required": true,
+            "example": "603777",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adj_type",
+            "in": "query",
+            "description": "复权选项(不复权 = 0、前复权 = 1、后复权 = 2)",
+            "required": true,
+            "example": "0",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit_days",
+            "in": "query",
+            "description": "从今日开始的倒推时间范围",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取对应时间范围的日频K线数据成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_DailyKlineFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/daily_trading_volume": {
+      "get": {
+        "summary": "获取对应`stock_id`的A股股票从今日开始倒推一定天数的日频交易量数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_daily_trading_volume",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "stock_id",
+            "in": "query",
+            "description": "需要获取对应日频数据的股票代码",
+            "required": true,
+            "example": "603777",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adj_type",
+            "in": "query",
+            "description": "复权选项(不复权 = 0、前复权 = 1、后复权 = 2)",
+            "required": true,
+            "example": "0",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit_days",
+            "in": "query",
+            "description": "从今日开始的倒推时间范围",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取对应时间范围的日频交易量数据成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_DailyTradingVolumeFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/ma_with_limit": {
+      "get": {
+        "summary": "获取一定时间范围内的移动平均线(MA5/MA10/MA20)数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_mas_with_limit",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "stock_id",
+            "in": "query",
+            "description": "需要获取移动平均线的股票代码",
+            "required": true,
+            "example": "603777",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit_days",
+            "in": "query",
+            "description": "限定返回的倒推天数范围，或者说数据点数量(注意不要超过90天)",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取请求的股票Id对应的时间范围内的移动平均线数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_MALinesFetch"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/stock_individual_info/{stock_id}": {
+      "get": {
+        "summary": "获取个股简单信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_stock_individual_info",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "stock_id",
+            "in": "path",
+            "description": "需要获取个股信息对应的股票代码",
+            "required": true,
+            "example": "603777",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取个股信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AkStockIndividualInfoEm"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/news/chosen_rescent100": {
+      "get": {
+        "summary": "获取最近的100条精选的财经信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_recent100_news_main_cx",
+        "tags": [
+          "A股金融新闻",
+          "A股金融新闻"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功获取最近100条精选的财经信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_StockNewsMainCx"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/news/chosen_with_range": {
+      "get": {
+        "summary": "通过指定时间范围、偏移量和返回数据条数以请求部分精选财经新闻条目",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_news_main_cx_with_range",
+        "tags": [
+          "A股金融新闻",
+          "A股金融新闻"
+        ],
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "description": "时间区间的开始，格式为YYYY-MM-DD HH:mm:ss",
+            "required": true,
+            "example": "2025-05-01 00:00:00",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "description": "时间区间的结束，格式为YYYY-MM-DD HH:mm:ss",
+            "required": true,
+            "example": "2025-05-07 23:59:59",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "用于指定结果集开始返回的偏移量，默认是从第 0 条记录开始。",
+            "required": true,
+            "example": 0,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "限制返回结果的最大条数",
+            "required": true,
+            "example": 10,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定范围内的精选财经新闻条目",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_StockNewsMainCx"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/news/stock_recent100/{symbol_id}": {
+      "get": {
+        "summary": "获取指定stock的最近100条财经信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_recent100_news_em",
+        "tags": [
+          "A股金融新闻",
+          "A股金融新闻"
+        ],
+        "parameters": [
+          {
+            "name": "symbol_id",
+            "in": "path",
+            "description": "需要获取新闻信息对应的股票代码",
+            "required": true,
+            "example": "603777",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定stock的最近100条财经信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockNewsEm"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "指定的股票代码不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_financial_abstract_ths/{symbol_id}/{indicator}": {
+      "get": {
+        "summary": "同花顺-财务指标-主要指标",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_financial_abstract_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [
+          {
+            "name": "symbol_id",
+            "in": "path",
+            "description": "想要获取数据的对应股票id",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "indicator",
+            "in": "path",
+            "description": "获取数据时间范围指示器参数，example = '按报告期'; choice of {'按报告期', '按年度', '按单季度'}",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取对应股票id的同花顺-财务指标-主要指标",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockFinancialAbstractThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "指定的股票代码或报告期不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_rank_cxd_ths/{time_range}": {
+      "get": {
+        "summary": "同花顺-数据中心-技术选股-创新低",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_rank_cxd_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [
+          {
+            "name": "time_range",
+            "in": "path",
+            "description": "指定获取数据的时间区间范围，choice of {'创月新低', '半年新低', '一年新低', '历史新低'}",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定时间范围内的同花顺-数据中心-技术选股-创新低数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockRankCxdThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_rank_cxfl_ths": {
+      "get": {
+        "summary": "同花顺-数据中心-技术选股-持续放量",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_rank_cxfl_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取同花顺-数据中心-技术选股-持续放量成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockRankCxflThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_rank_cxg_ths/{time_range}": {
+      "get": {
+        "summary": "同花顺-数据中心-技术选股-创新高",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_rank_cxg_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [
+          {
+            "name": "time_range",
+            "in": "path",
+            "description": "指定获取数据的时间区间范围，choice of {'创月新高', '半年新高', '一年新高', '历史新高'}",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取对应时间范围内的同花顺-数据中心-技术选股-创新高数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockRankCxgThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_rank_cxsl_ths": {
+      "get": {
+        "summary": "同花顺-数据中心-技术选股-持续缩量",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_rank_cxsl_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取同花顺-数据中心-技术选股-持续缩量成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockRankCxslThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_rank_lxsz_ths/{days}": {
+      "get": {
+        "summary": "同花顺-数据中心-技术选股-连续上涨(连续上涨天数超过一周)",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_rank_lxsz_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [
+          {
+            "name": "days",
+            "in": "path",
+            "description": "限定至少连续上涨的天数",
+            "required": true,
+            "example": 7,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取同花顺-数据中心-技术选股-连续上涨数据成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockRankLxszThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/tech_indicator/stock_rank_lxxd_ths": {
+      "get": {
+        "summary": "同花顺-数据中心-技术选股-连续下跌",
+        "deprecated": false,
+        "description": "",
+        "operationId": "stock_rank_lxxd_ths",
+        "tags": [
+          "技术指标",
+          "技术指标"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取同花顺-数据中心-技术选股-连续下跌数据成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_AkStockRankLxxdThs"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auths/github/callback": {
+      "get": {
+        "summary": "github_callback",
+        "deprecated": false,
+        "description": "",
+        "operationId": "github_callback",
+        "tags": [
+          "鉴权接口",
+          "鉴权接口"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "收到的作为对用户同意使用github进行登陆的响应的代码。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "不可猜测的随机字符串，用于防止跨站请求伪造攻击。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "empty body with jwt token in the header",
+            "headers": {
+              "Authorization": {
+                "description": "New jwt token",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "github state not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "github api fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auths/github/state": {
+      "get": {
+        "summary": "get_state",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get_state",
+        "tags": [
+          "鉴权接口",
+          "鉴权接口"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "在从当前服务重定向到github OAuth界面需要的一个不可猜测的随机字符串，用于防止跨站请求伪造攻击",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GithubState"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AkStockFinancialAbstractThs": {
+        "type": "object",
+        "description": "关键指标-同花顺 `stock_financial_abstract_ths`\n目标地址: https://basic.10jqka.com.cn/new/000063/finance.html\n描述: 同花顺-财务指标-主要指标\n限量: 单次获取指定 symbol 的所有数据",
+        "required": [
+          "report_date"
+        ],
+        "properties": {
+          "accounts_receivable_turnover_days": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "应收账款周转天数"
+          },
+          "basic_eps": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "基本每股收益"
+          },
+          "capital_reserve_per_share": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "每股资本公积金"
+          },
+          "conservative_quick_ratio": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "保守速动比率"
+          },
+          "current_ratio": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "流动比率"
+          },
+          "debt_asset_ratio": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "资产负债率"
+          },
+          "deducted_net_profit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "扣非净利润"
+          },
+          "deducted_net_profit_growth_rate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "扣非净利润同比增长率"
+          },
+          "equity_ratio": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "产权比率"
+          },
+          "gross_profit_margin": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "销售毛利率"
+          },
+          "inventory_turnover": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "存货周转率"
+          },
+          "inventory_turnover_days": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "存货周转天数"
+          },
+          "net_assets_per_share": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "每股净资产"
+          },
+          "net_profit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "净利润"
+          },
+          "net_profit_growth_rate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "净利润同比增长率"
+          },
+          "net_profit_margin": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "销售净利率"
+          },
+          "operating_cash_flow_per_share": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "每股经营现金流"
+          },
+          "operating_cycle": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "营业周期"
+          },
+          "quick_ratio": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "速动比率"
+          },
+          "report_date": {
+            "type": "string",
+            "description": "报告期"
+          },
+          "roe": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "净资产收益率"
+          },
+          "roe_diluted": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "净资产收益率-摊薄"
+          },
+          "total_revenue": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "营业总收入"
+          },
+          "total_revenue_growth_rate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "营业总收入同比增长率"
+          },
+          "undistributed_profit_per_share": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "每股未分配利润"
+          }
+        }
+      },
+      "AkStockIndividualInfoEm": {
+        "type": "object",
+        "description": "stock_individual_info_em\n目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic\n描述: 东方财富-个股-股票信息\n限量: 单次返回指定 symbol 的个股信息",
+        "required": [
+          "latest_price",
+          "stock_code",
+          "stock_name",
+          "total_shares",
+          "circulating_shares",
+          "total_market_cap",
+          "circulating_market_cap",
+          "industry",
+          "listing_date"
+        ],
+        "properties": {
+          "circulating_market_cap": {
+            "type": "number",
+            "format": "double",
+            "description": "流通市值(元)"
+          },
+          "circulating_shares": {
+            "type": "number",
+            "format": "double",
+            "description": "流通股"
+          },
+          "industry": {
+            "type": "string",
+            "description": "行业"
+          },
+          "latest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最新价(元)"
+          },
+          "listing_date": {
+            "type": "integer",
+            "format": "int64",
+            "description": "上市时间"
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          },
+          "total_market_cap": {
+            "type": "number",
+            "format": "double",
+            "description": "总市值(元)"
+          },
+          "total_shares": {
+            "type": "number",
+            "format": "double",
+            "description": "总股本(元)"
+          }
+        }
+      },
+      "AkStockNewsEm": {
+        "type": "object",
+        "description": "接口: stock_news_em\n实际数据源地址: https://so.eastmoney.com/news/s\n描述: 东方财富指定个股的新闻资讯数据\n限量: 指定 symbol(股票id) 当日最近 100 条新闻资讯数据",
+        "required": [
+          "keyword",
+          "publish_time",
+          "source",
+          "content",
+          "title",
+          "url"
+        ],
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "新闻正文内容"
+          },
+          "keyword": {
+            "type": "string",
+            "description": "关键词，例如股票代码（如 \"300059\"）"
+          },
+          "publish_time": {
+            "type": "string",
+            "description": "新闻发布时间（格式：YYYY-MM-DD HH:MM:SS）"
+          },
+          "source": {
+            "type": "string",
+            "description": "文章来源，例如“人民财讯”"
+          },
+          "title": {
+            "type": "string",
+            "description": "新闻标题"
+          },
+          "url": {
+            "type": "string",
+            "description": "新闻链接 URL"
+          }
+        }
+      },
+      "AkStockRankCxdThs": {
+        "type": "object",
+        "description": "akshare json schema 技术指标-创新低\n接口：stock_rank_cxd_ths\n目标地址：https://data.10jqka.com.cn/rank/cxd/\n描述：同花顺-数据中心-技术选股-创新低\n限量：单次指定 symbol 的所有数据",
+        "required": [
+          "previous_low",
+          "previous_low_date",
+          "index",
+          "turnover_rate",
+          "latest_price",
+          "change_percentage",
+          "stock_code",
+          "stock_name"
+        ],
+        "properties": {
+          "change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅，单位：百分比 (%)"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "description": "序号"
+          },
+          "latest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最新价格，注意单位：(元)"
+          },
+          "previous_low": {
+            "type": "number",
+            "format": "double",
+            "description": "前期低点价格"
+          },
+          "previous_low_date": {
+            "type": "string",
+            "description": "前期低点对应的日期，格式为 \"YYYY-MM-DDTHH:MM:SS.sss\""
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          },
+          "turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "换手率，单位：百分比 (%)"
+          }
+        }
+      },
+      "AkStockRankCxflThs": {
+        "type": "object",
+        "description": "akshare json schema 技术指标-持续放量\n接口: stock_rank_cxfl_ths\n目标地址: https://data.10jqka.com.cn/rank/cxfl/\n描述: 同花顺-数据中心-技术选股-持续放量\n限量: 单次返回所有数据",
+        "required": [
+          "base_day_volume",
+          "index",
+          "volume",
+          "industry",
+          "volume_increase_days",
+          "latest_price",
+          "change_percentage",
+          "stock_code",
+          "stock_name",
+          "stage_change_percentage"
+        ],
+        "properties": {
+          "base_day_volume": {
+            "type": "string",
+            "description": "基准日成交量，格式示例：\"371.17万(04月18日)\" (股)"
+          },
+          "change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅，单位：百分比 (%)"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "description": "序号"
+          },
+          "industry": {
+            "type": "string",
+            "description": "所属行业"
+          },
+          "latest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最新价格(元)"
+          },
+          "stage_change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "阶段涨跌幅，单位：百分比 (%)"
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          },
+          "volume": {
+            "type": "string",
+            "description": "成交量，格式示例：\"861.91万\" (股)"
+          },
+          "volume_increase_days": {
+            "type": "integer",
+            "format": "int32",
+            "description": "放量天数"
+          }
+        }
+      },
+      "AkStockRankCxgThs": {
+        "type": "object",
+        "description": "akshare json schema 技术指标-创新高\n接口：stock_rank_cxg_ths\n目标地址：https://data.10jqka.com.cn/rank/cxg/\n描述：同花顺-数据中心-技术选股-创新高\n限量：单次指定 symbol 的所有数据",
+        "required": [
+          "previous_high",
+          "previous_high_date",
+          "index",
+          "turnover_rate",
+          "latest_price",
+          "change_percentage",
+          "stock_code",
+          "stock_name"
+        ],
+        "properties": {
+          "change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅，注意单位%"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "description": "序号",
+            "minimum": 0
+          },
+          "latest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最新价，注意单位：元"
+          },
+          "previous_high": {
+            "type": "number",
+            "format": "double",
+            "description": "前期高点"
+          },
+          "previous_high_date": {
+            "type": "string",
+            "description": "前期高点日期, 格式为`%Y-%m-%dT%H:%M:%S%.3f`"
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          },
+          "turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "换手率，注意单位%"
+          }
+        }
+      },
+      "AkStockRankCxslThs": {
+        "type": "object",
+        "description": "akshare json schema 技术指标-持续缩量\n接口: stock_rank_cxsl_ths\n目标地址: https://data.10jqka.com.cn/rank/cxsl/\n描述: 同花顺-数据中心-技术选股-持续缩量\n限量: 单次返回所有数据",
+        "required": [
+          "base_day_volume",
+          "index",
+          "volume",
+          "industry",
+          "volume_decrease_days",
+          "latest_price",
+          "change_percentage",
+          "stock_code",
+          "stock_name",
+          "stage_change_percentage"
+        ],
+        "properties": {
+          "base_day_volume": {
+            "type": "string",
+            "description": "基准日成交量，格式示例：\"371.17万(04月18日)\" (股)"
+          },
+          "change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅，单位：百分比 (%)"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "description": "序号"
+          },
+          "industry": {
+            "type": "string",
+            "description": "所属行业"
+          },
+          "latest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最新价格(元)"
+          },
+          "stage_change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "阶段涨跌幅，单位：百分比 (%)"
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          },
+          "volume": {
+            "type": "string",
+            "description": "成交量，格式示例：\"861.91万\" (股)"
+          },
+          "volume_decrease_days": {
+            "type": "integer",
+            "format": "int32",
+            "description": "放量天数"
+          }
+        }
+      },
+      "AkStockRankLxszThs": {
+        "type": "object",
+        "description": "akshare json schema 技术指标-连续上涨\n接口：stock_rank_lxsz_ths\n目标地址：https://data.10jqka.com.cn/rank/lxsz/\n描述：同花顺-数据中心-技术选股-连续上涨\n限量：单次返回所有数据",
+        "required": [
+          "index",
+          "industry",
+          "closing_price",
+          "lowest_price",
+          "highest_price",
+          "cumulative_turnover_rate",
+          "stock_code",
+          "stock_name",
+          "consecutive_rising_days",
+          "consecutive_change_percentage"
+        ],
+        "properties": {
+          "closing_price": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价(元)"
+          },
+          "consecutive_change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "连续涨跌幅，单位：百分比 (%)"
+          },
+          "consecutive_rising_days": {
+            "type": "integer",
+            "format": "int32",
+            "description": "连续上涨天数"
+          },
+          "cumulative_turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "累计换手率，单位：百分比 (%)"
+          },
+          "highest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价(元)"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "description": "序号"
+          },
+          "industry": {
+            "type": "string",
+            "description": "所属行业"
+          },
+          "lowest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价(元)"
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          }
+        }
+      },
+      "AkStockRankLxxdThs": {
+        "type": "object",
+        "description": "akshare json schema 技术指标-连续下跌\n接口：stock_rank_lxxd_ths\n目标地址：https://data.10jqka.com.cn/rank/lxxd/\n描述：同花顺-数据中心-技术选股-连续下跌\n限量：单次返回所有数据",
+        "required": [
+          "index",
+          "industry",
+          "closing_price",
+          "lowest_price",
+          "highest_price",
+          "cumulative_turnover_rate",
+          "stock_code",
+          "stock_name",
+          "consecutive_rising_days",
+          "consecutive_change_percentage"
+        ],
+        "properties": {
+          "closing_price": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价(元)"
+          },
+          "consecutive_change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "连续涨跌幅，单位：百分比 (%)"
+          },
+          "consecutive_rising_days": {
+            "type": "integer",
+            "format": "int32",
+            "description": "连续上涨天数"
+          },
+          "cumulative_turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "累计换手率，单位：百分比 (%)"
+          },
+          "highest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价(元)"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "description": "序号"
+          },
+          "industry": {
+            "type": "string",
+            "description": "所属行业"
+          },
+          "lowest_price": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价(元)"
+          },
+          "stock_code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "stock_name": {
+            "type": "string",
+            "description": "股票简称"
+          }
+        }
+      },
+      "DailyIndicatorFetch": {
+        "type": "object",
+        "description": "日频其它指标数据",
+        "required": [
+          "date",
+          "trading_value",
+          "amplitude",
+          "turnover_rate",
+          "change_percent",
+          "change_amount"
+        ],
+        "properties": {
+          "amplitude": {
+            "type": "number",
+            "format": "double",
+            "description": "振幅(%)"
+          },
+          "change_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌额,注意单位(元)"
+          },
+          "change_percent": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅(%)"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "trading_value": {
+            "type": "number",
+            "format": "double",
+            "description": "成交额,注意单位(元)"
+          },
+          "turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "换手率(%)"
+          }
+        }
+      },
+      "DailyKlineFetch": {
+        "type": "object",
+        "description": "日频K线数据",
+        "required": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low"
+        ],
+        "properties": {
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价(元)"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价(元)"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价(元)"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价(元)"
+          }
+        }
+      },
+      "DailyTradingVolumeFetch": {
+        "type": "object",
+        "description": "日频成交量数据",
+        "required": [
+          "date",
+          "trading_volume"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "trading_volume": {
+            "type": "number",
+            "format": "double",
+            "description": "交易量(手)"
+          }
+        }
+      },
+      "ErrRes": {
+        "type": "object",
+        "description": "用于响应错误响应的通用响应体",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "❌ 错误响应 http 状态码",
+            "minimum": 0
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 错误响应描述性文本"
+          }
+        }
+      },
+      "GithubState": {
+        "type": "object",
+        "description": "在从当前服务重定向到github OAuth界面需要的一个不可猜测的随机字符串，\n用于防止跨站请求伪造攻击",
+        "required": [
+          "state"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "不可猜测的随机字符串",
+            "examples": [
+              "VrEaJ191gmyuhB5CKq0x"
+            ]
+          }
+        }
+      },
+      "IndexOption50EtfQvixKlineFetch": {
+        "type": "object",
+        "description": "50ETF 期权波动率指数 QVIX; 又称中国版的恐慌指数 K线数据",
+        "required": [
+          "open",
+          "close",
+          "high",
+          "low",
+          "date"
+        ],
+        "properties": {
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价"
+          }
+        }
+      },
+      "IndexOption50EtfQvixMAFetch": {
+        "type": "object",
+        "description": "50ETF 期权波动率指数 QVIX; 各种移动平均线数据",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-DD-MM"
+          },
+          "ma10": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应数据日期的10日平均线数据"
+          },
+          "ma20": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应数据日期的20日平均线数据"
+          },
+          "ma5": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应数据日期的5日平均线数据"
+          }
+        }
+      },
+      "MALinesFetch": {
+        "type": "object",
+        "description": "移动平均线数据(MA5/MA10/MA20)",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据点日期，格式为YYYY-MM-DD",
+            "examples": [
+              "2025-05-08"
+            ]
+          },
+          "ma10": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "数据点日期对应的MA10值。注意单位(元)",
+            "examples": [
+              13.481
+            ]
+          },
+          "ma20": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "数据点日期对应的MA20值，注意单位(元)",
+            "examples": [
+              13.8955
+            ]
+          },
+          "ma5": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "数据点日期对应的MA5值，注意单位(元)",
+            "examples": [
+              13.29
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockFinancialAbstractThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "关键指标-同花顺 `stock_financial_abstract_ths`\n目标地址: https://basic.10jqka.com.cn/new/000063/finance.html\n描述: 同花顺-财务指标-主要指标\n限量: 单次获取指定 symbol 的所有数据",
+              "required": [
+                "report_date"
+              ],
+              "properties": {
+                "accounts_receivable_turnover_days": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "应收账款周转天数"
+                },
+                "basic_eps": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "基本每股收益"
+                },
+                "capital_reserve_per_share": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "每股资本公积金"
+                },
+                "conservative_quick_ratio": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "保守速动比率"
+                },
+                "current_ratio": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "流动比率"
+                },
+                "debt_asset_ratio": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "资产负债率"
+                },
+                "deducted_net_profit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "扣非净利润"
+                },
+                "deducted_net_profit_growth_rate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "扣非净利润同比增长率"
+                },
+                "equity_ratio": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "产权比率"
+                },
+                "gross_profit_margin": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "销售毛利率"
+                },
+                "inventory_turnover": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "存货周转率"
+                },
+                "inventory_turnover_days": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "存货周转天数"
+                },
+                "net_assets_per_share": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "每股净资产"
+                },
+                "net_profit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "净利润"
+                },
+                "net_profit_growth_rate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "净利润同比增长率"
+                },
+                "net_profit_margin": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "销售净利率"
+                },
+                "operating_cash_flow_per_share": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "每股经营现金流"
+                },
+                "operating_cycle": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "营业周期"
+                },
+                "quick_ratio": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "速动比率"
+                },
+                "report_date": {
+                  "type": "string",
+                  "description": "报告期"
+                },
+                "roe": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "净资产收益率"
+                },
+                "roe_diluted": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "净资产收益率-摊薄"
+                },
+                "total_revenue": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "营业总收入"
+                },
+                "total_revenue_growth_rate": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "营业总收入同比增长率"
+                },
+                "undistributed_profit_per_share": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "每股未分配利润"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockNewsEm": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "接口: stock_news_em\n实际数据源地址: https://so.eastmoney.com/news/s\n描述: 东方财富指定个股的新闻资讯数据\n限量: 指定 symbol(股票id) 当日最近 100 条新闻资讯数据",
+              "required": [
+                "keyword",
+                "publish_time",
+                "source",
+                "content",
+                "title",
+                "url"
+              ],
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "新闻正文内容"
+                },
+                "keyword": {
+                  "type": "string",
+                  "description": "关键词，例如股票代码（如 \"300059\"）"
+                },
+                "publish_time": {
+                  "type": "string",
+                  "description": "新闻发布时间（格式：YYYY-MM-DD HH:MM:SS）"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "文章来源，例如“人民财讯”"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "新闻标题"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "新闻链接 URL"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockRankCxdThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "akshare json schema 技术指标-创新低\n接口：stock_rank_cxd_ths\n目标地址：https://data.10jqka.com.cn/rank/cxd/\n描述：同花顺-数据中心-技术选股-创新低\n限量：单次指定 symbol 的所有数据",
+              "required": [
+                "previous_low",
+                "previous_low_date",
+                "index",
+                "turnover_rate",
+                "latest_price",
+                "change_percentage",
+                "stock_code",
+                "stock_name"
+              ],
+              "properties": {
+                "change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅，单位：百分比 (%)"
+                },
+                "index": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "序号"
+                },
+                "latest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最新价格，注意单位：(元)"
+                },
+                "previous_low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "前期低点价格"
+                },
+                "previous_low_date": {
+                  "type": "string",
+                  "description": "前期低点对应的日期，格式为 \"YYYY-MM-DDTHH:MM:SS.sss\""
+                },
+                "stock_code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "stock_name": {
+                  "type": "string",
+                  "description": "股票简称"
+                },
+                "turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "换手率，单位：百分比 (%)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockRankCxflThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "akshare json schema 技术指标-持续放量\n接口: stock_rank_cxfl_ths\n目标地址: https://data.10jqka.com.cn/rank/cxfl/\n描述: 同花顺-数据中心-技术选股-持续放量\n限量: 单次返回所有数据",
+              "required": [
+                "base_day_volume",
+                "index",
+                "volume",
+                "industry",
+                "volume_increase_days",
+                "latest_price",
+                "change_percentage",
+                "stock_code",
+                "stock_name",
+                "stage_change_percentage"
+              ],
+              "properties": {
+                "base_day_volume": {
+                  "type": "string",
+                  "description": "基准日成交量，格式示例：\"371.17万(04月18日)\" (股)"
+                },
+                "change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅，单位：百分比 (%)"
+                },
+                "index": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "序号"
+                },
+                "industry": {
+                  "type": "string",
+                  "description": "所属行业"
+                },
+                "latest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最新价格(元)"
+                },
+                "stage_change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "阶段涨跌幅，单位：百分比 (%)"
+                },
+                "stock_code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "stock_name": {
+                  "type": "string",
+                  "description": "股票简称"
+                },
+                "volume": {
+                  "type": "string",
+                  "description": "成交量，格式示例：\"861.91万\" (股)"
+                },
+                "volume_increase_days": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "放量天数"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockRankCxgThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "akshare json schema 技术指标-创新高\n接口：stock_rank_cxg_ths\n目标地址：https://data.10jqka.com.cn/rank/cxg/\n描述：同花顺-数据中心-技术选股-创新高\n限量：单次指定 symbol 的所有数据",
+              "required": [
+                "previous_high",
+                "previous_high_date",
+                "index",
+                "turnover_rate",
+                "latest_price",
+                "change_percentage",
+                "stock_code",
+                "stock_name"
+              ],
+              "properties": {
+                "change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅，注意单位%"
+                },
+                "index": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "序号",
+                  "minimum": 0
+                },
+                "latest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最新价，注意单位：元"
+                },
+                "previous_high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "前期高点"
+                },
+                "previous_high_date": {
+                  "type": "string",
+                  "description": "前期高点日期, 格式为`%Y-%m-%dT%H:%M:%S%.3f`"
+                },
+                "stock_code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "stock_name": {
+                  "type": "string",
+                  "description": "股票简称"
+                },
+                "turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "换手率，注意单位%"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockRankCxslThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "akshare json schema 技术指标-持续缩量\n接口: stock_rank_cxsl_ths\n目标地址: https://data.10jqka.com.cn/rank/cxsl/\n描述: 同花顺-数据中心-技术选股-持续缩量\n限量: 单次返回所有数据",
+              "required": [
+                "base_day_volume",
+                "index",
+                "volume",
+                "industry",
+                "volume_decrease_days",
+                "latest_price",
+                "change_percentage",
+                "stock_code",
+                "stock_name",
+                "stage_change_percentage"
+              ],
+              "properties": {
+                "base_day_volume": {
+                  "type": "string",
+                  "description": "基准日成交量，格式示例：\"371.17万(04月18日)\" (股)"
+                },
+                "change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅，单位：百分比 (%)"
+                },
+                "index": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "序号"
+                },
+                "industry": {
+                  "type": "string",
+                  "description": "所属行业"
+                },
+                "latest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最新价格(元)"
+                },
+                "stage_change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "阶段涨跌幅，单位：百分比 (%)"
+                },
+                "stock_code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "stock_name": {
+                  "type": "string",
+                  "description": "股票简称"
+                },
+                "volume": {
+                  "type": "string",
+                  "description": "成交量，格式示例：\"861.91万\" (股)"
+                },
+                "volume_decrease_days": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "放量天数"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockRankLxszThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "akshare json schema 技术指标-连续上涨\n接口：stock_rank_lxsz_ths\n目标地址：https://data.10jqka.com.cn/rank/lxsz/\n描述：同花顺-数据中心-技术选股-连续上涨\n限量：单次返回所有数据",
+              "required": [
+                "index",
+                "industry",
+                "closing_price",
+                "lowest_price",
+                "highest_price",
+                "cumulative_turnover_rate",
+                "stock_code",
+                "stock_name",
+                "consecutive_rising_days",
+                "consecutive_change_percentage"
+              ],
+              "properties": {
+                "closing_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价(元)"
+                },
+                "consecutive_change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "连续涨跌幅，单位：百分比 (%)"
+                },
+                "consecutive_rising_days": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "连续上涨天数"
+                },
+                "cumulative_turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "累计换手率，单位：百分比 (%)"
+                },
+                "highest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价(元)"
+                },
+                "index": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "序号"
+                },
+                "industry": {
+                  "type": "string",
+                  "description": "所属行业"
+                },
+                "lowest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价(元)"
+                },
+                "stock_code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "stock_name": {
+                  "type": "string",
+                  "description": "股票简称"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_AkStockRankLxxdThs": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "akshare json schema 技术指标-连续下跌\n接口：stock_rank_lxxd_ths\n目标地址：https://data.10jqka.com.cn/rank/lxxd/\n描述：同花顺-数据中心-技术选股-连续下跌\n限量：单次返回所有数据",
+              "required": [
+                "index",
+                "industry",
+                "closing_price",
+                "lowest_price",
+                "highest_price",
+                "cumulative_turnover_rate",
+                "stock_code",
+                "stock_name",
+                "consecutive_rising_days",
+                "consecutive_change_percentage"
+              ],
+              "properties": {
+                "closing_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价(元)"
+                },
+                "consecutive_change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "连续涨跌幅，单位：百分比 (%)"
+                },
+                "consecutive_rising_days": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "连续上涨天数"
+                },
+                "cumulative_turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "累计换手率，单位：百分比 (%)"
+                },
+                "highest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价(元)"
+                },
+                "index": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "序号"
+                },
+                "industry": {
+                  "type": "string",
+                  "description": "所属行业"
+                },
+                "lowest_price": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价(元)"
+                },
+                "stock_code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "stock_name": {
+                  "type": "string",
+                  "description": "股票简称"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_DailyIndicatorFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "日频其它指标数据",
+              "required": [
+                "date",
+                "trading_value",
+                "amplitude",
+                "turnover_rate",
+                "change_percent",
+                "change_amount"
+              ],
+              "properties": {
+                "amplitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "振幅(%)"
+                },
+                "change_amount": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌额,注意单位(元)"
+                },
+                "change_percent": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅(%)"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "trading_value": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "成交额,注意单位(元)"
+                },
+                "turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "换手率(%)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_DailyKlineFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "日频K线数据",
+              "required": [
+                "date",
+                "open",
+                "close",
+                "high",
+                "low"
+              ],
+              "properties": {
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价(元)"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价(元)"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价(元)"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价(元)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_DailyTradingVolumeFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "日频成交量数据",
+              "required": [
+                "date",
+                "trading_volume"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "trading_volume": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "交易量(手)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_IndexOption50EtfQvixKlineFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "50ETF 期权波动率指数 QVIX; 又称中国版的恐慌指数 K线数据",
+              "required": [
+                "open",
+                "close",
+                "high",
+                "low",
+                "date"
+              ],
+              "properties": {
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_IndexOption50EtfQvixMAFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "50ETF 期权波动率指数 QVIX; 各种移动平均线数据",
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-DD-MM"
+                },
+                "ma10": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "对应数据日期的10日平均线数据"
+                },
+                "ma20": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "对应数据日期的20日平均线数据"
+                },
+                "ma5": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "对应数据日期的5日平均线数据"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_MALinesFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "移动平均线数据(MA5/MA10/MA20)",
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据点日期，格式为YYYY-MM-DD",
+                  "examples": [
+                    "2025-05-08"
+                  ]
+                },
+                "ma10": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "数据点日期对应的MA10值。注意单位(元)",
+                  "examples": [
+                    13.481
+                  ]
+                },
+                "ma20": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "数据点日期对应的MA20值，注意单位(元)",
+                  "examples": [
+                    13.8955
+                  ]
+                },
+                "ma5": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "数据点日期对应的MA5值，注意单位(元)",
+                  "examples": [
+                    13.29
+                  ]
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockNewsMainCx": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "财新网-财新数据通-内容精选",
+              "required": [
+                "pub_time",
+                "summary",
+                "tag",
+                "url"
+              ],
+              "properties": {
+                "pub_time": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "新闻的正式发布时间，即新闻内容原文在财新网等发布的时间。"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "新闻的摘要内容，对新闻正文的简要概括，便于快速了解新闻主旨。"
+                },
+                "tag": {
+                  "type": "string",
+                  "description": "新闻的主题标签，通常由几个关键词组成，归纳了该新闻的主要话题或核心内容。"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "新闻的详情链接，点击可以跳转到财新网对应的新闻完整正文页面。"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockZhIndexDailyKlineFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "open",
+                "close",
+                "high",
+                "low",
+                "volume",
+                "date"
+              ],
+              "properties": {
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价(元)"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价(元)"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价(元)"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价(元)"
+                },
+                "volume": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "交易量(手)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockZhIndexDailyVolumeFetch": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "date",
+                "volume"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "交易日期"
+                },
+                "volume": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "交易量"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "StockNewsMainCx": {
+        "type": "object",
+        "description": "财新网-财新数据通-内容精选",
+        "required": [
+          "pub_time",
+          "summary",
+          "tag",
+          "url"
+        ],
+        "properties": {
+          "pub_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "新闻的正式发布时间，即新闻内容原文在财新网等发布的时间。"
+          },
+          "summary": {
+            "type": "string",
+            "description": "新闻的摘要内容，对新闻正文的简要概括，便于快速了解新闻主旨。"
+          },
+          "tag": {
+            "type": "string",
+            "description": "新闻的主题标签，通常由几个关键词组成，归纳了该新闻的主要话题或核心内容。"
+          },
+          "url": {
+            "type": "string",
+            "description": "新闻的详情链接，点击可以跳转到财新网对应的新闻完整正文页面。"
+          }
+        }
+      },
+      "StockZhIndexDailyKlineFetch": {
+        "type": "object",
+        "required": [
+          "open",
+          "close",
+          "high",
+          "low",
+          "volume",
+          "date"
+        ],
+        "properties": {
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价(元)"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价(元)"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价(元)"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价(元)"
+          },
+          "volume": {
+            "type": "number",
+            "format": "double",
+            "description": "交易量(手)"
+          }
+        }
+      },
+      "StockZhIndexDailyMAFetch": {
+        "type": "object",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "ma10": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应(指数代码, 数据日期)的10日移动平均线数据"
+          },
+          "ma20": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应(指数代码, 数据日期)的20日移动平均线数据"
+          },
+          "ma5": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应(指数代码, 数据日期)的5日移动平均线数据"
+          }
+        }
+      },
+      "StockZhIndexDailyPaginFetch": {
+        "type": "object",
+        "required": [
+          "code",
+          "date",
+          "open",
+          "close",
+          "high",
+          "low",
+          "amplitude",
+          "change_percentage",
+          "change_amount"
+        ],
+        "properties": {
+          "amplitude": {
+            "type": "number",
+            "format": "double",
+            "description": "振幅(%)"
+          },
+          "change_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌额(%)"
+          },
+          "change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅(%)"
+          },
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价"
+          },
+          "code": {
+            "type": "string",
+            "description": "指数代码"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "最新数据时间，格式为YYYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价"
+          }
+        }
+      },
+      "StockZhIndexDailyVolumeFetch": {
+        "type": "object",
+        "required": [
+          "date",
+          "volume"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "交易日期"
+          },
+          "volume": {
+            "type": "number",
+            "format": "double",
+            "description": "交易量"
+          }
+        }
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

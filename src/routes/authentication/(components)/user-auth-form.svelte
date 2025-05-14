@@ -3,9 +3,9 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import Icon from '@iconify/svelte';
 	import { cn } from '$lib/utils.js';
-	import { getGithubState } from '../(data)/data';
 	import { toast } from 'svelte-sonner';
 	import type { HTMLAttributes } from 'svelte/elements';
+	import { getGithubState } from '$lib/api/auth';
 
 	const { class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
 
