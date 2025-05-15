@@ -4,7 +4,7 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
-	import { browser } from '$app/environment';
+	import { browser, dev } from '$app/environment';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import { globalStatus } from '$lib/global.svelte';
 	import { base } from '$app/paths';
@@ -27,10 +27,14 @@
 
 	// --- 判断目前处于哪个页面
 	const isPageActive = (path: string) => {
+		let prefix = dev ? '' : '/data-mind';
+
 		if (path === '/') {
-			return page.url.pathname === path ? 'border-b-4 border-indigo-500 font-bold' : '';
+			return page.url.pathname === prefix + path ? 'border-b-4 border-indigo-500 font-bold' : '';
 		}
-		return page.url.pathname.startsWith(path) ? 'border-b-4 border-indigo-500 font-bold' : '';
+		return page.url.pathname.startsWith(prefix + path)
+			? 'border-b-4 border-indigo-500 font-bold'
+			: '';
 	};
 </script>
 
