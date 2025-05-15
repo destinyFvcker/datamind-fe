@@ -1870,6 +1870,58 @@ export interface components {
              */
             volume: number;
         };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_AkStockIndividualInfoEm: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            /** @description stock_individual_info_em
+             *     目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic
+             *     描述: 东方财富-个股-股票信息
+             *     限量: 单次返回指定 symbol 的个股信息 */
+            data: {
+                /**
+                 * Format: double
+                 * @description 流通市值(元)
+                 */
+                circulating_market_cap: number;
+                /**
+                 * Format: double
+                 * @description 流通股
+                 */
+                circulating_shares: number;
+                /** @description 行业 */
+                industry: string;
+                /**
+                 * Format: double
+                 * @description 最新价(元)
+                 */
+                latest_price: number;
+                /**
+                 * Format: int64
+                 * @description 上市时间
+                 */
+                listing_date: number;
+                /** @description 股票代码 */
+                stock_code: string;
+                /** @description 股票简称 */
+                stock_name: string;
+                /**
+                 * Format: double
+                 * @description 总市值(元)
+                 */
+                total_market_cap: number;
+                /**
+                 * Format: double
+                 * @description 总股本(元)
+                 */
+                total_shares: number;
+            };
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -2501,7 +2553,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AkStockIndividualInfoEm"];
+                    "application/json": components["schemas"]["OkRes_AkStockIndividualInfoEm"];
                 };
             };
             /** @description 没有访问权限 */

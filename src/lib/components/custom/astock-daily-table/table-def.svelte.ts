@@ -8,7 +8,7 @@ import {
 	type TableOptions
 } from '@tanstack/table-core';
 import { toast } from 'svelte-sonner';
-import { cellCenter, cellRight, cellWichSignColor } from '../helper-snippets.svelte';
+import { cellCenter, cellRef, cellRight, cellWichSignColor } from '../helper-snippets.svelte';
 
 export const tableStatus: {
 	data: StockDailyPagin[];
@@ -39,7 +39,7 @@ export const defaultColumns = [
 		},
 		cell: (props) => {
 			const code = props.getValue();
-			return renderSnippet(cellCenter, code);
+			return renderSnippet(cellRef, code);
 		}
 	}),
 	columnHelper.accessor('date', {

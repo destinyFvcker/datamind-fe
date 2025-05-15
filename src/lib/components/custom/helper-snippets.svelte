@@ -1,9 +1,16 @@
 <script lang="ts" module>
+	import { base } from '$app/paths';
 	import { cn } from '$lib/utils';
 	import { ArrowDown, ArrowUp, Equal } from 'lucide-svelte';
 
-	export { cellWichSignColor, cellCenter, cellRight };
+	export { cellWichSignColor, cellCenter, cellRight, cellRef };
 </script>
+
+{#snippet cellRef(value: string)}
+	<div class="flex justify-center">
+		<a class="text-center" href={`${base}/astock/${value}`}>{value}</a>
+	</div>
+{/snippet}
 
 {#snippet cellCenter(value: string)}
 	<div class="text-center">{value}</div>
