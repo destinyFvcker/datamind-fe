@@ -51,7 +51,7 @@
 		</div>
 		<div class="block w-full flex-grow flex-wrap lg:w-auto lg:items-center">
 			<div class="mx-2 flex items-center gap-3 text-sm lg:flex-grow">
-				<Separator orientation="vertical" class="h-8 w-0.5" />
+				<!-- <Separator orientation="vertical" class="h-8 w-0.5" /> -->
 				<button
 					onclick={() => goto(`${base}/`)}
 					class="flex items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
@@ -87,7 +87,7 @@
 					<SquarePilcrow class="h-5 w-5" />
 					技术指标
 				</button>
-				<Separator orientation="vertical" class="h-8 w-0.5" />
+				<!-- <Separator orientation="vertical" class="h-8 w-0.5" /> -->
 
 				<div class="grow"></div>
 				<span class="font-bold">你好, {globalStatus.userName}</span>

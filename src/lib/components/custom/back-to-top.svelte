@@ -16,7 +16,6 @@
 	// Add scroll event listener
 	onMount(() => {
 		window.addEventListener('scroll', handleScroll);
-
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 		};

@@ -13,7 +13,6 @@
         "lucide-svelte": "^0.509.0",
         "mode-watcher": "^1.0.6",
         "openapi-fetch": "0.14.0",
-        "svelte-spa-router": "^4.0.1",
         "swapy": "^1.0.5",
       },
       "devDependencies": {
@@ -720,8 +719,6 @@
 
     "readdirp": ["readdirp@4.1.1", "https://registry.npmmirror.com/readdirp/-/readdirp-4.1.1.tgz", {}, "sha512-h80JrZu/MHUZCyHu5ciuoI0+WxsCxzxJTILn6Fs8rxSnFPh+UVHYfeIxK1nVGugMqkfC4vJcBOYbkfkwYK0+gw=="],
 
-    "regexparam": ["regexparam@2.0.2", "https://registry.npmmirror.com/regexparam/-/regexparam-2.0.2.tgz", {}, "sha512-A1PeDEYMrkLrfyOwv2jwihXbo9qxdGD3atBYQA9JJgreAx8/7rC6IUkWOw2NQlOxLp2wL0ifQbh1HuidDfYA6w=="],
-
     "require-from-string": ["require-from-string@2.0.2", "https://registry.npmmirror.com/require-from-string/-/require-from-string-2.0.2.tgz", {}, "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw=="],
 
     "resolve": ["resolve@1.22.10", "https://registry.npmmirror.com/resolve/-/resolve-1.22.10.tgz", { "dependencies": { "is-core-module": "^2.16.0", "path-parse": "^1.0.7", "supports-preserve-symlinks-flag": "^1.0.0" }, "bin": { "resolve": "bin/resolve" } }, "sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w=="],
@@ -799,8 +796,6 @@
     "svelte-eslint-parser": ["svelte-eslint-parser@0.43.0", "https://registry.npmmirror.com/svelte-eslint-parser/-/svelte-eslint-parser-0.43.0.tgz", { "dependencies": { "eslint-scope": "^7.2.2", "eslint-visitor-keys": "^3.4.3", "espree": "^9.6.1", "postcss": "^8.4.39", "postcss-scss": "^4.0.9" }, "peerDependencies": { "svelte": "^3.37.0 || ^4.0.0 || ^5.0.0" }, "optionalPeers": ["svelte"] }, "sha512-GpU52uPKKcVnh8tKN5P4UZpJ/fUDndmq7wfsvoVXsyP+aY0anol7Yqo01fyrlaWGMFfm4av5DyrjlaXdLRJvGA=="],
 
     "svelte-sonner": ["svelte-sonner@0.3.28", "https://registry.npmmirror.com/svelte-sonner/-/svelte-sonner-0.3.28.tgz", { "peerDependencies": { "svelte": "^3.0.0 || ^4.0.0 || ^5.0.0-next.1" } }, "sha512-K3AmlySeFifF/cKgsYNv5uXqMVNln0NBAacOYgmkQStLa/UoU0LhfAACU6Gr+YYC8bOCHdVmFNoKuDbMEsppJg=="],
-
-    "svelte-spa-router": ["svelte-spa-router@4.0.1", "https://registry.npmmirror.com/svelte-spa-router/-/svelte-spa-router-4.0.1.tgz", { "dependencies": { "regexparam": "2.0.2" } }, "sha512-2JkmUQ2f9jRluijL58LtdQBIpynSbem2eBGp4zXdi7aDY1znbR6yjw0KsonD0aq2QLwf4Yx4tBJQjxIjgjXHKg=="],
 
     "svelte-toolbelt": ["svelte-toolbelt@0.7.1", "https://registry.npmmirror.com/svelte-toolbelt/-/svelte-toolbelt-0.7.1.tgz", { "dependencies": { "clsx": "^2.1.1", "runed": "^0.23.2", "style-to-object": "^1.0.8" }, "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-HcBOcR17Vx9bjaOceUvxkY3nGmbBmCBBbuWLLEWO6jtmWH8f/QoWmbyUfQZrpDINH39en1b8mptfPQT9VKQ1xQ=="],
 

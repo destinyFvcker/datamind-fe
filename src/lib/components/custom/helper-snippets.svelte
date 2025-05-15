@@ -8,7 +8,10 @@
 
 {#snippet cellRef(value: string)}
 	<div class="flex justify-center">
-		<a class="text-center" href={`${base}/astock/${value}`}>{value}</a>
+		<a
+			class="hover:bo text-center text-blue-500 hover:font-bold hover:underline"
+			href={`${base}/astock/${value}`}>{value}</a
+		>
 	</div>
 {/snippet}
 
