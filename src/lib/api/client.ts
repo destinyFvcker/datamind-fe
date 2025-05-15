@@ -11,7 +11,7 @@ const authMiddleware: Middleware = {
 };
 
 const client = createClient<paths>({
-	baseUrl: dev ? 'http://localhost:8800' : 'https://www.destinyfvcker.cn/data-mind/'
+	baseUrl: dev ? '/' : 'https://www.destinyfvcker.cn/data-mind'
 });
 client.use(authMiddleware);
 

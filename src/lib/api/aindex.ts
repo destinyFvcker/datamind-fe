@@ -89,7 +89,7 @@ export async function stockZhIndexDailyVolume(indexCode: string, limit: number) 
 	return res.data;
 }
 
-export async function stockZhIndexDailyPagn(pageIndex: number, pageSize: number) {
+export async function stockZhIndexDailyPagn(pageIndex?: number, pageSize?: number) {
 	const res = await client.GET('/api/aindex/stock_zh_index_daily_pagin', {
 		params: {
 			query: {

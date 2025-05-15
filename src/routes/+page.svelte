@@ -1,14 +1,18 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
+	import { AstockDailyTable } from '$lib/components/custom/astock-daily-table';
+	import * as Card from '$lib/components/ui/card/index.js';
+	import { ChartCandlestick } from 'lucide-svelte';
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-
-<Icon icon="line-md:at" width="24" height="24" />
-
-<div>
-	<div class="relative">父元素</div>
-	<div class="absolute left-0 top-0">绝对定位的元素</div>
-	<div>我是下面的元素</div>
-</div>
+<Card.Root>
+	<Card.Header>
+		<Card.Title class="flex gap-2">
+			<ChartCandlestick />
+			A股行情(日频)
+		</Card.Title>
+		<Card.Description>每日收盘后更新.</Card.Description>
+	</Card.Header>
+	<Card.Content>
+		<AstockDailyTable />
+	</Card.Content>
+</Card.Root>

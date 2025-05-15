@@ -52,7 +52,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_IndexOption50EtfQvixKlineFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_IndexOption50EtfQvixKline"
                 }
               }
             },
@@ -113,7 +113,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_IndexOption50EtfQvixMAFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_IndexOption50EtfQvixMA"
                 }
               }
             },
@@ -184,7 +184,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyKlineFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyKline"
                 }
               }
             },
@@ -268,7 +268,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/StockZhIndexDailyMAFetch"
+                    "$ref": "#/components/schemas/StockZhIndexDailyMA"
                   }
                 }
               }
@@ -327,10 +327,13 @@
             "name": "page_index",
             "in": "query",
             "description": "请求某页的页索引(从1开始)",
-            "required": true,
+            "required": false,
             "example": 1,
             "schema": {
-              "type": "integer",
+              "type": [
+                "integer",
+                "null"
+              ],
               "format": "int32",
               "minimum": 0
             }
@@ -339,10 +342,13 @@
             "name": "page_size",
             "in": "query",
             "description": "每页的大小",
-            "required": true,
+            "required": false,
             "example": 50,
             "schema": {
-              "type": "integer",
+              "type": [
+                "integer",
+                "null"
+              ],
               "format": "int32",
               "minimum": 0
             }
@@ -356,7 +362,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/StockZhIndexDailyPaginFetch"
+                    "$ref": "#/components/schemas/StockZhIndexDailyPagin"
                   }
                 }
               }
@@ -428,7 +434,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyVolumeFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyVolume"
                 }
               }
             },
@@ -521,7 +527,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_DailyIndicatorFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_StockDailyIndicator"
                 }
               }
             },
@@ -614,7 +620,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_DailyKlineFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_StockDailyKline"
                 }
               }
             },
@@ -707,7 +713,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_DailyTradingVolumeFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_StockDailyTradingVolume"
                 }
               }
             },
@@ -790,7 +796,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes_Vec_MALinesFetch"
+                  "$ref": "#/components/schemas/OkRes_Vec_StockMALines"
                 }
               }
             },
@@ -809,6 +815,55 @@
           },
           "404": {
             "description": "对应个股信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/stock_daily_pagin": {
+      "get": {
+        "summary": "A股每股最新日频数据获取",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_astock_daily_pagin",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功获取最新交易日A股日频分页数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_StockDailyPagin"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
             "content": {
               "application/json": {
                 "schema": {
@@ -2266,108 +2321,6 @@
           }
         }
       },
-      "DailyIndicatorFetch": {
-        "type": "object",
-        "description": "日频其它指标数据",
-        "required": [
-          "date",
-          "trading_value",
-          "amplitude",
-          "turnover_rate",
-          "change_percent",
-          "change_amount"
-        ],
-        "properties": {
-          "amplitude": {
-            "type": "number",
-            "format": "double",
-            "description": "振幅(%)"
-          },
-          "change_amount": {
-            "type": "number",
-            "format": "double",
-            "description": "涨跌额,注意单位(元)"
-          },
-          "change_percent": {
-            "type": "number",
-            "format": "double",
-            "description": "涨跌幅(%)"
-          },
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "数据日期，格式为YYYY-MM-DD"
-          },
-          "trading_value": {
-            "type": "number",
-            "format": "double",
-            "description": "成交额,注意单位(元)"
-          },
-          "turnover_rate": {
-            "type": "number",
-            "format": "double",
-            "description": "换手率(%)"
-          }
-        }
-      },
-      "DailyKlineFetch": {
-        "type": "object",
-        "description": "日频K线数据",
-        "required": [
-          "date",
-          "open",
-          "close",
-          "high",
-          "low"
-        ],
-        "properties": {
-          "close": {
-            "type": "number",
-            "format": "double",
-            "description": "收盘价(元)"
-          },
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "数据日期，格式为YYYY-MM-DD"
-          },
-          "high": {
-            "type": "number",
-            "format": "double",
-            "description": "最高价(元)"
-          },
-          "low": {
-            "type": "number",
-            "format": "double",
-            "description": "最低价(元)"
-          },
-          "open": {
-            "type": "number",
-            "format": "double",
-            "description": "开盘价(元)"
-          }
-        }
-      },
-      "DailyTradingVolumeFetch": {
-        "type": "object",
-        "description": "日频成交量数据",
-        "required": [
-          "date",
-          "trading_volume"
-        ],
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "数据日期，格式为YYYY-MM-DD"
-          },
-          "trading_volume": {
-            "type": "number",
-            "format": "double",
-            "description": "交易量(手)"
-          }
-        }
-      },
       "ErrRes": {
         "type": "object",
         "description": "用于响应错误响应的通用响应体",
@@ -2400,132 +2353,6 @@
             "description": "不可猜测的随机字符串",
             "examples": [
               "VrEaJ191gmyuhB5CKq0x"
-            ]
-          }
-        }
-      },
-      "IndexOption50EtfQvixKlineFetch": {
-        "type": "object",
-        "description": "50ETF 期权波动率指数 QVIX; 又称中国版的恐慌指数 K线数据",
-        "required": [
-          "open",
-          "close",
-          "high",
-          "low",
-          "date"
-        ],
-        "properties": {
-          "close": {
-            "type": "number",
-            "format": "double",
-            "description": "收盘价"
-          },
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "数据日期，格式为YYY-MM-DD"
-          },
-          "high": {
-            "type": "number",
-            "format": "double",
-            "description": "最高价"
-          },
-          "low": {
-            "type": "number",
-            "format": "double",
-            "description": "最低价"
-          },
-          "open": {
-            "type": "number",
-            "format": "double",
-            "description": "开盘价"
-          }
-        }
-      },
-      "IndexOption50EtfQvixMAFetch": {
-        "type": "object",
-        "description": "50ETF 期权波动率指数 QVIX; 各种移动平均线数据",
-        "required": [
-          "date"
-        ],
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "数据日期，格式为YYYY-DD-MM"
-          },
-          "ma10": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double",
-            "description": "对应数据日期的10日平均线数据"
-          },
-          "ma20": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double",
-            "description": "对应数据日期的20日平均线数据"
-          },
-          "ma5": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double",
-            "description": "对应数据日期的5日平均线数据"
-          }
-        }
-      },
-      "MALinesFetch": {
-        "type": "object",
-        "description": "移动平均线数据(MA5/MA10/MA20)",
-        "required": [
-          "date"
-        ],
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "数据点日期，格式为YYYY-MM-DD",
-            "examples": [
-              "2025-05-08"
-            ]
-          },
-          "ma10": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double",
-            "description": "数据点日期对应的MA10值。注意单位(元)",
-            "examples": [
-              13.481
-            ]
-          },
-          "ma20": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double",
-            "description": "数据点日期对应的MA20值，注意单位(元)",
-            "examples": [
-              13.8955
-            ]
-          },
-          "ma5": {
-            "type": [
-              "number",
-              "null"
-            ],
-            "format": "double",
-            "description": "数据点日期对应的MA5值，注意单位(元)",
-            "examples": [
-              13.29
             ]
           }
         }
@@ -3352,414 +3179,6 @@
           }
         }
       },
-      "OkRes_Vec_DailyIndicatorFetch": {
-        "type": "object",
-        "description": "用于响应正确响应的通用响应体",
-        "required": [
-          "code",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "✅ 正确响应 http 状态码",
-            "minimum": 0,
-            "examples": [
-              200
-            ]
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "日频其它指标数据",
-              "required": [
-                "date",
-                "trading_value",
-                "amplitude",
-                "turnover_rate",
-                "change_percent",
-                "change_amount"
-              ],
-              "properties": {
-                "amplitude": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "振幅(%)"
-                },
-                "change_amount": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "涨跌额,注意单位(元)"
-                },
-                "change_percent": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "涨跌幅(%)"
-                },
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "数据日期，格式为YYYY-MM-DD"
-                },
-                "trading_value": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "成交额,注意单位(元)"
-                },
-                "turnover_rate": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "换手率(%)"
-                }
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "description": "💬 正确响应描述性文本",
-            "examples": [
-              "登陆成功，欢迎来到data-mind!👏"
-            ]
-          }
-        }
-      },
-      "OkRes_Vec_DailyKlineFetch": {
-        "type": "object",
-        "description": "用于响应正确响应的通用响应体",
-        "required": [
-          "code",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "✅ 正确响应 http 状态码",
-            "minimum": 0,
-            "examples": [
-              200
-            ]
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "日频K线数据",
-              "required": [
-                "date",
-                "open",
-                "close",
-                "high",
-                "low"
-              ],
-              "properties": {
-                "close": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "收盘价(元)"
-                },
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "数据日期，格式为YYYY-MM-DD"
-                },
-                "high": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "最高价(元)"
-                },
-                "low": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "最低价(元)"
-                },
-                "open": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "开盘价(元)"
-                }
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "description": "💬 正确响应描述性文本",
-            "examples": [
-              "登陆成功，欢迎来到data-mind!👏"
-            ]
-          }
-        }
-      },
-      "OkRes_Vec_DailyTradingVolumeFetch": {
-        "type": "object",
-        "description": "用于响应正确响应的通用响应体",
-        "required": [
-          "code",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "✅ 正确响应 http 状态码",
-            "minimum": 0,
-            "examples": [
-              200
-            ]
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "日频成交量数据",
-              "required": [
-                "date",
-                "trading_volume"
-              ],
-              "properties": {
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "数据日期，格式为YYYY-MM-DD"
-                },
-                "trading_volume": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "交易量(手)"
-                }
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "description": "💬 正确响应描述性文本",
-            "examples": [
-              "登陆成功，欢迎来到data-mind!👏"
-            ]
-          }
-        }
-      },
-      "OkRes_Vec_IndexOption50EtfQvixKlineFetch": {
-        "type": "object",
-        "description": "用于响应正确响应的通用响应体",
-        "required": [
-          "code",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "✅ 正确响应 http 状态码",
-            "minimum": 0,
-            "examples": [
-              200
-            ]
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "50ETF 期权波动率指数 QVIX; 又称中国版的恐慌指数 K线数据",
-              "required": [
-                "open",
-                "close",
-                "high",
-                "low",
-                "date"
-              ],
-              "properties": {
-                "close": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "收盘价"
-                },
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "数据日期，格式为YYY-MM-DD"
-                },
-                "high": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "最高价"
-                },
-                "low": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "最低价"
-                },
-                "open": {
-                  "type": "number",
-                  "format": "double",
-                  "description": "开盘价"
-                }
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "description": "💬 正确响应描述性文本",
-            "examples": [
-              "登陆成功，欢迎来到data-mind!👏"
-            ]
-          }
-        }
-      },
-      "OkRes_Vec_IndexOption50EtfQvixMAFetch": {
-        "type": "object",
-        "description": "用于响应正确响应的通用响应体",
-        "required": [
-          "code",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "✅ 正确响应 http 状态码",
-            "minimum": 0,
-            "examples": [
-              200
-            ]
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "50ETF 期权波动率指数 QVIX; 各种移动平均线数据",
-              "required": [
-                "date"
-              ],
-              "properties": {
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "数据日期，格式为YYYY-DD-MM"
-                },
-                "ma10": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "format": "double",
-                  "description": "对应数据日期的10日平均线数据"
-                },
-                "ma20": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "format": "double",
-                  "description": "对应数据日期的20日平均线数据"
-                },
-                "ma5": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "format": "double",
-                  "description": "对应数据日期的5日平均线数据"
-                }
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "description": "💬 正确响应描述性文本",
-            "examples": [
-              "登陆成功，欢迎来到data-mind!👏"
-            ]
-          }
-        }
-      },
-      "OkRes_Vec_MALinesFetch": {
-        "type": "object",
-        "description": "用于响应正确响应的通用响应体",
-        "required": [
-          "code",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "✅ 正确响应 http 状态码",
-            "minimum": 0,
-            "examples": [
-              200
-            ]
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "移动平均线数据(MA5/MA10/MA20)",
-              "required": [
-                "date"
-              ],
-              "properties": {
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "数据点日期，格式为YYYY-MM-DD",
-                  "examples": [
-                    "2025-05-08"
-                  ]
-                },
-                "ma10": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "format": "double",
-                  "description": "数据点日期对应的MA10值。注意单位(元)",
-                  "examples": [
-                    13.481
-                  ]
-                },
-                "ma20": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "format": "double",
-                  "description": "数据点日期对应的MA20值，注意单位(元)",
-                  "examples": [
-                    13.8955
-                  ]
-                },
-                "ma5": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "format": "double",
-                  "description": "数据点日期对应的MA5值，注意单位(元)",
-                  "examples": [
-                    13.29
-                  ]
-                }
-              }
-            }
-          },
-          "message": {
-            "type": "string",
-            "description": "💬 正确响应描述性文本",
-            "examples": [
-              "登陆成功，欢迎来到data-mind!👏"
-            ]
-          }
-        }
-      },
       "OkRes_Vec_StockNewsMainCx": {
         "type": "object",
         "description": "用于响应正确响应的通用响应体",
@@ -3819,7 +3238,112 @@
           }
         }
       },
-      "OkRes_Vec_StockZhIndexDailyKlineFetch": {
+      "StockNewsMainCx": {
+        "type": "object",
+        "description": "财新网-财新数据通-内容精选",
+        "required": [
+          "pub_time",
+          "summary",
+          "tag",
+          "url"
+        ],
+        "properties": {
+          "pub_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "新闻的正式发布时间，即新闻内容原文在财新网等发布的时间。"
+          },
+          "summary": {
+            "type": "string",
+            "description": "新闻的摘要内容，对新闻正文的简要概括，便于快速了解新闻主旨。"
+          },
+          "tag": {
+            "type": "string",
+            "description": "新闻的主题标签，通常由几个关键词组成，归纳了该新闻的主要话题或核心内容。"
+          },
+          "url": {
+            "type": "string",
+            "description": "新闻的详情链接，点击可以跳转到财新网对应的新闻完整正文页面。"
+          }
+        }
+      },
+      "IndexOption50EtfQvixKline": {
+        "type": "object",
+        "description": "50ETF 期权波动率指数 QVIX; 又称中国版的恐慌指数 日频K线数据",
+        "required": [
+          "open",
+          "close",
+          "high",
+          "low",
+          "date"
+        ],
+        "properties": {
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价"
+          }
+        }
+      },
+      "IndexOption50EtfQvixMA": {
+        "type": "object",
+        "description": "50ETF 期权波动率指数 QVIX; 日频移动平均线数据",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-DD-MM"
+          },
+          "ma10": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应数据日期的10日平均线数据"
+          },
+          "ma20": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应数据日期的20日平均线数据"
+          },
+          "ma5": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "对应数据日期的5日平均线数据"
+          }
+        }
+      },
+      "OkRes_Vec_IndexOption50EtfQvixKline": {
         "type": "object",
         "description": "用于响应正确响应的通用响应体",
         "required": [
@@ -3841,6 +3365,524 @@
             "type": "array",
             "items": {
               "type": "object",
+              "description": "50ETF 期权波动率指数 QVIX; 又称中国版的恐慌指数 日频K线数据",
+              "required": [
+                "open",
+                "close",
+                "high",
+                "low",
+                "date"
+              ],
+              "properties": {
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_IndexOption50EtfQvixMA": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "50ETF 期权波动率指数 QVIX; 日频移动平均线数据",
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-DD-MM"
+                },
+                "ma10": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "对应数据日期的10日平均线数据"
+                },
+                "ma20": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "对应数据日期的20日平均线数据"
+                },
+                "ma5": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "对应数据日期的5日平均线数据"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockDailyIndicator": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股日频其它指标数据",
+              "required": [
+                "date",
+                "trading_value",
+                "amplitude",
+                "turnover_rate",
+                "change_percent",
+                "change_amount"
+              ],
+              "properties": {
+                "amplitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "振幅(%)"
+                },
+                "change_amount": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌额,注意单位(元)"
+                },
+                "change_percent": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅(%)"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "trading_value": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "成交额,注意单位(元)"
+                },
+                "turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "换手率(%)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockDailyKline": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股日频K线数据",
+              "required": [
+                "date",
+                "open",
+                "close",
+                "high",
+                "low"
+              ],
+              "properties": {
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价(元)"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价(元)"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价(元)"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价(元)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockDailyPagin": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股日频分页数据",
+              "required": [
+                "code",
+                "open",
+                "close",
+                "low",
+                "high",
+                "trading_volume",
+                "trading_value",
+                "amplitude",
+                "turnover_rate",
+                "change_percentage",
+                "change_amount",
+                "date"
+              ],
+              "properties": {
+                "amplitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "振幅(%)"
+                },
+                "change_amount": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌额,注意单位(元)"
+                },
+                "change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅(%)"
+                },
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价(元)"
+                },
+                "code": {
+                  "type": "string",
+                  "description": "股票代码"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "最近的数据更新日期，格式为YYYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价(元)"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价(元)"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价(元)"
+                },
+                "trading_value": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "成交额,注意单位(元)"
+                },
+                "trading_volume": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "成交量,注意单位(手)"
+                },
+                "turnover_rate": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "换手率(%)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockDailyTradingVolume": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股日频成交量数据",
+              "required": [
+                "date",
+                "trading_volume"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "trading_volume": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "交易量(手)"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockMALines": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股移动平均线数据(MA5/MA10/MA20)",
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据点日期，格式为YYYY-MM-DD",
+                  "examples": [
+                    "2025-05-08"
+                  ]
+                },
+                "ma10": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "数据点日期对应的MA10值。注意单位(元)",
+                  "examples": [
+                    13.481
+                  ]
+                },
+                "ma20": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "数据点日期对应的MA20值，注意单位(元)",
+                  "examples": [
+                    13.8955
+                  ]
+                },
+                "ma5": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "format": "double",
+                  "description": "数据点日期对应的MA5值，注意单位(元)",
+                  "examples": [
+                    13.29
+                  ]
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockZhIndexDailyKline": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股指数日频K线数据",
               "required": [
                 "open",
                 "close",
@@ -3892,7 +3934,7 @@
           }
         }
       },
-      "OkRes_Vec_StockZhIndexDailyVolumeFetch": {
+      "OkRes_Vec_StockZhIndexDailyVolume": {
         "type": "object",
         "description": "用于响应正确响应的通用响应体",
         "required": [
@@ -3914,6 +3956,7 @@
             "type": "array",
             "items": {
               "type": "object",
+              "description": "A股指数日频交易量数据",
               "required": [
                 "date",
                 "volume"
@@ -3941,37 +3984,240 @@
           }
         }
       },
-      "StockNewsMainCx": {
+      "StockDailyIndicator": {
         "type": "object",
-        "description": "财新网-财新数据通-内容精选",
+        "description": "A股日频其它指标数据",
         "required": [
-          "pub_time",
-          "summary",
-          "tag",
-          "url"
+          "date",
+          "trading_value",
+          "amplitude",
+          "turnover_rate",
+          "change_percent",
+          "change_amount"
         ],
         "properties": {
-          "pub_time": {
-            "type": "string",
-            "format": "date-time",
-            "description": "新闻的正式发布时间，即新闻内容原文在财新网等发布的时间。"
+          "amplitude": {
+            "type": "number",
+            "format": "double",
+            "description": "振幅(%)"
           },
-          "summary": {
-            "type": "string",
-            "description": "新闻的摘要内容，对新闻正文的简要概括，便于快速了解新闻主旨。"
+          "change_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌额,注意单位(元)"
           },
-          "tag": {
-            "type": "string",
-            "description": "新闻的主题标签，通常由几个关键词组成，归纳了该新闻的主要话题或核心内容。"
+          "change_percent": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅(%)"
           },
-          "url": {
+          "date": {
             "type": "string",
-            "description": "新闻的详情链接，点击可以跳转到财新网对应的新闻完整正文页面。"
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "trading_value": {
+            "type": "number",
+            "format": "double",
+            "description": "成交额,注意单位(元)"
+          },
+          "turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "换手率(%)"
           }
         }
       },
-      "StockZhIndexDailyKlineFetch": {
+      "StockDailyKline": {
         "type": "object",
+        "description": "A股日频K线数据",
+        "required": [
+          "date",
+          "open",
+          "close",
+          "high",
+          "low"
+        ],
+        "properties": {
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价(元)"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价(元)"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价(元)"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价(元)"
+          }
+        }
+      },
+      "StockDailyPagin": {
+        "type": "object",
+        "description": "A股日频分页数据",
+        "required": [
+          "code",
+          "open",
+          "close",
+          "low",
+          "high",
+          "trading_volume",
+          "trading_value",
+          "amplitude",
+          "turnover_rate",
+          "change_percentage",
+          "change_amount",
+          "date"
+        ],
+        "properties": {
+          "amplitude": {
+            "type": "number",
+            "format": "double",
+            "description": "振幅(%)"
+          },
+          "change_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌额,注意单位(元)"
+          },
+          "change_percentage": {
+            "type": "number",
+            "format": "double",
+            "description": "涨跌幅(%)"
+          },
+          "close": {
+            "type": "number",
+            "format": "double",
+            "description": "收盘价(元)"
+          },
+          "code": {
+            "type": "string",
+            "description": "股票代码"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "最近的数据更新日期，格式为YYYY-MM-DD"
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "最高价(元)"
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "最低价(元)"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "description": "开盘价(元)"
+          },
+          "trading_value": {
+            "type": "number",
+            "format": "double",
+            "description": "成交额,注意单位(元)"
+          },
+          "trading_volume": {
+            "type": "number",
+            "format": "double",
+            "description": "成交量,注意单位(手)"
+          },
+          "turnover_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "换手率(%)"
+          }
+        }
+      },
+      "StockDailyTradingVolume": {
+        "type": "object",
+        "description": "A股日频成交量数据",
+        "required": [
+          "date",
+          "trading_volume"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据日期，格式为YYYY-MM-DD"
+          },
+          "trading_volume": {
+            "type": "number",
+            "format": "double",
+            "description": "交易量(手)"
+          }
+        }
+      },
+      "StockMALines": {
+        "type": "object",
+        "description": "A股移动平均线数据(MA5/MA10/MA20)",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "数据点日期，格式为YYYY-MM-DD",
+            "examples": [
+              "2025-05-08"
+            ]
+          },
+          "ma10": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "数据点日期对应的MA10值。注意单位(元)",
+            "examples": [
+              13.481
+            ]
+          },
+          "ma20": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "数据点日期对应的MA20值，注意单位(元)",
+            "examples": [
+              13.8955
+            ]
+          },
+          "ma5": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "数据点日期对应的MA5值，注意单位(元)",
+            "examples": [
+              13.29
+            ]
+          }
+        }
+      },
+      "StockZhIndexDailyKline": {
+        "type": "object",
+        "description": "A股指数日频K线数据",
         "required": [
           "open",
           "close",
@@ -4013,8 +4259,9 @@
           }
         }
       },
-      "StockZhIndexDailyMAFetch": {
+      "StockZhIndexDailyMA": {
         "type": "object",
+        "description": "A股指数日频移动平均线数据",
         "required": [
           "date"
         ],
@@ -4050,8 +4297,9 @@
           }
         }
       },
-      "StockZhIndexDailyPaginFetch": {
+      "StockZhIndexDailyPagin": {
         "type": "object",
+        "description": "A股指数日频分页数据",
         "required": [
           "code",
           "date",
@@ -4110,8 +4358,9 @@
           }
         }
       },
-      "StockZhIndexDailyVolumeFetch": {
+      "StockZhIndexDailyVolume": {
         "type": "object",
+        "description": "A股指数日频交易量数据",
         "required": [
           "date",
           "volume"

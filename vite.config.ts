@@ -6,11 +6,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'https://www.destinyfvcker.cn/data-mind',
-				changeOrigin: true
-			},
-			'^/auths': {
-				target: 'https://www.destinyfvcker.cn/data-mind',
+				target: 'http://localhost:8800',
 				changeOrigin: true
 			}
 		}

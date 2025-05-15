@@ -18,6 +18,15 @@ export async function astockInfo(stockId: string) {
 	return res.data;
 }
 
+export async function astockDailyPagin() {
+	const res = await client.GET('/api/astock/stock_daily_pagin');
+	if (res.error) {
+		const msg = 'err code = ' + res.error.code + ', msg = ' + res.error.message;
+		toast.error(msg);
+	}
+	return res.data;
+}
+
 export async function astockDailyIndicator(
 	stockId: string,
 	adjType: '0' | '1' | '2',
