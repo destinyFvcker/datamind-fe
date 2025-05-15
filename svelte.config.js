@@ -16,7 +16,8 @@ const config = {
 			'@/*': './path/to/lib/*'
 		},
 		paths: {
-			base: '/data-mind' // 设置基础路径
+			base: '/data-mind', // 设置基础路径
+			assets: '/data-mind'
 		},
 		csp: {
 			mode: 'hash',
