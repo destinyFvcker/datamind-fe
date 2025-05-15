@@ -14,11 +14,14 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			'@/*': './path/to/lib/*'
+		},
+		paths: {
+			base: '/data-mind' // 设置基础路径
+		},
+		csp: {
+			mode: 'hash',
+			directives: { 'script-src': ['self'] }
 		}
-		// csp: {
-		// 	mode: 'hash',
-		// 	directives: { 'script-src': ['self'] }
-		// }
 	}
 };
 
