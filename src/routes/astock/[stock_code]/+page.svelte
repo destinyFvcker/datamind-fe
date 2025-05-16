@@ -136,8 +136,8 @@
 						返回
 					</Button>
 				</div>
-				<div class="min-w-[100px] grow"></div>
-				<Table.Root class="rounded-sm">
+				<div class="min-w-[50px] grow"></div>
+				<Table.Root class="min-w-[690px] rounded-sm">
 					<Table.Header>
 						<Table.Row class={mode.current === 'dark' ? '' : 'bg-slate-200'}>
 							<Table.Head class="text-center">上市时间</Table.Head>
