@@ -119,13 +119,9 @@
 </script>
 
 <div class="flex h-screen w-full gap-2">
-	<Card.Root class="relative flex min-w-[600px] grow flex-col">
-		<Button class="absolute left-6 top-1 flex h-6 w-16" onclick={() => goto(`${base}/`)}>
-			<ArrowBigLeftDash />
-			返回
-		</Button>
+	<Card.Root class="flex min-w-[600px] grow flex-col">
 		<Card.Header>
-			<div class="flex w-full items-center overscroll-x-auto">
+			<div class="flex w-full items-start overscroll-x-auto">
 				<div class="flex min-w-[120px] flex-col space-y-1.5">
 					<Card.Title>
 						{#if isLoading}
@@ -135,6 +131,10 @@
 						{/if}
 					</Card.Title>
 					<Card.Description>股票代码：{data.stockCode}</Card.Description>
+					<Button class="flex h-6 w-16" onclick={() => goto(`${base}/`)}>
+						<ArrowBigLeftDash />
+						返回
+					</Button>
 				</div>
 				<div class="min-w-[100px] grow"></div>
 				<Table.Root class="rounded-sm">
