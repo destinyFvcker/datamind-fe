@@ -1,9 +1,9 @@
 import type { PageLoad } from './$types.js';
 
 export const load: PageLoad = ({ params }) => {
-	const { stock_code } = params;
+	const { index_code } = params;
 
 	return {
-		stockCode: stock_code
+		indexCode: index_code
 	};
 };

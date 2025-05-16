@@ -7,7 +7,7 @@ export interface StockDailyKlineData {
 
 export interface KlineDataSet {
 	dates: string[];
-	volumes: number[];
+	volumes?: number[];
 	klineDatas: StockDailyKlineData[];
 	dataMA5: (number | null | undefined)[];
 	dataMA10: (number | null | undefined)[];

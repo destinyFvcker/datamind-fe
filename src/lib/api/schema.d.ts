@@ -1922,6 +1922,60 @@ export interface components {
             /** @description 💬 正确响应描述性文本 */
             message: string;
         };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_Vec_StockZhIndexDailyPagin: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            data: {
+                /**
+                 * Format: double
+                 * @description 振幅(%)
+                 */
+                amplitude: number;
+                /**
+                 * Format: double
+                 * @description 涨跌额(%)
+                 */
+                change_amount: number;
+                /**
+                 * Format: double
+                 * @description 涨跌幅(%)
+                 */
+                change_percentage: number;
+                /**
+                 * Format: double
+                 * @description 收盘价
+                 */
+                close: number;
+                /** @description 指数代码 */
+                code: string;
+                /**
+                 * Format: date
+                 * @description 最新数据时间，格式为YYYY-MM-DD
+                 */
+                date: string;
+                /**
+                 * Format: double
+                 * @description 最高价
+                 */
+                high: number;
+                /**
+                 * Format: double
+                 * @description 最低价
+                 */
+                low: number;
+                /**
+                 * Format: double
+                 * @description 开盘价
+                 */
+                open: number;
+            }[];
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -2165,7 +2219,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StockZhIndexDailyPagin"][];
+                    "application/json": components["schemas"]["OkRes_Vec_StockZhIndexDailyPagin"];
                 };
             };
             /** @description 没有访问权限 */

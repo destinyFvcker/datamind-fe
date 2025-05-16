@@ -3,14 +3,23 @@
 	import { cn } from '$lib/utils';
 	import { ArrowDown, ArrowUp, Equal } from 'lucide-svelte';
 
-	export { cellWichSignColor, cellCenter, cellRight, cellRef };
+	export { cellWichSignColor, cellCenter, cellRight, stockCellRef, indexCellRef };
 </script>
 
-{#snippet cellRef(value: string)}
+{#snippet stockCellRef(value: string)}
 	<div class="flex justify-center">
 		<a
 			class="hover:bo text-center text-blue-500 hover:font-bold hover:underline"
 			href={`${base}/astock/${value}`}>{value}</a
+		>
+	</div>
+{/snippet}
+
+{#snippet indexCellRef(value: string)}
+	<div class="flex justify-center">
+		<a
+			class="hover:bo text-center text-blue-500 hover:font-bold hover:underline"
+			href={`${base}/aindex/${value}`}>{value}</a
 		>
 	</div>
 {/snippet}

@@ -360,10 +360,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StockZhIndexDailyPagin"
-                  }
+                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyPagin"
                 }
               }
             },
@@ -4452,6 +4449,97 @@
                 "type": "number",
                 "format": "double",
                 "description": "总股本(元)"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockZhIndexDailyPagin": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股指数日频分页数据",
+              "required": [
+                "code",
+                "date",
+                "open",
+                "close",
+                "high",
+                "low",
+                "amplitude",
+                "change_percentage",
+                "change_amount"
+              ],
+              "properties": {
+                "amplitude": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "振幅(%)"
+                },
+                "change_amount": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌额(%)"
+                },
+                "change_percentage": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "涨跌幅(%)"
+                },
+                "close": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "收盘价"
+                },
+                "code": {
+                  "type": "string",
+                  "description": "指数代码"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "最新数据时间，格式为YYYY-MM-DD"
+                },
+                "high": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最高价"
+                },
+                "low": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "最低价"
+                },
+                "open": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "开盘价"
+                }
               }
             }
           },
