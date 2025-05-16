@@ -4,7 +4,7 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
-	import { browser, dev } from '$app/environment';
+	import { browser } from '$app/environment';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import { globalStatus } from '$lib/global.svelte';
 	import { base } from '$app/paths';
@@ -27,7 +27,7 @@
 
 	// --- 判断目前处于哪个页面
 	const isPageActive = (path: string) => {
-		let prefix = dev ? '' : '/data-mind';
+		const prefix = '/data-mind';
 
 		if (path === '/') {
 			return page.url.pathname === prefix + path ? 'border-b-4 border-indigo-500 font-bold' : '';
@@ -42,7 +42,7 @@
 <LightSwitch />
 
 {#if globalStatus.isNavShow}
-	<nav class="h-18 items-center justify-between border-2 py-0.5 lg:flex lg:flex-wrap lg:pr-14">
+	<nav class="h-fit items-center justify-between border-2 py-0.5 lg:flex lg:flex-wrap lg:pr-14">
 		<div class="mb-1 flex lg:mb-0">
 			<div class="mr-3 flex flex-shrink-0 grow items-center gap-2">
 				<Icon icon="material-symbols:mindfulness" width="50" height="50" />

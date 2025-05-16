@@ -5,7 +5,9 @@
 		TooltipComponent,
 		GridComponent,
 		LegendComponent,
-		DataZoomComponent
+		DataZoomComponent,
+		ToolboxComponent,
+		BrushComponent
 	} from 'echarts/components';
 	import { BarChart, CandlestickChart, LineChart } from 'echarts/charts';
 	import { UniversalTransition } from 'echarts/features';
@@ -17,12 +19,14 @@
 
 	const ext = [
 		TitleComponent,
-		GraphicComponent,
 		TooltipComponent,
+		ToolboxComponent,
+		GraphicComponent,
 		GridComponent,
 		LegendComponent,
 		DataZoomComponent,
 		BarChart,
+		BrushComponent,
 		CandlestickChart,
 		LineChart,
 		CanvasRenderer,

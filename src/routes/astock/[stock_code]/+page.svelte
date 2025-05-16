@@ -2,6 +2,7 @@
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import {
+		astockDailyIndicator,
 		astockDailyKline,
 		astockInfo,
 		astockMaWithLimit,
@@ -13,13 +14,25 @@
 	import * as Table from '$lib/components/ui/table/index.js';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import type { AStockInfo, AStockKline, AStockMA, AstockNews, AStockVolume } from '../(data)/data';
+	import type {
+		AStockIndicator,
+		AStockInfo,
+		AStockKline,
+		AStockMA,
+		AstockNews,
+		AStockVolume
+	} from '../(data)/data';
 	import type { PageProps } from './$types';
 	import { stockRecent100 } from '$lib/api/news';
 	import { cn } from '$lib/utils';
 	import Icon from '@iconify/svelte';
 	import { mode } from 'mode-watcher';
 	import { KlineChartCustom, type KlineDataSet } from '$lib/components/custom/charts/kline';
+	import type { AStockIndicatsDataSet } from '$lib/components/custom/charts/astock-indicats/data';
+	import { AStockIndicatorsChart } from '$lib/components/custom/charts/astock-indicats';
+	import { ArrowBigLeftDash } from 'lucide-svelte';
+	import { base } from '$app/paths';
+	import { goto } from '$app/navigation';
 
 	let { data }: PageProps = $props();
 
@@ -28,7 +41,8 @@
 	let adjType: '0' | '1' | '2' = $state('1'); // 是否复权
 	let stockKline: AStockKline[] = $state([]); // k线数据
 	let dailyVolume: AStockVolume[] = $state([]); // 交易量数据
-	let dailyMA: AStockMA[] = $state([]);
+	let dailyMA: AStockMA[] = $state([]); // 移动平均线数据
+	let stockIndicator: AStockIndicator[] = $state([]); // 交易指标数据
 
 	let klineDataSet: KlineDataSet = $derived.by(() => {
 		const dates = stockKline.map((klineData) => klineData.date);
@@ -53,6 +67,20 @@
 		};
 	});
 
+	let indicatorDataSet: AStockIndicatsDataSet = $derived.by(() => {
+		const dates = stockIndicator.map((data) => data.date);
+		const amplitudes = stockIndicator.map((data) => data.amplitude);
+		const changePercents = stockIndicator.map((data) => data.change_percent);
+		const turnoverRates = stockIndicator.map((data) => data.turnover_rate);
+
+		return {
+			dates,
+			amplitudes,
+			changePercents,
+			turnoverRates
+		};
+	});
+
 	let isLoading = $state(false);
 	let isChartLoading = $state(false);
 	const fetchChartData = async () => {
@@ -66,7 +94,10 @@
 		const maRes = await astockMaWithLimit(data.stockCode, limitDays);
 		dailyMA = maRes?.data ?? [];
 
-		if (stockKline.length && dailyVolume.length && dailyMA.length) {
+		const indicatorsRes = await astockDailyIndicator(data.stockCode, adjType, limitDays);
+		stockIndicator = indicatorsRes?.data ?? [];
+
+		if (stockKline.length && dailyVolume.length && dailyMA.length && stockIndicator.length) {
 			isChartLoading = false;
 		}
 	};
@@ -88,7 +119,11 @@
 </script>
 
 <div class="flex h-screen w-full gap-2">
-	<Card.Root class="flex min-w-[600px] grow flex-col">
+	<Card.Root class="relative flex min-w-[600px] grow flex-col">
+		<Button class="absolute left-6 top-1 flex h-6 w-16" onclick={() => goto(`${base}/`)}>
+			<ArrowBigLeftDash />
+			返回
+		</Button>
 		<Card.Header>
 			<div class="flex w-full items-center overscroll-x-auto">
 				<div class="flex min-w-[120px] flex-col space-y-1.5">
@@ -179,6 +214,7 @@
 				</RadioGroup.Root>
 
 				<KlineChartCustom bind:dataSet={klineDataSet} />
+				<AStockIndicatorsChart bind:dataset={indicatorDataSet} />
 			{/if}
 		</Card.Content>
 	</Card.Root>

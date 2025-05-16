@@ -12,7 +12,7 @@ export type ChartOptions = {
 };
 
 const DEFAULT_OPTIONS: Partial<ChartOptions> = {
-	// theme: undefined,
+	theme: undefined,
 	renderer: 'canvas'
 };
 
@@ -24,7 +24,8 @@ export function chartable(element: HTMLElement, echartOptions: ChartOptions) {
 	if (echartOptions.ext) {
 		echarts.use(echartOptions.ext);
 	}
-	const echartsInstance = echarts.init(element, theme, { renderer });
+	let echartsInstance = echarts.init(element, theme, { renderer });
+	let themeCache = theme;
 	echartsInstance.setOption(options);
 
 	function handleResize() {
@@ -35,6 +36,13 @@ export function chartable(element: HTMLElement, echartOptions: ChartOptions) {
 
 	return {
 		update(newOptions: ChartOptions) {
+			console.log('echart update!');
+			if (newOptions.theme != themeCache) {
+				themeCache = newOptions.theme;
+				echartsInstance.dispose(); // 销毁实例
+				echartsInstance = echarts.init(element, themeCache, { renderer });
+			}
+
 			echartsInstance.setOption({
 				...echartOptions.options,
 				...newOptions.options

@@ -38,3 +38,12 @@ export interface AStockMA {
 	ma20?: number | null;
 	ma5?: number | null;
 }
+
+export interface AStockIndicator {
+	amplitude: number;
+	change_amount: number;
+	change_percent: number;
+	date: string;
+	trading_value: number;
+	turnover_rate: number;
+}

@@ -12,14 +12,14 @@ export const getOptions = (
 	legend: {
 		top: 10,
 		left: 'center',
-		data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+		data: ['日K', 'MA5', 'MA10', 'MA20']
 	},
 	tooltip: {
 		trigger: 'axis',
 		axisPointer: {
 			type: 'cross'
 		},
-		backgroundColor: 'rgba(255, 255, 255, 0.8)',
+		backgroundColor: 'rgba(255, 255, 255, 1)',
 		textStyle: {
 			fontSize: 12,
 			color: '#333'
@@ -45,12 +45,13 @@ export const getOptions = (
 	},
 	toolbox: {
 		feature: {
-			dataZoom: {
-				yAxisIndex: false
-			},
-			brush: {
-				type: ['lineX', 'clear']
-			}
+			// dataZoom: {
+			// 	yAxisIndex: false
+			// },
+			// brush: {
+			// 	type: ['lineX', 'clear']
+			// },
+			saveAsImage: {}
 		}
 	},
 	brush: {
@@ -119,19 +120,21 @@ export const getOptions = (
 		}
 	],
 	dataZoom: [
-		{
-			type: 'inside',
-			xAxisIndex: [0, 1],
-			start: 20,
-			end: 100
-		},
+		// {
+		// 	type: 'inside',
+		// 	xAxisIndex: [0, 1],
+		// 	start: 20,
+		// 	end: 100,
+		// 	minSpan: 15
+		// },
 		{
 			show: true,
 			xAxisIndex: [0, 1],
 			type: 'slider',
 			start: 20,
 			end: 100,
-			bottom: '5%'
+			bottom: '5%',
+			minSpan: 15
 		}
 	],
 	series: [
