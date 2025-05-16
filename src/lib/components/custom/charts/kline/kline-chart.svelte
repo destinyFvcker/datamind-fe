@@ -49,6 +49,9 @@
 	});
 </script>
 
-<div class="mb-2 flex h-96 w-auto items-center">
-	<div class="h-full w-full" use:chartable={{ options: options, ext, theme: mode.current }}></div>
+<div>
+	<div class="mb-2 flex h-[440px] w-auto items-center rounded-md border">
+		<div class="h-full w-full" use:chartable={{ options: options, ext, theme: mode.current }}></div>
+	</div>
+	<div class="text-center text-sm">日频k线图.</div>
 </div>

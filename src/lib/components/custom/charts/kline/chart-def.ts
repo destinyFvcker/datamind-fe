@@ -1,10 +1,6 @@
 import type { EChartsOption } from 'echarts';
 import type { StockDailyKlineData } from './data';
 
-// prettier-ignore
-const colorList = ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'];
-const labelFont = 'bold 12px Sans-serif';
-
 export const getOptions = (
 	dates: string[],
 	volumes: number[],
@@ -13,64 +9,70 @@ export const getOptions = (
 	dataMA10: (number | null | undefined)[],
 	dataMA20: (number | null | undefined)[]
 ): EChartsOption => ({
-	animation: false,
-	color: colorList,
-	title: {
-		left: 'center',
-		text: '日K'
-	},
 	legend: {
-		top: 30,
+		top: 10,
+		left: 'center',
 		data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
 	},
 	tooltip: {
-		// triggerOn: 'none',
-		transitionDuration: 0,
-		confine: true,
-		borderRadius: 4,
-		borderWidth: 1,
-		borderColor: '#333',
-		backgroundColor: 'rgba(255,255,255,0.9)',
+		trigger: 'axis',
+		axisPointer: {
+			type: 'cross'
+		},
+		backgroundColor: 'rgba(255, 255, 255, 0.8)',
 		textStyle: {
 			fontSize: 12,
 			color: '#333'
 		},
 		position: function (pos, params, el, elRect, size) {
-			// 鼠标在左侧时 tooltip 显示到右侧，鼠标在右侧时 tooltip 显示到左侧。
 			const obj: Record<string, number> = {
 				top: 60
 			};
-			obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)] ?? 'left'] = 5;
+			obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)] ?? 'right'] = 30;
 			return obj;
-		}
+		},
+		extraCssText: 'width: 170px'
 	},
 	axisPointer: {
 		link: [
 			{
 				xAxisIndex: [0, 1]
 			}
-		]
+		],
+		label: {
+			backgroundColor: '#777'
+		}
 	},
-	dataZoom: [
+	toolbox: {
+		feature: {
+			dataZoom: {
+				yAxisIndex: false
+			},
+			brush: {
+				type: ['lineX', 'clear']
+			}
+		}
+	},
+	brush: {
+		xAxisIndex: 'all',
+		brushLink: 'all',
+		outOfBrush: {
+			colorAlpha: 0.1
+		}
+	},
+	grid: [
 		{
-			type: 'slider',
-			xAxisIndex: [0, 1],
-			realtime: false,
-			start: 50,
-			end: 100,
-			top: 65,
-			height: 20,
-			handleIcon:
-				'path://M10.7,11.9H9.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-			handleSize: '120%'
+			left: 50,
+			right: 50,
+			height: '50%',
+			top: 50
+			// bottom: '20%'
 		},
 		{
-			type: 'inside',
-			xAxisIndex: [0, 1],
-			start: 40,
-			end: 70,
-			top: 30,
-			height: 20
+			left: 50,
+			right: 50,
+			bottom: '15%',
+			height: '15%'
 		}
 	],
 	xAxis: [
@@ -78,14 +80,12 @@ export const getOptions = (
 			type: 'category',
 			data: dates,
 			boundaryGap: false,
-			axisLine: { lineStyle: { color: '#777' } },
-			axisLabel: {
-				formatter: '{MM}-{dd}'
-			},
+			axisLine: { onZero: false },
+			splitLine: { show: false },
 			min: 'dataMin',
 			max: 'dataMax',
 			axisPointer: {
-				show: true
+				z: 100
 			}
 		},
 		{
@@ -93,34 +93,19 @@ export const getOptions = (
 			gridIndex: 1,
 			data: dates,
 			boundaryGap: false,
+			axisLine: { onZero: false },
+			axisTick: { show: false },
 			splitLine: { show: false },
 			axisLabel: { show: false },
-			axisTick: { show: false },
-			axisLine: { lineStyle: { color: '#777' } },
 			min: 'dataMin',
-			max: 'dataMax',
-			axisPointer: {
-				type: 'shadow',
-				label: { show: false },
-				triggerTooltip: true,
-				handle: {
-					show: true,
-					margin: 30,
-					color: '#B80C00'
-				}
-			}
+			max: 'dataMax'
 		}
 	],
 	yAxis: [
 		{
 			scale: true,
-			splitNumber: 2,
-			axisLine: { lineStyle: { color: '#777' } },
-			splitLine: { show: true },
-			axisTick: { show: false },
-			axisLabel: {
-				inside: true,
-				formatter: '{value}\n'
+			splitArea: {
+				show: true
 			}
 		},
 		{
@@ -133,83 +118,46 @@ export const getOptions = (
 			splitLine: { show: false }
 		}
 	],
-	grid: [
+	dataZoom: [
 		{
-			left: 20,
-			right: 20,
-			top: 110,
-			height: 120
+			type: 'inside',
+			xAxisIndex: [0, 1],
+			start: 20,
+			end: 100
 		},
 		{
-			left: 20,
-			right: 20,
-			height: 40,
-			top: 260
-		}
-	],
-	graphic: [
-		{
-			type: 'group',
-			left: 'center',
-			top: 70,
-			width: 300,
-			bounding: 'raw',
-			children: [
-				{
-					id: 'MA5',
-					type: 'text',
-					style: { fill: colorList[1], font: labelFont },
-					left: 0
-				},
-				{
-					id: 'MA10',
-					type: 'text',
-					style: { fill: colorList[2], font: labelFont },
-					left: 'center'
-				},
-				{
-					id: 'MA20',
-					type: 'text',
-					style: { fill: colorList[3], font: labelFont },
-					right: 0
-				}
-			]
+			show: true,
+			xAxisIndex: [0, 1],
+			type: 'slider',
+			start: 20,
+			end: 100,
+			bottom: '5%'
 		}
 	],
 	series: [
 		{
-			name: 'Volume',
-			type: 'bar',
-			xAxisIndex: 1,
-			yAxisIndex: 1,
-			itemStyle: {
-				color: '#7fbe9e'
-			},
-			emphasis: {
-				itemStyle: {
-					color: '#140'
-				}
-			},
-			data: volumes
-		},
-		{
-			type: 'candlestick',
 			name: '日K',
+			type: 'candlestick',
 			data: klineDatas.map((item: StockDailyKlineData) => ({
 				value: [item.open, item.close, item.low, item.high]
 			})),
 			itemStyle: {
-				color: '#ef232a',
-				color0: '#14b143',
-				borderColor: '#ef232a',
-				borderColor0: '#14b143'
+				color: '#06B800',
+				color0: '#FA0000',
+				borderColor: undefined,
+				borderColor0: undefined
 			},
-			emphasis: {
-				itemStyle: {
-					color: 'black',
-					color0: '#444',
-					borderColor: 'black',
-					borderColor0: '#444'
+			tooltip: {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				formatter: function (params: any) {
+					const paramData = params[0];
+					return [
+						'Date: ' + paramData.name + '<hr size=1 style="margin: 3px 0">',
+						'Open: ' + params.data[0] + '<br/>',
+						'Close: ' + params.data[1] + '<br/>',
+						'Lowest: ' + params.data[2] + '<br/>',
+						'Highest: ' + params.data[3] + '<br/>'
+					].join('');
 				}
 			}
 		},
@@ -218,9 +166,8 @@ export const getOptions = (
 			type: 'line',
 			data: dataMA5,
 			smooth: true,
-			showSymbol: false,
 			lineStyle: {
-				width: 1
+				opacity: 0.5
 			}
 		},
 		{
@@ -228,9 +175,8 @@ export const getOptions = (
 			type: 'line',
 			data: dataMA10,
 			smooth: true,
-			showSymbol: false,
 			lineStyle: {
-				width: 1
+				opacity: 0.5
 			}
 		},
 		{
@@ -238,10 +184,16 @@ export const getOptions = (
 			type: 'line',
 			data: dataMA20,
 			smooth: true,
-			showSymbol: false,
 			lineStyle: {
-				width: 1
+				opacity: 0.5
 			}
+		},
+		{
+			name: 'Volumn',
+			type: 'bar',
+			xAxisIndex: 1,
+			yAxisIndex: 1,
+			data: volumes
 		}
 	]
 });
