@@ -6,7 +6,7 @@
 
 	// 关于如何给props标注类型仍然需要学习
 	let { tableModel = $bindable() }: { tableModel: Table<T> } = $props();
-	let itemPerPage = $state('50');
+	let itemPerPage = $state('100');
 	let pageIndex = $derived(tableModel.getState().pagination.pageIndex);
 	let pageCount = $derived(tableModel.getPageCount());
 	let hasNextPage = $derived(tableModel.getCanNextPage());

@@ -12,13 +12,13 @@ const config = {
 		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter({
-			fallback: './static/error404.html'
+			fallback: 'index.html'
 		}),
 		alias: {
 			'@/*': './path/to/lib/*'
 		},
 		paths: {
-			// base: '/data-mind', // 设置基础路径
+			base: '/data-mind',
 			assets: 'https://www.destinyfvcker.cn/data-mind'
 		},
 		csp: {
