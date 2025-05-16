@@ -1,26 +1,75 @@
 <script lang="ts">
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 	import { Separator } from '$lib/components/ui/separator/index.js';
-	import { astockInfo } from '$lib/api/astock';
+	import {
+		astockDailyKline,
+		astockInfo,
+		astockMaWithLimit,
+		astockTradingVolume
+	} from '$lib/api/astock';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import type { AStockInfo, AstockNews } from '../(data)/data';
+	import type { AStockInfo, AStockKline, AStockMA, AstockNews, AStockVolume } from '../(data)/data';
 	import type { PageProps } from './$types';
 	import { stockRecent100 } from '$lib/api/news';
 	import { cn } from '$lib/utils';
 	import Icon from '@iconify/svelte';
 	import { mode } from 'mode-watcher';
+	import { KlineChartCustom, type KlineDataSet } from '$lib/components/custom/charts/kline';
 
 	let { data }: PageProps = $props();
 
-	let stockInfo: AStockInfo | undefined = $state();
-	let stockNews: AstockNews[] = $state([]);
+	let stockInfo: AStockInfo | undefined = $state(); // 股票简要信息
+	let stockNews: AstockNews[] = $state([]); // 个股最近100条新闻
+	let adjType: '0' | '1' | '2' = $state('1'); // 是否复权
+	let stockKline: AStockKline[] = $state([]); // k线数据
+	let dailyVolume: AStockVolume[] = $state([]); // 交易量数据
+	let dailyMA: AStockMA[] = $state([]);
+
+	let klineDataSet: KlineDataSet = $derived.by(() => {
+		const dates = stockKline.map((klineData) => klineData.date);
+		const volumes = dailyVolume.map((volumeData) => volumeData.trading_volume);
+		const klineDatas = stockKline.map((klineData) => ({
+			open: klineData.open,
+			close: klineData.close,
+			high: klineData.high,
+			low: klineData.low
+		}));
+		const dataMA5 = dailyMA.map((maData) => maData.ma5);
+		const dataMA10 = dailyMA.map((maData) => maData.ma10);
+		const dataMA20 = dailyMA.map((maData) => maData.ma20);
+
+		return {
+			dates,
+			volumes,
+			klineDatas,
+			dataMA5,
+			dataMA10,
+			dataMA20
+		};
+	});
 
 	let isLoading = $state(false);
+	let isChartLoading = $state(false);
+	const fetchChartData = async () => {
+		isChartLoading = true;
+
+		const limitDays = 90;
+		const klineRes = await astockDailyKline(data.stockCode, adjType, limitDays);
+		stockKline = klineRes?.data ?? [];
+		const volumeRes = await astockTradingVolume(data.stockCode, adjType, limitDays);
+		dailyVolume = volumeRes?.data ?? [];
+		const maRes = await astockMaWithLimit(data.stockCode, limitDays);
+		dailyMA = maRes?.data ?? [];
+
+		if (stockKline.length && dailyVolume.length && dailyMA.length) {
+			isChartLoading = false;
+		}
+	};
 	const fetchPageData = async () => {
 		isLoading = true;
 		const infoRes = await astockInfo(data.stockCode);
@@ -32,14 +81,16 @@
 		if (stockInfo && stockNews.length) {
 			isLoading = false;
 		}
+
+		await fetchChartData();
 	};
 	fetchPageData();
 </script>
 
 <div class="flex h-screen w-full gap-2">
-	<Card.Root class="min-w-[600px] grow">
+	<Card.Root class="flex min-w-[600px] grow flex-col">
 		<Card.Header>
-			<div class="flex items-center">
+			<div class="flex w-full items-center overscroll-x-auto">
 				<div class="flex min-w-[120px] flex-col space-y-1.5">
 					<Card.Title>
 						{#if isLoading}
@@ -65,55 +116,70 @@
 					<Table.Body>
 						<Table.Row>
 							{#if isLoading}
-								<Table.Cell colspan={6} class="text-center">
-									<Icon icon="line-md:downloading-loop" width="24" height="24" class="mx-auto" />
-								</Table.Cell>
+								{#each Array(6) as _}
+									<Table.Cell class="text-center">
+										<Icon icon="line-md:downloading-loop" width="24" height="24" class="mx-auto" />
+									</Table.Cell>
+								{/each}
 							{:else}
-								<Table.Cell class="text-center">{stockInfo?.listing_date}</Table.Cell>
+								{@const dateStr = stockInfo?.listing_date.toString()}
+								<Table.Cell class="text-center"
+									>{dateStr?.slice(0, 4)}-{dateStr?.slice(4, 6)}-{dateStr?.slice(6, 8)}</Table.Cell
+								>
 								<Table.Cell class="text-center">{stockInfo?.industry}</Table.Cell>
-								<Table.Cell class="text-center">{stockInfo?.circulating_shares}</Table.Cell>
-								<Table.Cell class="text-center">{stockInfo?.circulating_market_cap}</Table.Cell>
-								<Table.Cell class="text-center">{stockInfo?.total_market_cap}</Table.Cell>
-								<Table.Cell class="text-center">{stockInfo?.total_shares}</Table.Cell>
+								<Table.Cell class="text-center"
+									>{stockInfo?.circulating_shares.toLocaleString()}</Table.Cell
+								>
+								<Table.Cell class="text-center"
+									>{stockInfo?.circulating_market_cap.toLocaleString()}</Table.Cell
+								>
+								<Table.Cell class="text-center"
+									>{stockInfo?.total_market_cap.toLocaleString()}</Table.Cell
+								>
+								<Table.Cell class="text-center"
+									>{stockInfo?.total_shares.toLocaleString()}</Table.Cell
+								>
 							{/if}
 						</Table.Row>
 					</Table.Body>
 				</Table.Root>
 			</div>
 		</Card.Header>
-		<Card.Content>
-			<div class="space-y-4">
+		<Card.Content class="flex grow flex-col gap-4 overflow-y-auto">
+			{#if isChartLoading}
+				{#each Array(3) as _}
+					<div class="space-y-4">
+						<Skeleton class="h-10 w-[70%]" />
+						<Skeleton class="h-20 w-[80%]" />
+						<Skeleton class="h-16 w-[60%]" />
+					</div>
+					<div class="h-5"></div>
+				{/each}
+			{:else}
 				<RadioGroup.Root
-					value="option-one"
-					class="flex w-fit gap-3 rounded-sm border-4 border-double border-indigo-500 px-2"
+					bind:value={adjType}
+					class="sticky top-0 z-40 flex w-fit gap-3 rounded-sm border-4 border-double border-indigo-500 px-2"
+					onValueChange={() => {
+						fetchChartData();
+					}}
 				>
-					<span>数据复权: </span>
+					<span>复权选项: </span>
 					<div class="flex items-center space-x-2">
-						<RadioGroup.Item value="none" id="option-none" />
+						<RadioGroup.Item value="0" id="option-none" />
 						<Label for="option-none">不复权</Label>
 					</div>
 					<div class="flex items-center space-x-2">
-						<RadioGroup.Item value="forward" id="option-forward" />
+						<RadioGroup.Item value="1" id="option-forward" />
 						<Label for="option-forward">前复权</Label>
 					</div>
 					<div class="flex items-center space-x-2">
-						<RadioGroup.Item value="backward" id="option-backward" />
+						<RadioGroup.Item value="2" id="option-backward" />
 						<Label for="option-backward">后复权</Label>
 					</div>
 				</RadioGroup.Root>
-				{#if isLoading}
-					{#each Array(3) as _}
-						<div class="space-y-4">
-							<Skeleton class="h-10 w-[550px]" />
-							<Skeleton class="h-20 w-[650px]" />
-							<Skeleton class="h-16 w-[500px]" />
-						</div>
-						<div class="h-5"></div>
-					{/each}
-				{:else}
-					<!--  -->
-				{/if}
-			</div>
+
+				<KlineChartCustom bind:dataSet={klineDataSet} />
+			{/if}
 		</Card.Content>
 	</Card.Root>
 

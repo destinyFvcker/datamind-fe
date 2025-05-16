@@ -18,3 +18,23 @@ export interface AstockNews {
 	title: string;
 	url: string;
 }
+
+export interface AStockKline {
+	close: number;
+	date: string;
+	high: number;
+	low: number;
+	open: number;
+}
+
+export interface AStockVolume {
+	date: string;
+	trading_volume: number;
+}
+
+export interface AStockMA {
+	date: string;
+	ma10?: number | null;
+	ma20?: number | null;
+	ma5?: number | null;
+}

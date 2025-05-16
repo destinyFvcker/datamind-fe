@@ -9,22 +9,22 @@ export const getOptions = (
 	dates: string[],
 	volumes: number[],
 	klineDatas: StockDailyKlineData[],
-	dataMA5: number[],
-	dataMA10: number[],
-	dataMA20: number[]
+	dataMA5: (number | null | undefined)[],
+	dataMA10: (number | null | undefined)[],
+	dataMA20: (number | null | undefined)[]
 ): EChartsOption => ({
 	animation: false,
 	color: colorList,
 	title: {
 		left: 'center',
-		text: 'Candlestick on Mobile'
+		text: '日K'
 	},
 	legend: {
 		top: 30,
 		data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
 	},
 	tooltip: {
-		triggerOn: 'none',
+		// triggerOn: 'none',
 		transitionDuration: 0,
 		confine: true,
 		borderRadius: 4,
@@ -56,8 +56,8 @@ export const getOptions = (
 			type: 'slider',
 			xAxisIndex: [0, 1],
 			realtime: false,
-			start: 20,
-			end: 70,
+			start: 50,
+			end: 100,
 			top: 65,
 			height: 20,
 			handleIcon:

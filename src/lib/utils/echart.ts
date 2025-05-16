@@ -12,7 +12,7 @@ export type ChartOptions = {
 };
 
 const DEFAULT_OPTIONS: Partial<ChartOptions> = {
-	theme: undefined,
+	// theme: undefined,
 	renderer: 'canvas'
 };
 

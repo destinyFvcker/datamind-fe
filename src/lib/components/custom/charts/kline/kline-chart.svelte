@@ -11,7 +11,7 @@
 	import { UniversalTransition } from 'echarts/features';
 	import { CanvasRenderer } from 'echarts/renderers';
 	import { chartable } from '$lib/utils/echart';
-	import type { StockDailyKlineData } from './data';
+	import type { KlineDataSet, StockDailyKlineData } from './data';
 	import { getOptions } from './chart-def';
 	import { mode } from 'mode-watcher';
 
@@ -30,26 +30,25 @@
 	];
 
 	let {
-		dates = $bindable(),
-		volumes = $bindable(),
-		klineDatas = $bindable(),
-		dataMA5 = $bindable(),
-		dataMA10 = $bindable(),
-		dataMA20 = $bindable()
+		dataSet = $bindable()
 	}: {
-		dates: string[];
-		volumes: number[];
-		klineDatas: StockDailyKlineData[];
-		dataMA5: number[];
-		dataMA10: number[];
-		dataMA20: number[];
+		dataSet: KlineDataSet;
 	} = $props();
 
 	const options = $derived.by(() => {
-		return getOptions(dates, volumes, klineDatas, dataMA5, dataMA10, dataMA20);
+		// const dataMA5 = dataSet.dataMA5?.flat;
+
+		return getOptions(
+			dataSet.dates,
+			dataSet.volumes,
+			dataSet.klineDatas,
+			dataSet.dataMA5,
+			dataSet.dataMA10,
+			dataSet.dataMA20
+		);
 	});
 </script>
 
 <div class="mb-2 flex h-96 w-auto items-center">
-	<div class="h-full w-full" use:chartable={{ options: options, ext, theme: mode }}></div>
+	<div class="h-full w-full" use:chartable={{ options: options, ext, theme: mode.current }}></div>
 </div>
