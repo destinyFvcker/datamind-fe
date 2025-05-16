@@ -7,7 +7,7 @@ import {
 	type PaginationState,
 	type TableOptions
 } from '@tanstack/table-core';
-import { toast } from 'svelte-sonner';
+// import { toast } from 'svelte-sonner';
 import { cellCenter, cellRef, cellRight, cellWichSignColor } from '../helper-snippets.svelte';
 
 export const tableStatus: {
@@ -24,7 +24,7 @@ export async function updateData() {
 	const res = await astockDailyPagin();
 
 	if (res) {
-		toast.success(res.message);
+		// toast.success(res.message);
 		tableStatus.data = res.data;
 	}
 	tableStatus.isLoading = false;

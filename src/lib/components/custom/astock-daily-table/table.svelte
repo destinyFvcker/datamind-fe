@@ -5,19 +5,29 @@
 	import Icon from '@iconify/svelte';
 	import Paginator from '../paginator.svelte';
 	import { defaultColumns, options, tableStatus, updateData } from './table-def.svelte';
+	import { mode } from 'mode-watcher';
+	import { cn } from '$lib/utils';
 
 	updateData();
 	const table = createSvelteTable(options);
 </script>
 
-<div class="space-y-2 rounded-md border p-2">
+<div class="flex h-screen flex-col space-y-2 rounded-md border p-2">
 	<Paginator tableModel={table} />
-	<Table.Root>
+
+	<Table.Root class="relative grow overflow-auto overscroll-y-auto">
 		<Table.Header>
 			{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-				<Table.Row>
+				<Table.Row
+					class={cn(
+						'sticky top-0',
+						mode.current == 'dark'
+							? 'bg-slate-800 hover:bg-slate-800'
+							: 'bg-slate-200 hover:bg-slate-200'
+					)}
+				>
 					{#each headerGroup.headers as header (header.id)}
-						<Table.Head class="border">
+						<Table.Head>
 							{#if !header.isPlaceholder}
 								<FlexRender
 									content={header.column.columnDef.header}

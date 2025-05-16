@@ -103,6 +103,7 @@
 	};
 	const fetchPageData = async () => {
 		isLoading = true;
+		isChartLoading = true;
 		const infoRes = await astockInfo(data.stockCode);
 		stockInfo = infoRes?.data;
 
