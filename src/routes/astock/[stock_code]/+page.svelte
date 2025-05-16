@@ -130,7 +130,7 @@
 							{stockInfo?.stock_name}
 						{/if}
 					</Card.Title>
-					<Card.Description>股票代码：{data.stockCode}</Card.Description>
+					<Card.Description class="whitespace-nowrap">股票代码：{data.stockCode}</Card.Description>
 					<Button class="flex h-6 w-16" onclick={() => goto(`${base}/`)}>
 						<ArrowBigLeftDash />
 						返回
