@@ -55,7 +55,7 @@
 	updateQvixData();
 </script>
 
-<div>
+<div class="space-y-2">
 	<Card.Root>
 		<Card.Header>
 			<Card.Title class="flex gap-2">

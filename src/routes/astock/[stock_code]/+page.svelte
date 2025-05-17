@@ -194,7 +194,10 @@
 			{:else}
 				<RadioGroup.Root
 					bind:value={adjType}
-					class="sticky top-0 z-40 flex w-fit gap-3 rounded-sm border-4 border-double border-indigo-500 px-2"
+					class={cn(
+						'sticky top-0 z-40 flex w-fit gap-3 rounded-sm border-4 border-double border-indigo-500 px-2',
+						mode.current == 'dark' ? 'bg-slate-950' : 'bg-white'
+					)}
 					onValueChange={() => {
 						fetchChartData();
 					}}
