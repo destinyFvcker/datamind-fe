@@ -6,7 +6,7 @@ export interface GlobalStatus {
 }
 
 export const globalStatus: GlobalStatus = $state({
-	isNavShow: true,
-	userName: '未知用户',
+	isNavShow: false,
+	userName: 'zilu',
 	email: 'example@test.com'
 });

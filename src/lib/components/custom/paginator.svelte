@@ -1,7 +1,8 @@
 <script lang="ts" generics="T extends RowData">
-	import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-svelte';
+	import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from 'lucide-svelte';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
 	import { type RowData, type Table } from '@tanstack/table-core';
 
 	// 关于如何给props标注类型仍然需要学习
@@ -14,7 +15,17 @@
 </script>
 
 <div class="flex items-center justify-between px-2">
-	<!-- <span class="font-bold">📖使用分页:</span> -->
+	<div class="flex items-center">
+		<span class="font-bold">查找股票代码:</span>
+		<div class="relative">
+			<Search class="absolute left-2 top-[50%] h-4 w-4 translate-y-[-50%] text-muted-foreground" />
+			<Input
+				type="text"
+				placeholder="股票代码"
+				class="h-8 w-[200px] border-2 !border-slate-400 pl-8 focus-visible:ring-offset-1"
+			/>
+		</div>
+	</div>
 	<span> </span>
 	<div class="flex items-center space-x-6 lg:space-x-8">
 		<div class="flex items-center space-x-2">

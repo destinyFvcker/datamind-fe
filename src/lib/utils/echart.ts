@@ -36,7 +36,6 @@ export function chartable(element: HTMLElement, echartOptions: ChartOptions) {
 
 	return {
 		update(newOptions: ChartOptions) {
-			console.log('echart update!');
 			if (newOptions.theme != themeCache) {
 				themeCache = newOptions.theme;
 				echartsInstance.dispose(); // 销毁实例

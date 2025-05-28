@@ -8,6 +8,9 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const CozeWebSDK: any;
 }
 
 export {};

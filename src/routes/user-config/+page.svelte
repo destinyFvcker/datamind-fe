@@ -38,7 +38,7 @@
 					<div class="flex items-center gap-2 text-sm">
 						<div class="flex size-2 rounded-full bg-blue-500"></div>
 						钉钉报警机器人🤖
-						<Button class="h-4 gap-1">
+						<Button class="h-4 gap-1 transition hover:scale-110">
 							<Icon icon="line-md:cellphone-arrow-up" />
 							发送测试消息
 						</Button>

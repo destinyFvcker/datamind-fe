@@ -87,12 +87,16 @@
 		isChartLoading = true;
 
 		const limitDays = 90;
-		const klineRes = await astockDailyKline(data.stockCode, adjType, limitDays);
-		stockKline = klineRes?.data ?? [];
-		const volumeRes = await astockTradingVolume(data.stockCode, adjType, limitDays);
-		dailyVolume = volumeRes?.data ?? [];
-		const maRes = await astockMaWithLimit(data.stockCode, limitDays);
-		dailyMA = maRes?.data ?? [];
+
+		const klinePromise = astockDailyKline(data.stockCode, adjType, limitDays);
+		const volumePromise = astockTradingVolume(data.stockCode, adjType, limitDays);
+		const maPromise = astockMaWithLimit(data.stockCode, limitDays);
+
+		let res = await Promise.all([klinePromise, volumePromise, maPromise]);
+
+		stockKline = res[0]?.data ?? [];
+		dailyVolume = res[1]?.data ?? [];
+		dailyMA = res[2]?.data ?? [];
 
 		const indicatorsRes = await astockDailyIndicator(data.stockCode, adjType, limitDays);
 		stockIndicator = indicatorsRes?.data ?? [];

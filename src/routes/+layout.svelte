@@ -14,6 +14,7 @@
 	import { goto } from '$app/navigation';
 	import '../app.css';
 	import BackToTop from '$lib/components/custom/back-to-top.svelte';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
@@ -36,6 +37,39 @@
 			? 'border-b-4 border-indigo-500 font-bold'
 			: '';
 	};
+
+	onMount(() => {
+		// new CozeWebSDK.WebChatClient({
+		// 	config: {
+		// 		bot_id: '7505453994324705319'
+		// 	},
+		// 	componentProps: {
+		// 		title: 'Coze'
+		// 	},
+		// 	auth: {
+		// 		type: 'token',
+		// 		token: 'pat_P7WlikdF2iP2Knb7VMcaMY5Py2EXFEDpLOSXEjtOCcBLUU7p3elm1rIhTjXdVCV0',
+		// 		onRefreshToken: function () {
+		// 			return 'pat_P7WlikdF2iP2Knb7VMcaMY5Py2EXFEDpLOSXEjtOCcBLUU7p3elm1rIhTjXdVCV0';
+		// 		}
+		// 	},
+		// 	ui: {
+		// 		base: {
+		// 			icon: 'https://s2.loli.net/2025/05/02/byJTi3vzx6uARoY.png'
+		// 		},
+		// 		chatBot: {
+		// 			title: '监控平台智能客服',
+		// 			// el: cozeDiv,
+		// 			onHide: () => {
+		// 				// todo...
+		// 			},
+		// 			onShow: () => {
+		// 				// todo...
+		// 			}
+		// 		}
+		// 	}
+		// });
+	});
 </script>
 
 <ModeWatcher />
@@ -112,7 +146,7 @@
 	<div class="min-h-screen w-full p-2">
 		{@render children()}
 	</div>
-	<SvelteQueryDevtools buttonPosition="bottom-left" />
+	<!-- <SvelteQueryDevtools buttonPosition="bottom-left" /> -->
 </QueryClientProvider>
 
 <BackToTop />

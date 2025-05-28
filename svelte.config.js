@@ -20,11 +20,11 @@ const config = {
 		paths: {
 			base: '/data-mind',
 			assets: 'https://www.destinyfvcker.cn/data-mind'
-		},
-		csp: {
-			mode: 'hash',
-			directives: { 'script-src': ['self'] }
 		}
+		// csp: {
+		// 	mode: 'hash',
+		// 	directives: { 'script-src': ['self'] }
+		// }
 	}
 };
 
