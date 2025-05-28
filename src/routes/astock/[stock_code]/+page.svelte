@@ -268,7 +268,7 @@
 			<span class="grow"></span>
 			<Dialog.Root>
 				<Dialog.Trigger
-					class={cn('!h-5 w-10 !rounded-sm px-3 py-4', buttonVariants({ variant: 'default' }))}
+					class={cn('h-5! w-10 rounded-sm! px-3 py-4', buttonVariants({ variant: 'default' }))}
 				>
 					<span class="">摘要</span>
 				</Dialog.Trigger>

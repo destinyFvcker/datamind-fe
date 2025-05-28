@@ -78,13 +78,13 @@
 {#if globalStatus.isNavShow}
 	<nav class="h-fit items-center justify-between border-2 py-0.5 lg:flex lg:flex-wrap lg:pr-14">
 		<div class="mb-1 flex lg:mb-0">
-			<div class="mr-3 flex flex-shrink-0 grow items-center gap-2">
+			<div class="mr-3 flex shrink-0 grow items-center gap-2">
 				<Icon icon="material-symbols:mindfulness" width="50" height="50" />
 				<span class="text-lg font-bold tracking-tight subpixel-antialiased">data-mind</span>
 			</div>
 		</div>
-		<div class="block w-full flex-grow flex-wrap lg:w-auto lg:items-center">
-			<div class="mx-2 flex items-center gap-3 text-sm lg:flex-grow">
+		<div class="block w-full grow flex-wrap lg:w-auto lg:items-center">
+			<div class="mx-2 flex items-center gap-3 text-sm lg:grow">
 				<!-- <Separator orientation="vertical" class="h-8 w-0.5" /> -->
 				<button
 					onclick={() => goto(`${base}/`)}

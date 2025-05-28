@@ -54,7 +54,7 @@
 									<Input
 										type="text"
 										placeholder="webhook地址"
-										class="w-[600px] border-2 !border-slate-400 pl-8 focus-visible:ring-offset-1"
+										class="w-[600px] border-2 border-slate-400! pl-8 focus-visible:ring-offset-1"
 										onfocus={() => {
 											isWebhookFocus = true;
 										}}
@@ -80,7 +80,7 @@
 							</span>
 							<Dialog.Root>
 								<Dialog.Trigger
-									class={cn('!border-2 !border-slate-400', buttonVariants({ variant: 'outline' }))}
+									class={cn('border-2! border-slate-400!', buttonVariants({ variant: 'outline' }))}
 								>
 									<div class="flex items-center gap-1">
 										<Icon icon="line-md:security-twotone" width="24" height="24" />
@@ -165,7 +165,7 @@
 								<Input
 									type="text"
 									placeholder="你的昵称"
-									class="w-[300px] border-2 !border-slate-400 pl-8 focus-visible:ring-offset-1"
+									class="w-[300px] border-2 border-slate-400! pl-8 focus-visible:ring-offset-1"
 									onfocus={() => {
 										isNickNameFocus = true;
 									}}
@@ -186,7 +186,7 @@
 						<span class="block text-sm">修改密码:</span>
 						<Dialog.Root>
 							<Dialog.Trigger
-								class={cn('!border-2 !border-slate-400', buttonVariants({ variant: 'outline' }))}
+								class={cn('border-2! border-slate-400!', buttonVariants({ variant: 'outline' }))}
 							>
 								<div class="flex items-center gap-1">
 									<RotateCcwKey />
@@ -220,7 +220,7 @@
 
 					<div>
 						<span class="block text-sm">绑定第三方账号:</span>
-						<Button variant="outline" class="flex gap-1 !border-2 !border-slate-400">
+						<Button variant="outline" class="flex gap-1 border-2! border-slate-400!">
 							<Icon icon="line-md:github" width="24" height="24" />
 							绑定github账号
 						</Button>

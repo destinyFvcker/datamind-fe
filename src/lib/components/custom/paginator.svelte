@@ -22,7 +22,7 @@
 			<Input
 				type="text"
 				placeholder="股票代码"
-				class="h-8 w-[200px] border-2 !border-slate-400 pl-8 focus-visible:ring-offset-1"
+				class="h-8 w-[200px] border-2 border-slate-400! pl-8 focus-visible:ring-offset-1"
 			/>
 		</div>
 	</div>
