@@ -191,6 +191,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/astock/stock_hsgt_hist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 获取沪深港通资金流向数据 */
+        get: operations["fetch_stock_hsgt_hist_em"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/astock/stock_individual_info/{stock_id}": {
         parameters: {
             query?: never;
@@ -404,6 +421,142 @@ export interface paths {
         };
         /** get_state */
         get: operations["get_state"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auths/plain_auth/signin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 普通账号登录 */
+        post: operations["plain_sign_in"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auths/plain_auth/signup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 普通账号注册 */
+        post: operations["plain_sign_up"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/manage/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 获取前端可展示的用户可配置信息 */
+        get: operations["get_user_config_info"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/manage/ping_alarm_robot": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 向钉钉报警机器人发送测试信息 */
+        post: operations["hook_ding_test_msg"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/manage/update_ding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 更新钉钉报警机器人配置 */
+        post: operations["update_ding_robot"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/manage/update_nickname": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 更新用户昵称 */
+        post: operations["update_user_nickname"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/manage/update_pwd": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 更新用户密码 */
+        post: operations["update_user_password"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/manage/user_info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get_user_basic_info */
+        get: operations["get_user_basic_info"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1976,6 +2129,126 @@ export interface components {
             /** @description 💬 正确响应描述性文本 */
             message: string;
         };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            data: null | Record<string, never>;
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_GithubState: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            /** @description 在从当前服务重定向到github OAuth界面需要的一个不可猜测的随机字符串，
+             *     用于防止跨站请求伪造攻击 */
+            data: {
+                /** @description 不可猜测的随机字符串 */
+                state: string;
+            };
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_Vec_StockZhIndexDailyMA: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            data: {
+                /**
+                 * Format: date
+                 * @description 数据日期，格式为YYYY-MM-DD
+                 */
+                date: string;
+                /**
+                 * Format: double
+                 * @description 对应(指数代码, 数据日期)的10日移动平均线数据
+                 */
+                ma10?: number | null;
+                /**
+                 * Format: double
+                 * @description 对应(指数代码, 数据日期)的20日移动平均线数据
+                 */
+                ma20?: number | null;
+                /**
+                 * Format: double
+                 * @description 对应(指数代码, 数据日期)的5日移动平均线数据
+                 */
+                ma5?: number | null;
+            }[];
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
+        /** @description 注册/登录data-mind账号请求体结构 */
+        SignBody: {
+            /** @description 邮箱账号 */
+            email: string;
+            /** @description 密码 */
+            password: string;
+        };
+        /** @description 更新钉钉报警机器人🤖请求体 */
+        UpdateDingBody: {
+            /** @description 钉钉报警机器人密钥签名 */
+            signature?: string | null;
+            /** @description 钉钉报警机器人webhook地址 */
+            webhook_addr?: string | null;
+        };
+        /** @description 通用的更新信息请求体 */
+        UpdateMsgBody: {
+            /** @description 更新请求体内容 */
+            value: string;
+        };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_UserRepo: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            /** @description 用户基本信息表 */
+            data: {
+                avatar_url: string;
+                /** Format: date-time */
+                created_at: string;
+                email: string;
+                /** Format: int64 */
+                id: number;
+                /** Format: date-time */
+                last_login_at?: string | null;
+                mobile?: string | null;
+                nickname: string;
+                password_hash: string;
+                /** Format: date-time */
+                updated_at: string;
+            };
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
+        /** @description 用户基本信息表 */
+        UserRepo: {
+            avatar_url: string;
+            /** Format: date-time */
+            created_at: string;
+            email: string;
+            /** Format: int64 */
+            id: number;
+            /** Format: date-time */
+            last_login_at?: string | null;
+            mobile?: string | null;
+            nickname: string;
+            password_hash: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -2161,7 +2434,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StockZhIndexDailyMA"][];
+                    "application/json": components["schemas"]["OkRes_Vec_StockZhIndexDailyMA"];
                 };
             };
             /** @description 没有访问权限 */
@@ -2558,6 +2831,55 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description 成功获取最新交易日A股日频分页数据 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes_Vec_StockDailyPagin"];
+                };
+            };
+            /** @description 没有访问权限 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 发生服务器内部错误 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    fetch_stock_hsgt_hist_em: {
+        parameters: {
+            query: {
+                /**
+                 * @description 资金流动方向, choice of "0"(北向), "1"(南向)
+                 * @example 1
+                 */
+                flow_type: string;
+                /**
+                 * @description 限定返回历史数据从最新数据开始倒推的天数，-1返回所有数据
+                 * @example 30
+                 */
+                limit_days: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 成功获取指定的资金流向-沪深港通资金流向-沪深港通历史数据 */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -3096,9 +3418,15 @@ export interface operations {
     github_callback: {
         parameters: {
             query: {
-                /** @description 收到的作为对用户同意使用github进行登陆的响应的代码。 */
+                /**
+                 * @description 收到的作为对用户同意使用github进行登陆的响应的代码。
+                 * @example A.u2r=n?N^Ea3Y5.?rLzF+U0ce
+                 */
                 code: string;
-                /** @description 不可猜测的随机字符串，用于防止跨站请求伪造攻击。 */
+                /**
+                 * @description 不可猜测的随机字符串，用于防止跨站请求伪造攻击。
+                 * @example VrEaJ191gmyuhB5CKq0x
+                 */
                 state: string;
             };
             header?: never;
@@ -3114,7 +3442,9 @@ export interface operations {
                     Authorization?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
             };
             /** @description github state not found */
             404: {
@@ -3151,7 +3481,369 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GithubState"];
+                    "application/json": components["schemas"]["OkRes_GithubState"];
+                };
+            };
+        };
+    };
+    plain_sign_in: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SignBody"];
+            };
+        };
+        responses: {
+            /** @description empty body with jwt token in the header */
+            200: {
+                headers: {
+                    /** @description New jwt token */
+                    Authorization?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 服务器内部错误❌ */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    plain_sign_up: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SignBody"];
+            };
+        };
+        responses: {
+            /** @description 成功创建用户 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 用户已存在，请进行登录 */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 服务器内部错误 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    get_user_config_info: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 获取用户可配置信息成功 ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 系统不存在此用户 */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    hook_ding_test_msg: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 测试钉钉报警机器人消息发送成功 ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 系统不存在此用户 */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    update_ding_robot: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UpdateDingBody"];
+            };
+        };
+        responses: {
+            /** @description 更新钉钉报警机器人配置成功 ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 请求参数错误（全为空） */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    update_user_nickname: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UpdateMsgBody"];
+            };
+        };
+        responses: {
+            /** @description 更新昵称成功 ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    update_user_password: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UpdateMsgBody"];
+            };
+        };
+        responses: {
+            /** @description 更新密码成功 ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes"];
+                };
+            };
+            /** @description 提供的密码不正确 */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    get_user_basic_info: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 获取用户基本信息成功 ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes_UserRepo"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 系统不存在此用户 */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
                 };
             };
         };

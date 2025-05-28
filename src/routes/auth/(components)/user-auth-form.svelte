@@ -5,29 +5,61 @@
 	import { cn } from '$lib/utils.js';
 	import { toast } from 'svelte-sonner';
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { getGithubState } from '$lib/api/auth';
+	import { getGithubState, signIn, signUp } from '$lib/api/auth';
+	import { initApp } from '$lib';
 
 	const { class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
 
 	let isLogin = $state(true);
 	let isLoading = $state(false);
 
-	async function onSubmitSingIn(event: SubmitEvent) {
+	let email = $state('');
+	let password = $state('');
+	let confirmPassword = $state('');
+
+	const clearInput = () => {
+		email = '';
+		password = '';
+		confirmPassword = '';
+	};
+
+	async function onSubmitSignIn(event: SubmitEvent) {
 		event.preventDefault();
 		isLoading = true;
 
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			isLoading = false;
-		}, 5000);
+		}, 2000);
+
+		const res = await signIn(email, password);
+
+		if (res) {
+			initApp();
+			toast.success(res.message);
+			clearTimeout(timeout);
+		}
 	}
 
-	async function onSubmitLogIn(event: SubmitEvent) {
+	async function onSubmitSignUp(event: SubmitEvent) {
 		event?.preventDefault();
 		isLoading = true;
-
-		setTimeout(() => {
+		const timeout = setTimeout(() => {
 			isLoading = false;
-		}, 5000);
+		}, 2000);
+
+		if (password != confirmPassword) {
+			toast.error('两次输入密码不一致! 请重新输入');
+			isLoading = false;
+			clearTimeout(timeout);
+			return;
+		}
+
+		const res = await signUp(email, password);
+		if (res) {
+			toast.success(res.message);
+			isLogin = !isLogin;
+			clearTimeout(timeout);
+		}
 	}
 
 	async function onGithubSignIn() {
@@ -38,13 +70,6 @@
 
 		try {
 			const githubStatus = await getGithubState();
-
-			if (!githubStatus.data) {
-				toast.error(`Github state require failed, please check your internet connection.`);
-				isLoading = false;
-				clearTimeout(timeoutId);
-				return;
-			}
 
 			const uri =
 				'https://github.com/login/oauth/authorize?' +
@@ -63,7 +88,7 @@
 {#if isLogin}
 	<div class="flex flex-col space-y-2 text-center">
 		<h1 class="text-2xl font-semibold tracking-tight">Login</h1>
-		<p class="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+		<p class="text-muted-foreground flex items-center justify-center gap-1 text-sm">
 			start your journey with data-mind!
 			<Icon icon="line-md:emoji-smile-wink" width="24" height="24" />
 		</p>
@@ -71,7 +96,7 @@
 {:else}
 	<div class="flex flex-col space-y-2 text-center">
 		<h1 class="text-2xl font-semibold tracking-tight">Create an account</h1>
-		<p class="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+		<p class="text-muted-foreground flex items-center justify-center gap-1 text-sm">
 			Enter your email below to create your account
 			<Icon icon="line-md:heart" width="24" height="24" />
 		</p>
@@ -81,7 +106,7 @@
 <div class={cn('grid gap-6', className)} {...restProps}>
 	<div class="grid gap-4">
 		{#if isLogin}
-			<form onsubmit={onSubmitSingIn}>
+			<form onsubmit={onSubmitSignIn}>
 				<div class="grid gap-3">
 					<div class="grid gap-2.5">
 						<Icon icon="material-symbols:mail" width="24" height="24" />
@@ -93,6 +118,7 @@
 							autocomplete="email"
 							autocorrect="off"
 							disabled={isLoading}
+							bind:value={email}
 						/>
 						<Icon icon="ic:round-password" width="24" height="24" />
 						<Input
@@ -105,6 +131,7 @@
 							autocorrect="off"
 							spellcheck="false"
 							disabled={isLoading}
+							bind:value={password}
 						/>
 					</div>
 					<Button type="submit" disabled={isLoading}>
@@ -116,7 +143,7 @@
 				</div>
 			</form>
 		{:else}
-			<form onsubmit={onSubmitSingIn}>
+			<form onsubmit={onSubmitSignUp}>
 				<div class="grid gap-2">
 					<div class="grid gap-2.5">
 						<Icon icon="material-symbols:mail" width="24" height="24" />
@@ -124,10 +151,12 @@
 							id="email"
 							placeholder="name@example.com"
 							type="email"
+							required
 							autocapitalize="none"
 							autocomplete="email"
 							autocorrect="off"
 							disabled={isLoading}
+							bind:value={email}
 						/>
 						<Icon icon="ic:round-password" width="24" height="24" />
 						<Input
@@ -140,6 +169,7 @@
 							autocorrect="off"
 							spellcheck="false"
 							disabled={isLoading}
+							bind:value={password}
 						/>
 						<Input
 							id="password"
@@ -151,6 +181,7 @@
 							autocorrect="off"
 							spellcheck="false"
 							disabled={isLoading}
+							bind:value={confirmPassword}
 						/>
 					</div>
 					<Button type="submit" disabled={isLoading}>
@@ -169,6 +200,7 @@
 			disabled={isLoading}
 			onclick={() => {
 				isLogin = !isLogin;
+				clearInput();
 			}}
 		>
 			{isLogin ? 'Create a Account' : 'Want Login?'}
@@ -181,7 +213,7 @@
 			<span class="w-full border-t"></span>
 		</div>
 		<div class="relative flex justify-center text-xs uppercase">
-			<span class="bg-background px-2 text-muted-foreground"> Or continue with </span>
+			<span class="bg-background text-muted-foreground px-2"> Or continue with </span>
 		</div>
 	</div>
 

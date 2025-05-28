@@ -6,6 +6,7 @@
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
 	import { browser } from '$app/environment';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
+	import * as Avatar from '$lib/components/ui/avatar/index.js';
 	import { globalStatus } from '$lib/global.svelte';
 	import { base } from '$app/paths';
 	import Icon from '@iconify/svelte';
@@ -14,7 +15,8 @@
 	import { goto } from '$app/navigation';
 	import '../app.css';
 	import BackToTop from '$lib/components/custom/back-to-top.svelte';
-	import { onMount } from 'svelte';
+	import { cn } from '$lib/utils';
+	import { initApp } from '$lib';
 
 	let { children } = $props();
 
@@ -38,38 +40,7 @@
 			: '';
 	};
 
-	onMount(() => {
-		// new CozeWebSDK.WebChatClient({
-		// 	config: {
-		// 		bot_id: '7505453994324705319'
-		// 	},
-		// 	componentProps: {
-		// 		title: 'Coze'
-		// 	},
-		// 	auth: {
-		// 		type: 'token',
-		// 		token: 'pat_P7WlikdF2iP2Knb7VMcaMY5Py2EXFEDpLOSXEjtOCcBLUU7p3elm1rIhTjXdVCV0',
-		// 		onRefreshToken: function () {
-		// 			return 'pat_P7WlikdF2iP2Knb7VMcaMY5Py2EXFEDpLOSXEjtOCcBLUU7p3elm1rIhTjXdVCV0';
-		// 		}
-		// 	},
-		// 	ui: {
-		// 		base: {
-		// 			icon: 'https://s2.loli.net/2025/05/02/byJTi3vzx6uARoY.png'
-		// 		},
-		// 		chatBot: {
-		// 			title: '监控平台智能客服',
-		// 			// el: cozeDiv,
-		// 			onHide: () => {
-		// 				// todo...
-		// 			},
-		// 			onShow: () => {
-		// 				// todo...
-		// 			}
-		// 		}
-		// 	}
-		// });
-	});
+	initApp();
 </script>
 
 <ModeWatcher />
@@ -124,7 +95,15 @@
 				<!-- <Separator orientation="vertical" class="h-8 w-0.5" /> -->
 
 				<div class="grow"></div>
-				<span class="font-bold">你好, {globalStatus.userName}</span>
+				<span class="font-bold">你好, {globalStatus.userInfo?.nickname ?? '未知用户'}</span>
+				<Avatar.Root>
+					<Avatar.Image
+						src={globalStatus.userInfo?.avatar_url ??
+							'https://s2.loli.net/2025/05/28/5WCKgdOnqLlSMa6.jpg'}
+						alt="@shadcn"
+					/>
+					<Avatar.Fallback>CN</Avatar.Fallback>
+				</Avatar.Root>
 				<Separator orientation="vertical" class="h-8 w-0.5" />
 				<button
 					onclick={() => {
@@ -143,7 +122,7 @@
 {/if}
 
 <QueryClientProvider client={queryClient}>
-	<div class="min-h-screen w-full p-2">
+	<div class={cn('min-h-screen w-full', globalStatus.isInAuthPage ? '' : 'p-2')}>
 		{@render children()}
 	</div>
 	<!-- <SvelteQueryDevtools buttonPosition="bottom-left" /> -->

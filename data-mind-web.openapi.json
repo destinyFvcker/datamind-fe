@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "data-mind-web",
     "description": "",
@@ -20,6 +20,9 @@
     },
     {
       "name": "鉴权接口"
+    },
+    {
+      "name": "用户信息管理"
     }
   ],
   "paths": {
@@ -266,10 +269,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StockZhIndexDailyMA"
-                  }
+                  "$ref": "#/components/schemas/OkRes_Vec_StockZhIndexDailyMA"
                 }
               }
             },
@@ -330,12 +330,10 @@
             "required": false,
             "example": 1,
             "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
+              "type": "integer",
               "format": "int32",
-              "minimum": 0
+              "minimum": 0,
+              "nullable": true
             }
           },
           {
@@ -345,12 +343,10 @@
             "required": false,
             "example": 50,
             "schema": {
-              "type": [
-                "integer",
-                "null"
-              ],
+              "type": "integer",
               "format": "int32",
-              "minimum": 0
+              "minimum": 0,
+              "nullable": true
             }
           }
         ],
@@ -850,6 +846,77 @@
         "responses": {
           "200": {
             "description": "成功获取最新交易日A股日频分页数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_Vec_StockDailyPagin"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/astock/stock_hsgt_hist": {
+      "get": {
+        "summary": "获取沪深港通资金流向数据",
+        "deprecated": false,
+        "description": "",
+        "operationId": "fetch_stock_hsgt_hist_em",
+        "tags": [
+          "A股量化金融数据",
+          "A股量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "flow_type",
+            "in": "query",
+            "description": "资金流动方向, choice of \"0\"(北向), \"1\"(南向)",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit_days",
+            "in": "query",
+            "description": "限定返回历史数据从最新数据开始倒推的天数，-1返回所有数据",
+            "required": true,
+            "example": 30,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指定的资金流向-沪深港通资金流向-沪深港通历史数据",
             "content": {
               "application/json": {
                 "schema": {
@@ -1595,6 +1662,7 @@
             "in": "query",
             "description": "收到的作为对用户同意使用github进行登陆的响应的代码。",
             "required": true,
+            "example": "A.u2r=n?N^Ea3Y5.?rLzF+U0ce",
             "schema": {
               "type": "string"
             }
@@ -1604,6 +1672,7 @@
             "in": "query",
             "description": "不可猜测的随机字符串，用于防止跨站请求伪造攻击。",
             "required": true,
+            "example": "VrEaJ191gmyuhB5CKq0x",
             "schema": {
               "type": "string"
             }
@@ -1612,6 +1681,13 @@
         "responses": {
           "200": {
             "description": "empty body with jwt token in the header",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
             "headers": {
               "Authorization": {
                 "description": "New jwt token",
@@ -1664,7 +1740,495 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GithubState"
+                  "$ref": "#/components/schemas/OkRes_GithubState"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auths/plain_auth/signin": {
+      "post": {
+        "summary": "普通账号登录",
+        "deprecated": false,
+        "description": "",
+        "operationId": "plain_sign_in",
+        "tags": [
+          "鉴权接口",
+          "鉴权接口"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "empty body with jwt token in the header",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {
+              "Authorization": {
+                "description": "New jwt token",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器内部错误❌",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auths/plain_auth/signup": {
+      "post": {
+        "summary": "普通账号注册",
+        "deprecated": false,
+        "description": "",
+        "operationId": "plain_sign_up",
+        "tags": [
+          "鉴权接口",
+          "鉴权接口"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功创建用户",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "409": {
+            "description": "用户已存在，请进行登录",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/manage/": {
+      "get": {
+        "summary": "获取前端可展示的用户可配置信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get_user_config_info",
+        "tags": [
+          "用户信息管理",
+          "用户信息管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取用户可配置信息成功 ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "系统不存在此用户",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/manage/ping_alarm_robot": {
+      "post": {
+        "summary": "向钉钉报警机器人发送测试信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "hook_ding_test_msg",
+        "tags": [
+          "用户信息管理",
+          "用户信息管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "测试钉钉报警机器人消息发送成功 ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "系统不存在此用户",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/manage/update_ding": {
+      "post": {
+        "summary": "更新钉钉报警机器人配置",
+        "deprecated": false,
+        "description": "",
+        "operationId": "update_ding_robot",
+        "tags": [
+          "用户信息管理",
+          "用户信息管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDingBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新钉钉报警机器人配置成功 ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "请求参数错误（全为空）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/manage/update_nickname": {
+      "post": {
+        "summary": "更新用户昵称",
+        "deprecated": false,
+        "description": "",
+        "operationId": "update_user_nickname",
+        "tags": [
+          "用户信息管理",
+          "用户信息管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMsgBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新昵称成功 ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/manage/update_pwd": {
+      "post": {
+        "summary": "更新用户密码",
+        "deprecated": false,
+        "description": "",
+        "operationId": "update_user_password",
+        "tags": [
+          "用户信息管理",
+          "用户信息管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMsgBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新密码成功 ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "提供的密码不正确",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/manage/user_info": {
+      "get": {
+        "summary": "get_user_basic_info",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get_user_basic_info",
+        "tags": [
+          "用户信息管理",
+          "用户信息管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取用户基本信息成功 ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_UserRepo"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "系统不存在此用户",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
                 }
               }
             },
@@ -1685,176 +2249,128 @@
         ],
         "properties": {
           "accounts_receivable_turnover_days": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "应收账款周转天数"
+            "type": "string",
+            "description": "应收账款周转天数",
+            "nullable": true
           },
           "basic_eps": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "基本每股收益"
+            "type": "string",
+            "description": "基本每股收益",
+            "nullable": true
           },
           "capital_reserve_per_share": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "每股资本公积金"
+            "type": "string",
+            "description": "每股资本公积金",
+            "nullable": true
           },
           "conservative_quick_ratio": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "保守速动比率"
+            "type": "string",
+            "description": "保守速动比率",
+            "nullable": true
           },
           "current_ratio": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "流动比率"
+            "type": "string",
+            "description": "流动比率",
+            "nullable": true
           },
           "debt_asset_ratio": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "资产负债率"
+            "type": "string",
+            "description": "资产负债率",
+            "nullable": true
           },
           "deducted_net_profit": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "扣非净利润"
+            "type": "string",
+            "description": "扣非净利润",
+            "nullable": true
           },
           "deducted_net_profit_growth_rate": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "扣非净利润同比增长率"
+            "type": "string",
+            "description": "扣非净利润同比增长率",
+            "nullable": true
           },
           "equity_ratio": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "产权比率"
+            "type": "string",
+            "description": "产权比率",
+            "nullable": true
           },
           "gross_profit_margin": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "销售毛利率"
+            "type": "string",
+            "description": "销售毛利率",
+            "nullable": true
           },
           "inventory_turnover": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "存货周转率"
+            "type": "string",
+            "description": "存货周转率",
+            "nullable": true
           },
           "inventory_turnover_days": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "存货周转天数"
+            "type": "string",
+            "description": "存货周转天数",
+            "nullable": true
           },
           "net_assets_per_share": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "每股净资产"
+            "type": "string",
+            "description": "每股净资产",
+            "nullable": true
           },
           "net_profit": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "净利润"
+            "type": "string",
+            "description": "净利润",
+            "nullable": true
           },
           "net_profit_growth_rate": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "净利润同比增长率"
+            "type": "string",
+            "description": "净利润同比增长率",
+            "nullable": true
           },
           "net_profit_margin": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "销售净利率"
+            "type": "string",
+            "description": "销售净利率",
+            "nullable": true
           },
           "operating_cash_flow_per_share": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "每股经营现金流"
+            "type": "string",
+            "description": "每股经营现金流",
+            "nullable": true
           },
           "operating_cycle": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "营业周期"
+            "type": "string",
+            "description": "营业周期",
+            "nullable": true
           },
           "quick_ratio": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "速动比率"
+            "type": "string",
+            "description": "速动比率",
+            "nullable": true
           },
           "report_date": {
             "type": "string",
             "description": "报告期"
           },
           "roe": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "净资产收益率"
+            "type": "string",
+            "description": "净资产收益率",
+            "nullable": true
           },
           "roe_diluted": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "净资产收益率-摊薄"
+            "type": "string",
+            "description": "净资产收益率-摊薄",
+            "nullable": true
           },
           "total_revenue": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "营业总收入"
+            "type": "string",
+            "description": "营业总收入",
+            "nullable": true
           },
           "total_revenue_growth_rate": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "营业总收入同比增长率"
+            "type": "string",
+            "description": "营业总收入同比增长率",
+            "nullable": true
           },
           "undistributed_profit_per_share": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "每股未分配利润"
+            "type": "string",
+            "description": "每股未分配利润",
+            "nullable": true
           }
         }
       },
@@ -2382,176 +2898,128 @@
               ],
               "properties": {
                 "accounts_receivable_turnover_days": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "应收账款周转天数"
+                  "type": "string",
+                  "description": "应收账款周转天数",
+                  "nullable": true
                 },
                 "basic_eps": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "基本每股收益"
+                  "type": "string",
+                  "description": "基本每股收益",
+                  "nullable": true
                 },
                 "capital_reserve_per_share": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "每股资本公积金"
+                  "type": "string",
+                  "description": "每股资本公积金",
+                  "nullable": true
                 },
                 "conservative_quick_ratio": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "保守速动比率"
+                  "type": "string",
+                  "description": "保守速动比率",
+                  "nullable": true
                 },
                 "current_ratio": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "流动比率"
+                  "type": "string",
+                  "description": "流动比率",
+                  "nullable": true
                 },
                 "debt_asset_ratio": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "资产负债率"
+                  "type": "string",
+                  "description": "资产负债率",
+                  "nullable": true
                 },
                 "deducted_net_profit": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "扣非净利润"
+                  "type": "string",
+                  "description": "扣非净利润",
+                  "nullable": true
                 },
                 "deducted_net_profit_growth_rate": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "扣非净利润同比增长率"
+                  "type": "string",
+                  "description": "扣非净利润同比增长率",
+                  "nullable": true
                 },
                 "equity_ratio": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "产权比率"
+                  "type": "string",
+                  "description": "产权比率",
+                  "nullable": true
                 },
                 "gross_profit_margin": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "销售毛利率"
+                  "type": "string",
+                  "description": "销售毛利率",
+                  "nullable": true
                 },
                 "inventory_turnover": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "存货周转率"
+                  "type": "string",
+                  "description": "存货周转率",
+                  "nullable": true
                 },
                 "inventory_turnover_days": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "存货周转天数"
+                  "type": "string",
+                  "description": "存货周转天数",
+                  "nullable": true
                 },
                 "net_assets_per_share": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "每股净资产"
+                  "type": "string",
+                  "description": "每股净资产",
+                  "nullable": true
                 },
                 "net_profit": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "净利润"
+                  "type": "string",
+                  "description": "净利润",
+                  "nullable": true
                 },
                 "net_profit_growth_rate": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "净利润同比增长率"
+                  "type": "string",
+                  "description": "净利润同比增长率",
+                  "nullable": true
                 },
                 "net_profit_margin": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "销售净利率"
+                  "type": "string",
+                  "description": "销售净利率",
+                  "nullable": true
                 },
                 "operating_cash_flow_per_share": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "每股经营现金流"
+                  "type": "string",
+                  "description": "每股经营现金流",
+                  "nullable": true
                 },
                 "operating_cycle": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "营业周期"
+                  "type": "string",
+                  "description": "营业周期",
+                  "nullable": true
                 },
                 "quick_ratio": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "速动比率"
+                  "type": "string",
+                  "description": "速动比率",
+                  "nullable": true
                 },
                 "report_date": {
                   "type": "string",
                   "description": "报告期"
                 },
                 "roe": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "净资产收益率"
+                  "type": "string",
+                  "description": "净资产收益率",
+                  "nullable": true
                 },
                 "roe_diluted": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "净资产收益率-摊薄"
+                  "type": "string",
+                  "description": "净资产收益率-摊薄",
+                  "nullable": true
                 },
                 "total_revenue": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "营业总收入"
+                  "type": "string",
+                  "description": "营业总收入",
+                  "nullable": true
                 },
                 "total_revenue_growth_rate": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "营业总收入同比增长率"
+                  "type": "string",
+                  "description": "营业总收入同比增长率",
+                  "nullable": true
                 },
                 "undistributed_profit_per_share": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "每股未分配利润"
+                  "type": "string",
+                  "description": "每股未分配利润",
+                  "nullable": true
                 }
               }
             }
@@ -3315,28 +3783,22 @@
             "description": "数据日期，格式为YYYY-DD-MM"
           },
           "ma10": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
-            "description": "对应数据日期的10日平均线数据"
+            "description": "对应数据日期的10日平均线数据",
+            "nullable": true
           },
           "ma20": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
-            "description": "对应数据日期的20日平均线数据"
+            "description": "对应数据日期的20日平均线数据",
+            "nullable": true
           },
           "ma5": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
-            "description": "对应数据日期的5日平均线数据"
+            "description": "对应数据日期的5日平均线数据",
+            "nullable": true
           }
         }
       },
@@ -3441,28 +3903,22 @@
                   "description": "数据日期，格式为YYYY-DD-MM"
                 },
                 "ma10": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
+                  "type": "number",
                   "format": "double",
-                  "description": "对应数据日期的10日平均线数据"
+                  "description": "对应数据日期的10日平均线数据",
+                  "nullable": true
                 },
                 "ma20": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
+                  "type": "number",
                   "format": "double",
-                  "description": "对应数据日期的20日平均线数据"
+                  "description": "对应数据日期的20日平均线数据",
+                  "nullable": true
                 },
                 "ma5": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
+                  "type": "number",
                   "format": "double",
-                  "description": "对应数据日期的5日平均线数据"
+                  "description": "对应数据日期的5日平均线数据",
+                  "nullable": true
                 }
               }
             }
@@ -3813,37 +4269,31 @@
                   ]
                 },
                 "ma10": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
+                  "type": "number",
                   "format": "double",
                   "description": "数据点日期对应的MA10值。注意单位(元)",
                   "examples": [
                     13.481
-                  ]
+                  ],
+                  "nullable": true
                 },
                 "ma20": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
+                  "type": "number",
                   "format": "double",
                   "description": "数据点日期对应的MA20值，注意单位(元)",
                   "examples": [
                     13.8955
-                  ]
+                  ],
+                  "nullable": true
                 },
                 "ma5": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
+                  "type": "number",
                   "format": "double",
                   "description": "数据点日期对应的MA5值，注意单位(元)",
                   "examples": [
                     13.29
-                  ]
+                  ],
+                  "nullable": true
                 }
               }
             }
@@ -4178,37 +4628,31 @@
             ]
           },
           "ma10": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
             "description": "数据点日期对应的MA10值。注意单位(元)",
             "examples": [
               13.481
-            ]
+            ],
+            "nullable": true
           },
           "ma20": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
             "description": "数据点日期对应的MA20值，注意单位(元)",
             "examples": [
               13.8955
-            ]
+            ],
+            "nullable": true
           },
           "ma5": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
             "description": "数据点日期对应的MA5值，注意单位(元)",
             "examples": [
               13.29
-            ]
+            ],
+            "nullable": true
           }
         }
       },
@@ -4269,28 +4713,22 @@
             "description": "数据日期，格式为YYYY-MM-DD"
           },
           "ma10": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
-            "description": "对应(指数代码, 数据日期)的10日移动平均线数据"
+            "description": "对应(指数代码, 数据日期)的10日移动平均线数据",
+            "nullable": true
           },
           "ma20": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
-            "description": "对应(指数代码, 数据日期)的20日移动平均线数据"
+            "description": "对应(指数代码, 数据日期)的20日移动平均线数据",
+            "nullable": true
           },
           "ma5": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "format": "double",
-            "description": "对应(指数代码, 数据日期)的5日移动平均线数据"
+            "description": "对应(指数代码, 数据日期)的5日移动平均线数据",
+            "nullable": true
           }
         }
       },
@@ -4549,6 +4987,327 @@
             "examples": [
               "登陆成功，欢迎来到data-mind!👏"
             ]
+          }
+        }
+      },
+      "OkRes": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "properties": {}
+              }
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_GithubState": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "object",
+            "description": "在从当前服务重定向到github OAuth界面需要的一个不可猜测的随机字符串，\n用于防止跨站请求伪造攻击",
+            "required": [
+              "state"
+            ],
+            "properties": {
+              "state": {
+                "type": "string",
+                "description": "不可猜测的随机字符串",
+                "examples": [
+                  "VrEaJ191gmyuhB5CKq0x"
+                ]
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_Vec_StockZhIndexDailyMA": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "A股指数日频移动平均线数据",
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "数据日期，格式为YYYY-MM-DD"
+                },
+                "ma10": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "对应(指数代码, 数据日期)的10日移动平均线数据",
+                  "nullable": true
+                },
+                "ma20": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "对应(指数代码, 数据日期)的20日移动平均线数据",
+                  "nullable": true
+                },
+                "ma5": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "对应(指数代码, 数据日期)的5日移动平均线数据",
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "SignBody": {
+        "type": "object",
+        "description": "注册/登录data-mind账号请求体结构",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "邮箱账号",
+            "examples": [
+              "destinyfunk@163.com"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "description": "密码",
+            "examples": [
+              "12345678"
+            ]
+          }
+        }
+      },
+      "UpdateDingBody": {
+        "type": "object",
+        "description": "更新钉钉报警机器人🤖请求体",
+        "properties": {
+          "signature": {
+            "type": "string",
+            "description": "钉钉报警机器人密钥签名",
+            "nullable": true
+          },
+          "webhook_addr": {
+            "type": "string",
+            "description": "钉钉报警机器人webhook地址",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateMsgBody": {
+        "type": "object",
+        "description": "通用的更新信息请求体",
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "更新请求体内容"
+          }
+        }
+      },
+      "OkRes_UserRepo": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "object",
+            "description": "用户基本信息表",
+            "required": [
+              "id",
+              "email",
+              "password_hash",
+              "nickname",
+              "avatar_url",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "avatar_url": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "email": {
+                "type": "string"
+              },
+              "id": {
+                "type": "integer",
+                "format": "int64",
+                "minimum": 0
+              },
+              "last_login_at": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "mobile": {
+                "type": "string",
+                "nullable": true
+              },
+              "nickname": {
+                "type": "string"
+              },
+              "password_hash": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "UserRepo": {
+        "type": "object",
+        "description": "用户基本信息表",
+        "required": [
+          "id",
+          "email",
+          "password_hash",
+          "nickname",
+          "avatar_url",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "avatar_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "email": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "last_login_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "password_hash": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

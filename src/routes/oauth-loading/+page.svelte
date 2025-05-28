@@ -1,19 +1,28 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
+	import { jwtStorage } from '$lib';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 
 	let dots = $state('');
 
 	onMount(() => {
+		const interval = setInterval(() => {
+			dots = dots.length >= 3 ? '' : dots + '.';
+		}, 500);
+
 		const hash = window.location.hash.substring(1); // 移除#
 		const params = new URLSearchParams(hash);
 		const token = params.get('token');
 
-		console.log(token);
+		if (!token) {
+			goto(`${base}/error/404`);
+			return;
+		}
 
-		const interval = setInterval(() => {
-			dots = dots.length >= 3 ? '' : dots + '.';
-		}, 500);
+		jwtStorage.updateData({ jwt: token });
+		goto(`${base}/`);
 
 		return () => clearInterval(interval);
 	});
