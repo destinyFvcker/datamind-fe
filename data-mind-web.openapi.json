@@ -1879,7 +1879,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OkRes"
+                  "$ref": "#/components/schemas/OkRes_UserConfigShow"
                 }
               }
             },
@@ -2124,7 +2124,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMsgBody"
+                "$ref": "#/components/schemas/UpdatePasswordBody"
               }
             }
           }
@@ -5308,6 +5308,87 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "OkRes_UserConfigShow": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "object",
+            "description": "在前端展示的用户相关信息",
+            "required": [
+              "nick_name"
+            ],
+            "properties": {
+              "ding_webhook_addr": {
+                "type": "string",
+                "description": "用户的钉钉报警机器人地址",
+                "nullable": true
+              },
+              "nick_name": {
+                "type": "string",
+                "description": "用户的昵称"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "UserConfigShow": {
+        "type": "object",
+        "description": "在前端展示的用户相关信息",
+        "required": [
+          "nick_name"
+        ],
+        "properties": {
+          "ding_webhook_addr": {
+            "type": "string",
+            "description": "用户的钉钉报警机器人地址",
+            "nullable": true
+          },
+          "nick_name": {
+            "type": "string",
+            "description": "用户的昵称"
+          }
+        }
+      },
+      "UpdatePasswordBody": {
+        "type": "object",
+        "description": "更新密码请求体",
+        "required": [
+          "old_password",
+          "new_password"
+        ],
+        "properties": {
+          "new_password": {
+            "type": "string",
+            "description": "新密码"
+          },
+          "old_password": {
+            "type": "string",
+            "description": "旧密码"
           }
         }
       }

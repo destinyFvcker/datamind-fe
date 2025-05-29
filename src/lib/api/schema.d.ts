@@ -2249,6 +2249,37 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
         };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_UserConfigShow: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            /** @description 在前端展示的用户相关信息 */
+            data: {
+                /** @description 用户的钉钉报警机器人地址 */
+                ding_webhook_addr?: string | null;
+                /** @description 用户的昵称 */
+                nick_name: string;
+            };
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
+        /** @description 在前端展示的用户相关信息 */
+        UserConfigShow: {
+            /** @description 用户的钉钉报警机器人地址 */
+            ding_webhook_addr?: string | null;
+            /** @description 用户的昵称 */
+            nick_name: string;
+        };
+        /** @description 更新密码请求体 */
+        UpdatePasswordBody: {
+            /** @description 新密码 */
+            new_password: string;
+            /** @description 旧密码 */
+            old_password: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -3578,7 +3609,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OkRes"];
+                    "application/json": components["schemas"]["OkRes_UserConfigShow"];
                 };
             };
             /** @description 没有权限访问对应资源 🚫 */
@@ -3759,7 +3790,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["UpdateMsgBody"];
+                "application/json": components["schemas"]["UpdatePasswordBody"];
             };
         };
         responses: {

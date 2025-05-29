@@ -16,7 +16,7 @@
 	import '../app.css';
 	import BackToTop from '$lib/components/custom/back-to-top.svelte';
 	import { cn } from '$lib/utils';
-	import { initApp } from '$lib';
+	import { initApp, jwtStorage } from '$lib';
 
 	let { children } = $props();
 
@@ -40,7 +40,9 @@
 			: '';
 	};
 
-	initApp();
+	if (jwtStorage.getData()) {
+		initApp();
+	}
 </script>
 
 <ModeWatcher />

@@ -6,7 +6,9 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 
+	globalStatus.isNavShow = false;
 	if (jwtStorage.getData()) {
+		globalStatus.isNavShow = true;
 		goto(`${base}/`);
 	}
 
