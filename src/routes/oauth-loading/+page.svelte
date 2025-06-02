@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { jwtStorage } from '$lib';
+	import { initApp, jwtStorage } from '$lib';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 
@@ -12,17 +12,24 @@
 			dots = dots.length >= 3 ? '' : dots + '.';
 		}, 500);
 
-		const hash = window.location.hash.substring(1); // 移除#
-		const params = new URLSearchParams(hash);
-		const token = params.get('token');
+		// 创建异步函数来处理 token 逻辑
+		const handleAuth = async () => {
+			const hash = window.location.hash.substring(1); // 移除#
+			const params = new URLSearchParams(hash);
+			const token = params.get('token');
 
-		if (!token) {
-			goto(`${base}/error/404`);
-			return;
-		}
+			if (!token) {
+				goto(`${base}/error/404`);
+				return;
+			}
 
-		jwtStorage.updateData({ jwt: token });
-		goto(`${base}/`);
+			jwtStorage.saveData({ jwt: token });
+			await initApp();
+			goto(`${base}/`);
+		};
+
+		// 调用异步函数
+		handleAuth();
 
 		return () => clearInterval(interval);
 	});

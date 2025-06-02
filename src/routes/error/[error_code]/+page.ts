@@ -3,7 +3,7 @@ import { goto } from '$app/navigation';
 import { globalStatus } from '$lib/global.svelte.js';
 import { base } from '$app/paths';
 
-const possibleCodes = ['401', '404'];
+const possibleCodes = ['401', '404', 'no-email'];
 
 export const entries = () => {
 	return possibleCodes.map((code) => {

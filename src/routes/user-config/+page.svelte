@@ -346,7 +346,10 @@
 						</form>
 					</div>
 					<div>
-						<span class="block text-sm">修改密码:</span>
+						<div class="">
+							<span class="text-sm">修改密码:</span>
+							<span class="text-sm text-gray-500">(Oauth登录用户默认密码为12345678)</span>
+						</div>
 						<Dialog.Root
 							bind:open={isPasswordDialogShow}
 							onOpenChange={() => {
