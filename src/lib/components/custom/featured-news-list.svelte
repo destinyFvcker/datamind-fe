@@ -37,7 +37,7 @@
 {#snippet newsBlock(newsInfo: NewsInfo)}
 	<div class="flex flex-col gap-1 rounded border p-2 md:h-[150px] lg:h-[105px]">
 		<button
-			class="text-left font-bold hover:underline"
+			class="cursor-pointer text-left font-bold hover:underline"
 			onclick={() => {
 				window.location.href = newsInfo.url;
 			}}
@@ -52,7 +52,10 @@
 				<span class="min-w-10 grow"></span>
 				<Dialog.Root>
 					<Dialog.Trigger
-						class={cn('h-5! w-10 rounded-sm! px-3 py-4', buttonVariants({ variant: 'default' }))}
+						class={cn(
+							'h-5! w-10 cursor-pointer rounded-sm! px-3 py-4',
+							buttonVariants({ variant: 'default' })
+						)}
 					>
 						<span class="">摘要</span>
 					</Dialog.Trigger>

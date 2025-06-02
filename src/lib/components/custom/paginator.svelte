@@ -6,23 +6,38 @@
 	import { type RowData, type Table } from '@tanstack/table-core';
 
 	// 关于如何给props标注类型仍然需要学习
-	let { tableModel = $bindable() }: { tableModel: Table<T> } = $props();
+	let {
+		tableModel = $bindable(),
+		itemName,
+		sortColumn
+	}: { tableModel: Table<T>; itemName: string; sortColumn: string } = $props();
+
 	let itemPerPage = $state('100');
 	let pageIndex = $derived(tableModel.getState().pagination.pageIndex);
 	let pageCount = $derived(tableModel.getPageCount());
 	let hasNextPage = $derived(tableModel.getCanNextPage());
 	let hasPreviousPage = $derived(tableModel.getCanPreviousPage());
+
+	const handleKeyUp = (e: any) => {
+		let inputValue = e?.target?.value;
+		if (inputValue) {
+			console.log('inputValue = ', inputValue);
+			tableModel.setColumnFilters([{ id: sortColumn, value: inputValue.toString() }]);
+		}
+		// tableModel.setGlobalFilter(String(e?.target?.value));
+	};
 </script>
 
 <div class="flex items-center justify-between px-2">
-	<div class="flex items-center">
-		<span class="font-bold">查找股票代码:</span>
+	<div class="flex items-center gap-2">
+		<span class="font-bold">{`查找${itemName}代码:`}</span>
 		<div class="relative">
-			<Search class="absolute left-2 top-[50%] h-4 w-4 translate-y-[-50%] text-muted-foreground" />
+			<Search class="text-muted-foreground absolute top-[50%] left-2 h-4 w-4 translate-y-[-50%]" />
 			<Input
 				type="text"
-				placeholder="股票代码"
+				placeholder={`${itemName}代码`}
 				class="h-8 w-[200px] border-2 border-slate-400! pl-8 focus-visible:ring-offset-1"
+				onkeyup={handleKeyUp}
 			/>
 		</div>
 	</div>
@@ -37,7 +52,7 @@
 				}}
 				bind:value={itemPerPage}
 			>
-				<Select.Trigger class="h-8 w-[70px]"
+				<Select.Trigger class="h-8 w-[70px] cursor-pointer"
 					>{itemPerPage ? itemPerPage : '选择分页时每页要显示条目的数量'}</Select.Trigger
 				>
 				<Select.Content>
@@ -55,7 +70,7 @@
 		<div class="flex items-center space-x-2">
 			<Button
 				variant="outline"
-				class="hidden h-8 w-8 p-0 lg:flex"
+				class="hidden h-8 w-8 cursor-pointer p-0 lg:flex"
 				onclick={() => tableModel.firstPage()}
 				disabled={!hasPreviousPage}
 			>
@@ -64,7 +79,7 @@
 			</Button>
 			<Button
 				variant="outline"
-				class="h-8 w-8 p-0"
+				class="h-8 w-8 cursor-pointer p-0"
 				onclick={() => tableModel.previousPage()}
 				disabled={!hasPreviousPage}
 			>
@@ -73,7 +88,7 @@
 			</Button>
 			<Button
 				variant="outline"
-				class="h-8 w-8 p-0"
+				class="h-8 w-8 cursor-pointer p-0"
 				onclick={() => tableModel.nextPage()}
 				disabled={!hasNextPage}
 			>
@@ -82,7 +97,7 @@
 			</Button>
 			<Button
 				variant="outline"
-				class="hidden h-8 w-8 p-0 lg:flex"
+				class="hidden h-8 w-8 cursor-pointer p-0 lg:flex"
 				onclick={() => tableModel.lastPage()}
 				disabled={!hasNextPage}
 			>

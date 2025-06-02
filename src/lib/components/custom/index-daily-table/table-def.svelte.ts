@@ -3,8 +3,12 @@ import { renderSnippet } from '$lib/components/ui/data-table';
 import {
 	createColumnHelper,
 	getCoreRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
+	getSortedRowModel,
+	type ColumnFiltersState,
 	type PaginationState,
+	type SortingState,
 	type TableOptions
 } from '@tanstack/table-core';
 import { cellCenter, cellRight, cellWichSignColor, indexCellRef } from '../helper-snippets.svelte';
@@ -12,10 +16,14 @@ import { cellCenter, cellRight, cellWichSignColor, indexCellRef } from '../helpe
 export const tableStatus: {
 	data: IndexDailyPagin[];
 	pagination: PaginationState;
+	sorting: SortingState;
+	columnFilters: ColumnFiltersState;
 	isLoading: boolean;
 } = $state({
 	data: [],
 	pagination: { pageIndex: 0, pageSize: 100 },
+	sorting: [],
+	columnFilters: [],
 	isLoading: false
 });
 
@@ -40,7 +48,8 @@ export const defaultColumns = [
 		cell: (props) => {
 			const code = props.getValue();
 			return renderSnippet(indexCellRef, code);
-		}
+		},
+		filterFn: 'includesString'
 	}),
 	columnHelper.accessor('date', {
 		header: () => {
@@ -49,7 +58,8 @@ export const defaultColumns = [
 		cell: (props) => {
 			const updateDate = props.getValue();
 			return renderSnippet(cellCenter, updateDate);
-		}
+		},
+		enableSorting: false
 	}),
 	columnHelper.accessor('open', {
 		header: () => {
@@ -123,6 +133,12 @@ export const options: TableOptions<IndexDailyPagin> = {
 	state: {
 		get pagination() {
 			return tableStatus.pagination;
+		},
+		get sorting() {
+			return tableStatus.sorting;
+		},
+		get columnFilters() {
+			return tableStatus.columnFilters;
 		}
 	},
 	columns: defaultColumns,
@@ -133,9 +149,25 @@ export const options: TableOptions<IndexDailyPagin> = {
 			tableStatus.pagination = updater;
 		}
 	},
+	onSortingChange: (updater) => {
+		if (updater instanceof Function) {
+			tableStatus.sorting = updater(tableStatus.sorting);
+		} else {
+			tableStatus.sorting = updater;
+		}
+	},
+	onColumnFiltersChange: (updater) => {
+		if (updater instanceof Function) {
+			tableStatus.columnFilters = updater(tableStatus.columnFilters);
+		} else {
+			tableStatus.columnFilters = updater;
+		}
+	},
 	//
 	getCoreRowModel: getCoreRowModel(),
-	getPaginationRowModel: getPaginationRowModel()
+	getPaginationRowModel: getPaginationRowModel(),
+	getSortedRowModel: getSortedRowModel(),
+	getFilteredRowModel: getFilteredRowModel()
 };
 
 export interface IndexDailyPagin {

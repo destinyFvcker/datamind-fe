@@ -12,7 +12,7 @@
 </script>
 
 <div class="flex h-screen flex-col space-y-2 rounded-md border p-2">
-	<Paginator tableModel={table} />
+	<Paginator tableModel={table} itemName={'指数'} sortColumn={'code'} />
 
 	<Table.Root class="relative grow overflow-auto overscroll-y-auto">
 		<Table.Header>
@@ -26,13 +26,32 @@
 					)}
 				>
 					{#each headerGroup.headers as header (header.id)}
-						<Table.Head>
-							{#if !header.isPlaceholder}
-								<FlexRender
-									content={header.column.columnDef.header}
-									context={header.getContext()}
-								/>
-							{/if}
+						<Table.Head
+							class={cn(
+								'',
+								header.column.getCanSort()
+									? 'cursor-pointer transition select-none hover:scale-110 hover:bg-slate-950 hover:text-white'
+									: ''
+							)}
+							onclick={() => {
+								if (header.column.getCanSort()) {
+									header.column.toggleSorting();
+								}
+							}}
+						>
+							<div class="flex items-center justify-center gap-1">
+								{#if !header.isPlaceholder}
+									<FlexRender
+										content={header.column.columnDef.header}
+										context={header.getContext()}
+									/>
+								{/if}
+								{#if header.column.getIsSorted().toString() === 'asc'}
+									🔼
+								{:else if header.column.getIsSorted().toString() === 'desc'}
+									🔽
+								{/if}
+							</div>
 						</Table.Head>
 					{/each}
 				</Table.Row>

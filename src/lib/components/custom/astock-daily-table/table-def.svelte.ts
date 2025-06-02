@@ -3,20 +3,29 @@ import { renderSnippet } from '$lib/components/ui/data-table';
 import {
 	createColumnHelper,
 	getCoreRowModel,
+	getFilteredRowModel,
 	getPaginationRowModel,
+	getSortedRowModel,
+	type ColumnFiltersState,
+	type FilterFn,
 	type PaginationState,
+	type SortingState,
 	type TableOptions
 } from '@tanstack/table-core';
-// import { toast } from 'svelte-sonner';
+import { rankings, rankItem } from '@tanstack/match-sorter-utils';
 import { cellCenter, stockCellRef, cellRight, cellWichSignColor } from '../helper-snippets.svelte';
 
 export const tableStatus: {
 	data: StockDailyPagin[];
 	pagination: PaginationState;
+	sorting: SortingState;
+	columnFilters: ColumnFiltersState;
 	isLoading: boolean;
 } = $state({
 	data: [],
 	pagination: { pageIndex: 0, pageSize: 100 },
+	sorting: [],
+	columnFilters: [],
 	isLoading: false
 });
 export async function updateData() {
@@ -30,6 +39,23 @@ export async function updateData() {
 	tableStatus.isLoading = false;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+	// 如果 value 是空的，不进行过滤，保留所有行
+	if (typeof value === 'object') {
+		if (!value.value || String(value.value).trim() === '') {
+			return true;
+		}
+	}
+
+	// Rank the item
+	const itemRank = rankItem(row.getValue(columnId), value, { threshold: rankings.CONTAINS });
+	// Store the itemRank info
+	addMeta({ itemRank });
+	// Return if the item should be filtered in/out
+	return itemRank.passed;
+};
+
 const columnHelper = createColumnHelper<StockDailyPagin>();
 
 export const defaultColumns = [
@@ -40,7 +66,8 @@ export const defaultColumns = [
 		cell: (props) => {
 			const code = props.getValue();
 			return renderSnippet(stockCellRef, code);
-		}
+		},
+		filterFn: 'includesString'
 	}),
 	columnHelper.accessor('date', {
 		header: () => {
@@ -49,7 +76,8 @@ export const defaultColumns = [
 		cell: (props) => {
 			const updateDate = props.getValue();
 			return renderSnippet(cellCenter, updateDate);
-		}
+		},
+		enableSorting: false
 	}),
 	columnHelper.accessor('open', {
 		header: () => {
@@ -150,8 +178,17 @@ export const options: TableOptions<StockDailyPagin> = {
 	state: {
 		get pagination() {
 			return tableStatus.pagination;
+		},
+		get sorting() {
+			return tableStatus.sorting;
+		},
+		get columnFilters() {
+			return tableStatus.columnFilters;
 		}
 	},
+	// filterFns: {
+	// 	fuzzy: fuzzyFilter
+	// },
 	columns: defaultColumns,
 	onPaginationChange: (updater) => {
 		if (typeof updater === 'function') {
@@ -160,9 +197,26 @@ export const options: TableOptions<StockDailyPagin> = {
 			tableStatus.pagination = updater;
 		}
 	},
+	onSortingChange: (updater) => {
+		if (updater instanceof Function) {
+			tableStatus.sorting = updater(tableStatus.sorting);
+		} else {
+			tableStatus.sorting = updater;
+		}
+	},
+	onColumnFiltersChange: (updater) => {
+		if (updater instanceof Function) {
+			tableStatus.columnFilters = updater(tableStatus.columnFilters);
+		} else {
+			tableStatus.columnFilters = updater;
+		}
+	},
 	//
 	getCoreRowModel: getCoreRowModel(),
-	getPaginationRowModel: getPaginationRowModel()
+	getPaginationRowModel: getPaginationRowModel(),
+	getSortedRowModel: getSortedRowModel(),
+	getFilteredRowModel: getFilteredRowModel()
+	// globalFilterFn: fuzzyFilter
 };
 
 export interface StockDailyPagin {
