@@ -10,6 +10,7 @@
         "animejs": "^4.0.2",
         "chart.js": "^4.4.9",
         "echarts": "^5.6.0",
+        "embla-carousel-autoplay": "^8.6.0",
         "formsnap": "^2.0.1",
         "lucide-svelte": "^0.509.0",
         "mode-watcher": "^1.0.6",
@@ -528,6 +529,8 @@
     "electron-to-chromium": ["electron-to-chromium@1.5.96", "https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.5.96.tgz", {}, "sha512-8AJUW6dh75Fm/ny8+kZKJzI1pgoE8bKLZlzDU2W1ENd+DXKJrx7I7l9hb8UWR4ojlnb5OlixMt00QWiYJoVw1w=="],
 
     "embla-carousel": ["embla-carousel@8.6.0", "https://registry.npmmirror.com/embla-carousel/-/embla-carousel-8.6.0.tgz", {}, "sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA=="],
+
+    "embla-carousel-autoplay": ["embla-carousel-autoplay@8.6.0", "https://registry.npmmirror.com/embla-carousel-autoplay/-/embla-carousel-autoplay-8.6.0.tgz", { "peerDependencies": { "embla-carousel": "8.6.0" } }, "sha512-OBu5G3nwaSXkZCo1A6LTaFMZ8EpkYbwIaH+bPqdBnDGQ2fh4+NbzjXjs2SktoPNKCtflfVMc75njaDHOYXcrsA=="],
 
     "embla-carousel-reactive-utils": ["embla-carousel-reactive-utils@8.6.0", "https://registry.npmmirror.com/embla-carousel-reactive-utils/-/embla-carousel-reactive-utils-8.6.0.tgz", { "peerDependencies": { "embla-carousel": "8.6.0" } }, "sha512-fMVUDUEx0/uIEDM0Mz3dHznDhfX+znCCDCeIophYb1QGVM7YThSWX+wz11zlYwWFOr74b4QLGg0hrGPJeG2s4A=="],
 

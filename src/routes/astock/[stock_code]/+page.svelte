@@ -141,48 +141,58 @@
 						返回
 					</Button>
 				</div>
-				<div class="min-w-[50px] grow"></div>
-				<Table.Root class="min-w-[690px] rounded-sm">
-					<Table.Header>
-						<Table.Row class={mode.current === 'dark' ? '' : 'bg-slate-200'}>
-							<Table.Head class="text-center">上市时间</Table.Head>
-							<Table.Head class="text-center">行业</Table.Head>
-							<Table.Head class="text-center">流通股</Table.Head>
-							<Table.Head class="text-center">流通市值(元)</Table.Head>
-							<Table.Head class="text-center">总市值(元)</Table.Head>
-							<Table.Head class="text-center">总股本(元)</Table.Head>
-						</Table.Row>
-					</Table.Header>
-					<Table.Body>
-						<Table.Row>
-							{#if isLoading}
-								{#each Array(6) as _}
-									<Table.Cell class="text-center">
-										<Icon icon="line-md:downloading-loop" width="24" height="24" class="mx-auto" />
-									</Table.Cell>
-								{/each}
-							{:else}
-								{@const dateStr = stockInfo?.listing_date.toString()}
-								<Table.Cell class="text-center"
-									>{dateStr?.slice(0, 4)}-{dateStr?.slice(4, 6)}-{dateStr?.slice(6, 8)}</Table.Cell
-								>
-								<Table.Cell class="text-center">{stockInfo?.industry}</Table.Cell>
-								<Table.Cell class="text-center"
-									>{stockInfo?.circulating_shares.toLocaleString()}</Table.Cell
-								>
-								<Table.Cell class="text-center"
-									>{stockInfo?.circulating_market_cap.toLocaleString()}</Table.Cell
-								>
-								<Table.Cell class="text-center"
-									>{stockInfo?.total_market_cap.toLocaleString()}</Table.Cell
-								>
-								<Table.Cell class="text-center"
-									>{stockInfo?.total_shares.toLocaleString()}</Table.Cell
-								>
-							{/if}
-						</Table.Row>
-					</Table.Body>
-				</Table.Root>
+				<div class="max-w-[100px] min-w-[50px] grow"></div>
+				<div class="w-0 min-w-0 flex-1 overflow-x-auto">
+					<Table.Root class="min-w-[690px] rounded-sm">
+						<Table.Header>
+							<Table.Row class={mode.current === 'dark' ? '' : 'bg-slate-200'}>
+								<Table.Head class="text-center">上市时间</Table.Head>
+								<Table.Head class="text-center">行业</Table.Head>
+								<Table.Head class="text-center">流通股</Table.Head>
+								<Table.Head class="text-center">流通市值(元)</Table.Head>
+								<Table.Head class="text-center">总市值(元)</Table.Head>
+								<Table.Head class="text-center">总股本(元)</Table.Head>
+							</Table.Row>
+						</Table.Header>
+						<Table.Body>
+							<Table.Row>
+								{#if isLoading}
+									{#each Array(6) as _}
+										<Table.Cell class="text-center">
+											<Icon
+												icon="line-md:downloading-loop"
+												width="24"
+												height="24"
+												class="mx-auto"
+											/>
+										</Table.Cell>
+									{/each}
+								{:else}
+									{@const dateStr = stockInfo?.listing_date.toString()}
+									<Table.Cell class="text-center"
+										>{dateStr?.slice(0, 4)}-{dateStr?.slice(4, 6)}-{dateStr?.slice(
+											6,
+											8
+										)}</Table.Cell
+									>
+									<Table.Cell class="text-center">{stockInfo?.industry}</Table.Cell>
+									<Table.Cell class="text-center"
+										>{stockInfo?.circulating_shares.toLocaleString()}</Table.Cell
+									>
+									<Table.Cell class="text-center"
+										>{stockInfo?.circulating_market_cap.toLocaleString()}</Table.Cell
+									>
+									<Table.Cell class="text-center"
+										>{stockInfo?.total_market_cap.toLocaleString()}</Table.Cell
+									>
+									<Table.Cell class="text-center"
+										>{stockInfo?.total_shares.toLocaleString()}</Table.Cell
+									>
+								{/if}
+							</Table.Row>
+						</Table.Body>
+					</Table.Root>
+				</div>
 			</div>
 		</Card.Header>
 		<Card.Content class="flex grow flex-col gap-4 overflow-y-auto">
@@ -227,7 +237,7 @@
 		</Card.Content>
 	</Card.Root>
 
-	<Card.Root class="flex min-w-[300px] max-w-[400px] flex-col">
+	<Card.Root class="flex max-w-[400px] min-w-[300px] flex-col">
 		<Card.Header>
 			<Card.Title>近日新闻</Card.Title>
 			<Card.Description>关于[{data.stockCode}]的最近的100条精选新闻</Card.Description>
