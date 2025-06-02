@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/api/aindex/basic_info/{index_code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** index_basic_info */
+        get: operations["index_basic_info"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/aindex/index_option_50etf_qvix_kline": {
         parameters: {
             query?: never;
@@ -2280,6 +2297,34 @@ export interface components {
             /** @description 旧密码 */
             old_password: string;
         };
+        /** @description 指数基本信息 */
+        IndexBasicInfo: {
+            /** @description 指数名称 */
+            display_name: string;
+            /** @description 指数代码 */
+            index_code: string;
+            /** @description 发布时间 */
+            publish_date: string;
+        };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_IndexBasicInfo: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            /** @description 指数基本信息 */
+            data: {
+                /** @description 指数名称 */
+                display_name: string;
+                /** @description 指数代码 */
+                index_code: string;
+                /** @description 发布时间 */
+                publish_date: string;
+            };
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -2289,6 +2334,59 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    index_basic_info: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description 需要获取基本信息的指数代码
+                 * @example
+                 */
+                index_code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 成功获取指数基本信息 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes_IndexBasicInfo"];
+                };
+            };
+            /** @description 没有访问权限 */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 对应指数基本信息不存在 */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 发生服务器内部错误 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
     index_option_50etf_qvix_kline: {
         parameters: {
             query: {
@@ -3466,16 +3564,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description empty body with jwt token in the header */
-            200: {
+            /** @description empty body with jwt token in the path */
+            302: {
                 headers: {
-                    /** @description New jwt token */
-                    Authorization?: string;
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["OkRes"];
-                };
+                content?: never;
             };
             /** @description github state not found */
             404: {

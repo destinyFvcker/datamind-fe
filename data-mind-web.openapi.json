@@ -26,6 +26,77 @@
     }
   ],
   "paths": {
+    "/api/aindex/basic_info/{index_code}": {
+      "get": {
+        "summary": "index_basic_info",
+        "deprecated": false,
+        "description": "",
+        "operationId": "index_basic_info",
+        "tags": [
+          "A股指数量化金融数据",
+          "A股指数量化金融数据"
+        ],
+        "parameters": [
+          {
+            "name": "index_code",
+            "in": "path",
+            "description": "需要获取基本信息的指数代码",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功获取指数基本信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_IndexBasicInfo"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有访问权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "对应指数基本信息不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "发生服务器内部错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
     "/api/aindex/index_option_50etf_qvix_kline": {
       "get": {
         "summary": "50ETF 期权波动率指数 QVIX K线数据",
@@ -1679,23 +1750,9 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "empty body with jwt token in the header",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OkRes"
-                }
-              }
-            },
-            "headers": {
-              "Authorization": {
-                "description": "New jwt token",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+          "302": {
+            "description": "empty body with jwt token in the path",
+            "headers": {}
           },
           "404": {
             "description": "github state not found",
@@ -5389,6 +5446,79 @@
           "old_password": {
             "type": "string",
             "description": "旧密码"
+          }
+        }
+      },
+      "IndexBasicInfo": {
+        "type": "object",
+        "description": "指数基本信息",
+        "required": [
+          "index_code",
+          "display_name",
+          "publish_date"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "description": "指数名称"
+          },
+          "index_code": {
+            "type": "string",
+            "description": "指数代码"
+          },
+          "publish_date": {
+            "type": "string",
+            "description": "发布时间"
+          }
+        }
+      },
+      "OkRes_IndexBasicInfo": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "object",
+            "description": "指数基本信息",
+            "required": [
+              "index_code",
+              "display_name",
+              "publish_date"
+            ],
+            "properties": {
+              "display_name": {
+                "type": "string",
+                "description": "指数名称"
+              },
+              "index_code": {
+                "type": "string",
+                "description": "指数代码"
+              },
+              "publish_date": {
+                "type": "string",
+                "description": "发布时间"
+              }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
           }
         }
       }

@@ -21,7 +21,6 @@
 	const handleKeyUp = (e: any) => {
 		let inputValue = e?.target?.value;
 		if (inputValue) {
-			console.log('inputValue = ', inputValue);
 			tableModel.setColumnFilters([{ id: sortColumn, value: inputValue.toString() }]);
 		}
 		// tableModel.setGlobalFilter(String(e?.target?.value));

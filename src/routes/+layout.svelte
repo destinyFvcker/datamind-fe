@@ -79,7 +79,7 @@
 					)}"
 				>
 					<ChartNetwork class="h-5 w-5" />
-					A股指数行情
+					指数行情
 				</button>
 				<Separator orientation="vertical" class="h-8 w-0.5" />
 

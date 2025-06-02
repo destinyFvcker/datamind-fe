@@ -132,7 +132,9 @@
 						{#if isLoading}
 							<Skeleton class="h-[30px] w-[100px]" />
 						{:else}
-							{stockInfo?.stock_name}
+							<span class="text-2xl font-bold">
+								{stockInfo?.stock_name}
+							</span>
 						{/if}
 					</Card.Title>
 					<Card.Description class="whitespace-nowrap">股票代码：{data.stockCode}</Card.Description>

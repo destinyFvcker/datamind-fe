@@ -1,6 +1,23 @@
 import { toast } from 'svelte-sonner';
 import client from './client';
 
+export async function indexBasicInfo(indexCode: string) {
+	const res = await client.GET('/api/aindex/basic_info/{index_code}', {
+		params: {
+			path: {
+				index_code: indexCode
+			}
+		}
+	});
+
+	if (res.error) {
+		const msg = 'err code = ' + res.error.code + ', msg = ' + res.error.message;
+		toast.error(msg);
+	}
+
+	return res.data;
+}
+
 export async function indexOption50EtfKline(limit: number) {
 	const res = await client.GET('/api/aindex/index_option_50etf_qvix_kline', {
 		params: {

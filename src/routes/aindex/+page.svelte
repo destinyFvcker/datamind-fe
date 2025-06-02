@@ -3,12 +3,12 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 	import { ChartNetwork, ChartNoAxesCombined } from 'lucide-svelte';
-	import type { IndexKlineData, IndexMAData } from './(data)/data';
+	import type { IndexMAData, QvixKlineData } from './(data)/data';
 	import { indexOption50EtfKline, indexOption50EtfMas } from '$lib/api/aindex';
 	import type { KlineDataSet, StockDailyKlineData } from '$lib/components/custom/charts/kline/data';
 	import { KlineChartCustom } from '$lib/components/custom/charts/kline';
 
-	let indexKlineDatas: IndexKlineData[] = $state([]);
+	let indexKlineDatas: QvixKlineData[] = $state([]);
 	let indexMADatas: IndexMAData[] = $state([]);
 
 	let klineDataSet: KlineDataSet = $derived.by(() => {
@@ -81,7 +81,7 @@
 		<Card.Header>
 			<Card.Title class="flex gap-2">
 				<ChartNetwork />
-				A股指数行情(日频)
+				指数行情(日频)
 			</Card.Title>
 			<Card.Description>每日收盘后更新.</Card.Description>
 		</Card.Header>
