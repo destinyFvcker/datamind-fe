@@ -582,6 +582,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/coze/access_token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get_coze_access_token */
+        get: operations["get_coze_access_token"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2325,6 +2342,17 @@ export interface components {
             /** @description 💬 正确响应描述性文本 */
             message: string;
         };
+        /** @description 用于响应正确响应的通用响应体 */
+        OkRes_String: {
+            /**
+             * Format: int32
+             * @description ✅ 正确响应 http 状态码
+             */
+            code: number;
+            data: string;
+            /** @description 💬 正确响应描述性文本 */
+            message: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -3955,6 +3983,44 @@ export interface operations {
             };
             /** @description 系统不存在此用户 */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+            /** @description 请求出现错误 💥 */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrRes"];
+                };
+            };
+        };
+    };
+    get_coze_access_token: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 成功获取coze access token ✅ */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OkRes_String"];
+                };
+            };
+            /** @description 没有权限访问对应资源 🚫 */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

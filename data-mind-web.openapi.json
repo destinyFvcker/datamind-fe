@@ -23,6 +23,9 @@
     },
     {
       "name": "用户信息管理"
+    },
+    {
+      "name": "Coze api"
     }
   ],
   "paths": {
@@ -2271,6 +2274,55 @@
           },
           "404": {
             "description": "系统不存在此用户",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "请求出现错误 💥",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrRes"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/coze/access_token": {
+      "get": {
+        "summary": "get_coze_access_token",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get_coze_access_token",
+        "tags": [
+          "Coze api",
+          "Coze api"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功获取coze access token ✅",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkRes_String"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "401": {
+            "description": "没有权限访问对应资源 🚫",
             "content": {
               "application/json": {
                 "schema": {
@@ -5512,6 +5564,36 @@
                 "description": "发布时间"
               }
             }
+          },
+          "message": {
+            "type": "string",
+            "description": "💬 正确响应描述性文本",
+            "examples": [
+              "登陆成功，欢迎来到data-mind!👏"
+            ]
+          }
+        }
+      },
+      "OkRes_String": {
+        "type": "object",
+        "description": "用于响应正确响应的通用响应体",
+        "required": [
+          "code",
+          "message",
+          "data"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "✅ 正确响应 http 状态码",
+            "minimum": 0,
+            "examples": [
+              200
+            ]
+          },
+          "data": {
+            "type": "string"
           },
           "message": {
             "type": "string",

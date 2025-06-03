@@ -3,9 +3,15 @@ export class CozeAgent {
 	private client: any;
 	private config = {
 		bot_id: '7505453994324705319',
-		token: 'pat_P7WlikdF2iP2Knb7VMcaMY5Py2EXFEDpLOSXEjtOCcBLUU7p3elm1rIhTjXdVCV0',
+		token: 'pat_SPNzZxD7hbwcpaYLHjVMB35XPnjhXZpRELzF6OrkPjr2SEUkDygJNWsGVXL6lDXV',
+		// token: 'pat_NxqWe78cV66mkZ0jeroHuMQVSgB23IOzyBxWOVBUoQSozVBULlT1gpsvWGQOpxuV',
+		// token: 'pat_NxqWe78cV66mkZ0jeroHuMQVSgB23IOzyBxWOVBUoQSozVBULlT1gpsvWGQOpxaa',
+		// pat_SPNzZxD7hbwcpaYLHjVMB35XPnjhXZpRELzF6OrkPjr2SEUkDygJNWsGVXL6lDXV
 		title: '监控平台智能客服',
-		icon: 'https://s2.loli.net/2025/05/02/byJTi3vzx6uARoY.png'
+		icon: 'https://s2.loli.net/2025/05/02/byJTi3vzx6uARoY.png',
+		id: 0,
+		nickname: '用户',
+		avartar_url: 'https://s2.loli.net/2025/05/28/5WCKgdOnqLlSMa6.jpg'
 	};
 
 	constructor(customConfig?: Partial<typeof this.config>) {
@@ -24,7 +30,14 @@ export class CozeAgent {
 			auth: {
 				type: 'token',
 				token: this.config.token,
-				onRefreshToken: () => this.config.token
+				onRefreshToken: () => {
+					return this.config.token;
+					// const res = await getCozeAccessToken();
+					// if (res) {
+					// 	this.config.token = res.data;
+					// }
+					// return res?.data;
+				}
 			},
 			ui: {
 				base: {
@@ -35,6 +48,11 @@ export class CozeAgent {
 					onHide: this.onHide.bind(this),
 					onShow: this.onShow.bind(this)
 				}
+			},
+			userInfo: {
+				id: this.config.id.toString(),
+				url: this.config.avartar_url,
+				nickname: this.config.nickname
 			}
 		});
 	}
@@ -49,6 +67,7 @@ export class CozeAgent {
 
 	public refresh(customConfig?: Partial<typeof this.config>) {
 		this.config = { ...this.config, ...customConfig };
+		// console.log(this.config);
 		this.destroy();
 		this.init();
 	}
