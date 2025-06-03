@@ -61,7 +61,7 @@
 				<!-- <Separator orientation="vertical" class="h-8 w-0.5" /> -->
 				<button
 					onclick={() => goto(`${base}/`)}
-					class="flex items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
+					class="flex cursor-pointer items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
 						'/'
 					)}"
 				>
@@ -74,7 +74,7 @@
 					onclick={() => {
 						goto(`${base}/aindex`);
 					}}
-					class="flex items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
+					class="flex cursor-pointer items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
 						'/aindex'
 					)}"
 				>
@@ -87,7 +87,7 @@
 					onclick={() => {
 						goto(`${base}/indicator`);
 					}}
-					class="flex items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
+					class="flex cursor-pointer items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
 						'/indicator'
 					)}"
 				>
@@ -111,7 +111,7 @@
 					onclick={() => {
 						goto(`${base}/user-config`);
 					}}
-					class="flex items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
+					class="flex cursor-pointer items-center gap-1 transition hover:scale-110 hover:font-bold {isPageActive(
 						'/user-config'
 					)}"
 				>
