@@ -10,3 +10,25 @@ export interface ConsecuData {
 	stock_code: string;
 	stock_name: string;
 }
+
+export interface NewHighData {
+	change_percentage: number;
+	index: number;
+	latest_price: number;
+	previous_high: number;
+	previous_high_date: string;
+	stock_code: string;
+	stock_name: string;
+	turnover_rate: number;
+}
+
+export interface NewLowData {
+	change_percentage: number;
+	index: number;
+	latest_price: number;
+	previous_low: number;
+	previous_low_date: string;
+	stock_code: string;
+	stock_name: string;
+	turnover_rate: number;
+}
