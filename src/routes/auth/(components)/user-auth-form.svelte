@@ -7,6 +7,7 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { getGithubState, signIn, signUp } from '$lib/api/auth';
 	import { initApp } from '$lib';
+	import { dev } from '$app/environment';
 
 	const { class: className, ...restProps }: HTMLAttributes<HTMLDivElement> = $props();
 
@@ -74,7 +75,7 @@
 			const uri =
 				'https://github.com/login/oauth/authorize?' +
 				'client_id=Ov23lim6oTncg9iWxk1T' +
-				'&redirect_uri=http://localhost:8800/auths/github/callback' +
+				`&redirect_uri=${dev ? 'http://localhost:8800' : 'https://www.destinyfvcker.cn'}/auths/github/callback` +
 				`&state=${githubStatus.data.state}`;
 			window.location.href = uri;
 		} catch {
