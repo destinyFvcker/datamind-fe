@@ -75,7 +75,7 @@
 			const uri =
 				'https://github.com/login/oauth/authorize?' +
 				'client_id=Ov23lim6oTncg9iWxk1T' +
-				`&redirect_uri=${dev ? 'http://localhost:8800' : 'https://www.destinyfvcker.cn'}/auths/github/callback` +
+				`&redirect_uri=${dev ? 'http://localhost:8800' : 'https://www.destinyfvcker.cn/data-mind'}/auths/github/callback` +
 				`&state=${githubStatus.data.state}`;
 			window.location.href = uri;
 		} catch {
