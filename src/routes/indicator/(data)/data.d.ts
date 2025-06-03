@@ -32,3 +32,29 @@ export interface NewLowData {
 	stock_name: string;
 	turnover_rate: number;
 }
+
+export interface VolumeStreakIncreaseData {
+	base_day_volume: string;
+	change_percentage: number;
+	index: number;
+	industry: string;
+	latest_price: number;
+	stage_change_percentage: number;
+	stock_code: string;
+	stock_name: string;
+	volume: string;
+	volume_increase_days: number;
+}
+
+export interface VolumeStreakDecreaseData {
+	base_day_volume: string;
+	change_percentage: number;
+	index: number;
+	industry: string;
+	latest_price: number;
+	stage_change_percentage: number;
+	stock_code: string;
+	stock_name: string;
+	volume: string;
+	volume_decrease_days: number;
+}

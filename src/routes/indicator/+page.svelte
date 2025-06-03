@@ -7,6 +7,8 @@
 	import { ConsecuTable, updateConsecuData } from './(components)/consecu-table';
 	import { NewHighTable, updateNewHighData } from './(components)/new-high-table';
 	import { NewLowTable, updateNewLowData } from './(components)/new-low-table';
+	import { VolumeStreakIncreaseTable } from './(components)/volume-streak-increase-table';
+	import { VolumeStreakDecreaseTable } from './(components)/volume-streak-decrease-table';
 
 	interface selectItem {
 		value: string;
@@ -17,6 +19,7 @@
 	let newHighLowSelectValue: 'low' | 'high' = $state('high');
 	let newHighSelectValue: '创月新高' | '半年新高' | '一年新高' | '历史新高' = $state('创月新高');
 	let newLowSelectValue: '创月新低' | '半年新低' | '一年新低' | '历史新低' = $state('创月新低');
+	let volumeStreakSelectValue: 'cxfl' | 'cxsl' = $state('cxfl');
 
 	const consecuTrends: selectItem[] = [
 		{ value: 'lxsz', label: '连续上涨📈' },
@@ -38,6 +41,10 @@
 		{ value: '一年新低', label: '一年新低' },
 		{ value: '历史新低', label: '历史新低' }
 	];
+	const volumeStreaks: selectItem[] = [
+		{ value: 'cxfl', label: '持续放量' },
+		{ value: 'cxsl', label: '持续缩量' }
+	];
 
 	const consecuTriggerContent = $derived(
 		consecuTrends.find((t) => t.value === consecuSelectValue)?.label ?? '选择一个方向……'
@@ -50,6 +57,9 @@
 	);
 	const newLowTriggerContent = $derived(
 		newLowRanges.find((t) => t.value === newLowSelectValue)?.label ?? '选择范围……'
+	);
+	const volumeStreakTriggerContent = $derived(
+		volumeStreaks.find((t) => t.value === volumeStreakSelectValue)?.label ?? '选择一个方向……'
 	);
 
 	$effect(() => {
@@ -166,11 +176,26 @@
 								<Card.Title class="flex items-center gap-2">
 									<ChartSpline />
 									持续放/缩量
+									<Separator orientation="vertical" class="h-5" />
+									<Select.Root type="single" bind:value={volumeStreakSelectValue}>
+										<Select.Trigger class="w-fit cursor-pointer">
+											{volumeStreakTriggerContent}
+										</Select.Trigger>
+										<Select.Content>
+											{#each volumeStreaks as item}
+												<Select.Item value={item.value}>{item.label}</Select.Item>
+											{/each}
+										</Select.Content>
+									</Select.Root>
 								</Card.Title>
 								<Card.Description>收盘后更新.</Card.Description>
 							</Card.Header>
-							<Card.Content>
-								<p>Card Content</p>
+							<Card.Content class="flex flex-1 flex-col overflow-hidden">
+								{#if volumeStreakSelectValue == 'cxfl'}
+									<VolumeStreakIncreaseTable />
+								{:else if volumeStreakSelectValue == 'cxsl'}
+									<VolumeStreakDecreaseTable />
+								{/if}
 							</Card.Content>
 						</Card.Root>
 					</div>
